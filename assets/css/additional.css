@@ -1,7 +1,9 @@
 .banner-image {
+    background-image: url('../img/menu.jpeg');
     background-size: cover;
     background-position: center;
 }
+
 
 .carousel-image {
 
