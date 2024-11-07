@@ -1,5 +1,5 @@
 .banner-image {
-    background-image: url('assets/img/menu.jpeg');
+    background-image: url('/assets/img/menu.jpeg');
     background-size: cover;
     background-position: center;
 }
