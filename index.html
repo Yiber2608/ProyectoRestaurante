@@ -1,23 +1,22 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
-    <meta name="description" content="" />
-    <meta name="author" content="" />
-    <title>Index</title>
-    <!-- Custom Google font-->
+    <meta name="description" content="Restaurante con auténtica gastronomía caribeña" />
+    <meta name="author" content="TechSysDesign" />
+    <title>Sabores del Caribe</title>
+    <link rel="icon" href="/assets/img/hamburguesa.png" type="image/x-icon">
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-        href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@100;200;300;400;500;600;700;800;900&amp;display=swap"
+        href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@100;200;300;400;500;600;700;800;900&display=swap"
         rel="stylesheet" />
-    <!-- Bootstrap icons-->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.1/font/bootstrap-icons.css" rel="stylesheet" />
-    <!-- Core theme CSS (includes Bootstrap)-->
     <link href="./assets/css/Bootstrap.css" rel="stylesheet" />
     <link rel="stylesheet" href="./assets/css/additional.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
 </head>
 
 <body class="d-flex flex-column h-100">
@@ -25,7 +24,7 @@
         <!-- Navigation-->
         <nav class="navbar navbar-expand-lg navbar-light bg-dark shadow-sm py-3 fixed-top">
             <div class="container px-2">
-                <a class="navbar-brand fs-3 fw-bold text-primary" href="index.html">Restaurant</a>
+                <a class="navbar-brand fs-3 fw-bold text-primary" href="index.html">Sabores del Caribe</a>
                 <button class="navbar-toggler bg-white" type="button" data-bs-toggle="collapse"
                     data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
                     aria-expanded="false" aria-label="Toggle navigation">
@@ -33,115 +32,211 @@
                 </button>
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
-                        <li class="nav-item">
-                            <a class="nav-link fw-bold text-white" href="menu.html">Menu</a>
+                        <li class="nav-item"><a class="nav-link fw-bold text-white" href="/menu.html">Menú</a></li>
+                        <li class="nav-item"><a class="nav-link fw-bold text-white" href="/empleos.html">Empleos</a>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link fw-bold text-white" href="reserva.html">Reservar</a>
+                        <li class="nav-item"><a class="nav-link fw-bold text-white" href="/concocenos.html">Nosotros</a>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link fw-bold text-white" href="nosotros.html">Nosotros</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link fw-bold text-white" href="login.html">Login</a>
-                        </li>
+                        <li class="nav-item"><a class="nav-link fw-bold text-white"
+                                href="/contactanos.html">Contacto</a></li>
                     </ul>
                 </div>
             </div>
         </nav>
 
-        <!-- Contenido-->
-        <header class="py-5">
-            <div
-                class="container-fluid d-flex align-items-center bg-gradient-primary-to-success px-lg-5 shadow  mx-0 pb-5 pb-md-0  min-vh-100 ">
-                <div class="row ">
-                    <!-- Carousel -->
-                    <div class="col-12  col-lg-6 order-1 order-lg-2 ">
-                        <div id="carouselExampleSlidesOnly" class="carousel slide" data-bs-ride="carousel">
-                            <div class="carousel-inner rounded-circle">
-                                <div class="carousel-item active ">
-                                    <img src="./assets/img/hamburguesa.png" class="d-block w-100 rounded-circle m-auto"
-                                        alt="Hamburguesa">
-                                </div>
-                                <div class="carousel-item ">
-                                    <img src="./assets/img/pollito.png" class="d-block w-100 rounded-circle  m-auto"
-                                        alt="Pollo">
-                                </div>
-                                <div class="carousel-item">
-                                    <img src="./assets/img/taquitos.png" class="d-block w-100 rounded-circle  m-auto"
-                                        alt="Tacos">
-                                </div>
-                            </div>
+        <!-- Header-->
+        <header class="banner-image ">
+            <div class=" d-flex align-items-center min-vh-100-custom  banner-overlay">
+                <div class="container ">
+                    <div class="row align-items-center ">
+                        <div class="col-12 text-center mb-5 mb-lg-0  ">
+                            <tittle class="display-1 fw-bolder  text-white mb-4">Bienvenido a Sabores del Caribe
+                            </tittle>
+                            <p class="fs-2 mb-5 text-white-50">Descubre la auténtica gastronomía caribeña en cada
+                                bocado.</p>
+                            <a class="btn btn-danger btn-lg fw-bold rounded-pill px-5 py-3" href="#servicios">
+                                Mas Servicios
+                            </a>
                         </div>
-                    </div>
-
-                    <!-- Text -->
-                    <div class="col-12 col-lg-6 order-2 order-lg-1 my-auto  ">
-                        <div class="container mx-auto text-center p-xxl-5 ">
-                            <h1 class="display-1 fw-bolder mb-1 ">BIENVENIDO</h1>
-                            <h1 class="fs-1 mt-3 mb-5 ">
-                                ¡Conoce un poco de la gastronomía que tenemos para ti 🤤!
-                            </h1>
-                            <div class="display-3">
-                                <a class="btn bg-danger fw-bolder" href="http://">
-                                    <h2>Ver Mas</h2>
-                                </a>
-                            </div>
-                        </div>
-
                     </div>
                 </div>
             </div>
         </header>
 
-        <section class="py-5">
-            <div class="container " id="contenido">
+        <!-- Featured Section -->
+        <section class="container-fluid bg-gradient-primary-to-success py-4">
+            <div class="container">
+                <h2 class="novedades-title">Novedades y Eventos del Restaurante</h2>
+
+                <div class="swiper novedades-swiper">
+                    <div class="swiper-wrapper  pb-5 pt-3">
+                        <!-- Evento Especial -->
+                        <div class="swiper-slide">
+                            <div class="card novedades-card">
+                                <div class="card-body d-flex flex-column">
+                                    <div class="novedades-icon-bg">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32"
+                                            fill="currentColor" class="bi bi-calendar-event" viewBox="0 0 16 16">
+                                            <path
+                                                d="M11 6.5a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-1z" />
+                                            <path
+                                                d="M3.5 0a.5.5 0 0 1 .5.5V1h8V.5a.5.5 0 0 1 1 0V1h1a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V3a2 2 0 0 1 2-2h1V.5a.5.5 0 0 1 .5-.5zM1 4v10a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V4H1z" />
+                                        </svg>
+                                    </div>
+                                    <h3 class="novedades-card-title">Noche de Degustación</h3>
+                                    <p class="novedades-card-text">15 de Agosto, 2024</p>
+                                    <a href="#" class="btn btn-primary novedades-btn">Reservar</a>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Nuevo Chef -->
+                        <div class="swiper-slide">
+                            <div class="card novedades-card">
+                                <div class="card-body d-flex flex-column">
+                                    <div class="novedades-icon-bg">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32"
+                                            fill="currentColor" class="bi bi-person" viewBox="0 0 16 16">
+                                            <path
+                                                d="M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6Zm2-3a2 2 0 1 1-4 0 2 2 0 0 1 4 0Zm4 8c0 1-1 1-1 1H3s-1 0-1-1 1-4 6-4 6 3 6 4Zm-1-.004c-.001-.246-.154-.986-.832-1.664C11.516 10.68 10.289 10 8 10c-2.29 0-3.516.68-4.168 1.332-.678.678-.83 1.418-.832 1.664h10Z" />
+                                        </svg>
+                                    </div>
+                                    <h3 class="novedades-card-title">Nuevo Chef Ejecutivo</h3>
+                                    <p class="novedades-card-text">¡Bienvenido Chef María García!</p>
+                                    <a href="#" class="btn btn-primary novedades-btn">Conoce más</a>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Nuevo Menú -->
+                        <div class="swiper-slide">
+                            <div class="card novedades-card">
+                                <div class="card-body d-flex flex-column">
+                                    <div class="novedades-icon-bg">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32"
+                                            fill="currentColor" class="bi bi-journal-text" viewBox="0 0 16 16">
+                                            <path
+                                                d="M5 10.5a.5.5 0 0 1 .5-.5h2a.5.5 0 0 1 0 1h-2a.5.5 0 0 1-.5-.5zm0-2a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 0 1h-5a.5.5 0 0 1-.5-.5zm0-2a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 0 1h-5a.5.5 0 0 1-.5-.5zm0-2a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 0 1h-5a.5.5 0 0 1-.5-.5z" />
+                                            <path
+                                                d="M3 0h10a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2v-1h1v1a1 1 0 0 0 1 1h10a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H3a1 1 0 0 0-1 1v1H1V2a2 2 0 0 1 2-2z" />
+                                            <path
+                                                d="M1 5v-.5a.5.5 0 0 1 1 0V5h.5a.5.5 0 0 1 0 1h-2a.5.5 0 0 1 0-1H1zm0 3v-.5a.5.5 0 0 1 1 0V8h.5a.5.5 0 0 1 0 1h-2a.5.5 0 0 1 0-1H1zm0 3v-.5a.5.5 0 0 1 1 0v.5h.5a.5.5 0 0 1 0 1h-2a.5.5 0 0 1 0-1H1z" />
+                                        </svg>
+                                    </div>
+                                    <h3 class="novedades-card-title">Nuevo Menú de Temporada</h3>
+                                    <p class="novedades-card-text">¡Descubre nuestros nuevos platos!</p>
+                                    <a href="#" class="btn btn-primary novedades-btn">Ver menú</a>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Premio -->
+                        <div class="swiper-slide">
+                            <div class="card novedades-card">
+                                <div class="card-body d-flex flex-column">
+                                    <div class="novedades-icon-bg">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32"
+                                            fill="currentColor" class="bi bi-award" viewBox="0 0 16 16">
+                                            <path
+                                                d="M9.669.864 8 0 6.331.864l-1.858.282-.842 1.68-1.337 1.32L2.6 6l-.306 1.854 1.337 1.32.842 1.68 1.858.282L8 12l1.669-.864 1.858-.282.842-1.68 1.337-1.32L13.4 6l.306-1.854-1.337-1.32-.842-1.68L9.669.864zm1.196 1.193.684 1.365 1.086 1.072L12.387 6l.248 1.506-1.086 1.072-.684 1.365-1.51.229L8 10.874l-1.355-.702-1.51-.229-.684-1.365-1.086-1.072L3.614 6l-.25-1.506 1.087-1.072.684-1.365 1.51-.229L8 1.126l1.356.702 1.509.229z" />
+                                            <path
+                                                d="M4 11.794V16l4-1 4 1v-4.206l-2.018.306L8 13.126 6.018 12.1 4 11.794z" />
+                                        </svg>
+                                    </div>
+                                    <h3 class="novedades-card-title">Premio Gastronómico</h3>
+                                    <p class="novedades-card-text">Reconocidos como Mejor Restaurante del Año</p>
+                                    <a href="#" class="btn btn-primary novedades-btn">Leer más</a>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Clase de Cocina -->
+                        <div class="swiper-slide">
+                            <div class="card novedades-card">
+                                <div class="card-body d-flex flex-column">
+                                    <div class="novedades-icon-bg">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32"
+                                            fill="currentColor" class="bi bi-mortarboard" viewBox="0 0 16 16">
+                                            <path
+                                                d="M8.211 2.047a.5.5 0 0 0-.422 0l-7.5 3.5a.5.5 0 0 0 .025.917l7.5 3a.5.5 0 0 0 .372 0L14 7.14V13a1 1 0 0 0-1 1v2h3v-2a1 1 0 0 0-1-1V6.739l.686-.275a.5.5 0 0 0 .025-.917l-7.5-3.5ZM8 8.46 1.758 5.965 8 3.052l6.242 2.913L8 8.46Z" />
+                                            <path
+                                                d="M4.176 9.032a.5.5 0 0 0-.656.327l-.5 1.7a.5.5 0 0 0 .294.605l4.5 1.8a.5.5 0 0 0 .372 0l4.5-1.8a.5.5 0 0 0 .294-.605l-.5-1.7a.5.5 0 0 0-.656-.327L8 10.466 4.176 9.032Zm-.068 1.873.22-.748 3.496 1.311a.5.5 0 0 0 .352 0l3.496-1.311.22.748L8 12.46l-3.892-1.556Z" />
+                                        </svg>
+                                    </div>
+                                    <h3 class="novedades-card-title">Clase de Cocina</h3>
+                                    <p class="novedades-card-text">Aprende a cocinar con nuestro chef</p>
+                                    <a href="#" class="btn btn-primary novedades-btn">Inscríbete</a>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Clase de Cocina -->
+                        <div class="swiper-slide">
+                            <div class="card novedades-card">
+                                <div class="card-body d-flex flex-column">
+                                    <div class="novedades-icon-bg">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32"
+                                            fill="currentColor" class="bi bi-mortarboard" viewBox="0 0 16 16">
+                                            <path
+                                                d="M8.211 2.047a.5.5 0 0 0-.422 0l-7.5 3.5a.5.5 0 0 0 .025.917l7.5 3a.5.5 0 0 0 .372 0L14 7.14V13a1 1 0 0 0-1 1v2h3v-2a1 1 0 0 0-1-1V6.739l.686-.275a.5.5 0 0 0 .025-.917l-7.5-3.5ZM8 8.46 1.758 5.965 8 3.052l6.242 2.913L8 8.46Z" />
+                                            <path
+                                                d="M4.176 9.032a.5.5 0 0 0-.656.327l-.5 1.7a.5.5 0 0 0 .294.605l4.5 1.8a.5.5 0 0 0 .372 0l4.5-1.8a.5.5 0 0 0 .294-.605l-.5-1.7a.5.5 0 0 0-.656-.327L8 10.466 4.176 9.032Zm-.068 1.873.22-.748 3.496 1.311a.5.5 0 0 0 .352 0l3.496-1.311.22.748L8 12.46l-3.892-1.556Z" />
+                                        </svg>
+                                    </div>
+                                    <h3 class="novedades-card-title">Clase de Cocina</h3>
+                                    <p class="novedades-card-text">Aprende a cocinar con nuestro chef</p>
+                                    <a href="#" class="btn btn-primary novedades-btn">Inscríbete</a>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Clase de Cocina -->
+                        <div class="swiper-slide">
+                            <div class="card novedades-card">
+                                <div class="card-body d-flex flex-column">
+                                    <div class="novedades-icon-bg">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32"
+                                            fill="currentColor" class="bi bi-mortarboard" viewBox="0 0 16 16">
+                                            <path
+                                                d="M8.211 2.047a.5.5 0 0 0-.422 0l-7.5 3.5a.5.5 0 0 0 .025.917l7.5 3a.5.5 0 0 0 .372 0L14 7.14V13a1 1 0 0 0-1 1v2h3v-2a1 1 0 0 0-1-1V6.739l.686-.275a.5.5 0 0 0 .025-.917l-7.5-3.5ZM8 8.46 1.758 5.965 8 3.052l6.242 2.913L8 8.46Z" />
+                                            <path
+                                                d="M4.176 9.032a.5.5 0 0 0-.656.327l-.5 1.7a.5.5 0 0 0 .294.605l4.5 1.8a.5.5 0 0 0 .372 0l4.5-1.8a.5.5 0 0 0 .294-.605l-.5-1.7a.5.5 0 0 0-.656-.327L8 10.466 4.176 9.032Zm-.068 1.873.22-.748 3.496 1.311a.5.5 0 0 0 .352 0l3.496-1.311.22.748L8 12.46l-3.892-1.556Z" />
+                                        </svg>
+                                    </div>
+                                    <h3 class="novedades-card-title">Clase de Cocina</h3>
+                                    <p class="novedades-card-text">Aprende a cocinar con nuestro chef</p>
+                                    <a href="#" class="btn btn-primary novedades-btn">Inscríbete</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="swiper-pagination"></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Content Cards -->
+        <section id="servicios" class="py-5 ">
+            <div class="container my-5" id="contenido">
                 <div class="row g-4">
-                    <!-- Tarjeta 1 -->
-                    <div class="col-12 col-md-6 ">
-                        <div class="card h-100 shadow">
-                            <div class="row g-0 h-100">
-                                <div class="col-12 col-sm-4 bg-dark d-flex align-items-center">
-                                    <img src="./assets/img/mesas.png"
-                                        class="img-fluid rounded-start w-100 object-fit-cover h-100" alt="Chef">
-                                </div>
-                                <div class="col-12 col-sm-8">
-                                    <div class="card-body d-flex flex-column h-100 bg-gradient-primary-to-success">
-                                        <h2 class="card-title">¡Encuentra tu Punto más Cercano!</h2>
-                                        <p class="card-text flex-grow-1">Nunca estarás lejos de una experiencia
-                                            culinaria excepcional. Contamos con numerosas sedes en todo el país para que
-                                            puedas disfrutar de nuestros sabores auténticos en la ubicación más
-                                            conveniente para ti. ¡Descubre tu punto más cercano y ven a vivir la magia
-                                            del Caribe!</p>
-                                        <div class="mt-auto">
-                                            <a class="btn bg-white" href="menu.html">Consultar</a>
-                                            <p class="card-text"><small class="text-body-secondary">Actualizado hace 3
-                                                    minutos</small></p>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Tarjeta 2 -->
+                    <!-- Card 1 -->
                     <div class="col-12 col-md-6">
-                        <div class="card h-100 shadow">
+                        <div class="card h-100 shadow card-hover">
                             <div class="row g-0 h-100">
-                                <div class="col-12 col-sm-4 bg-dark d-flex align-items-center">
-                                    <img src="./assets/img/menu.jpeg"
-                                        class="img-fluid rounded-start w-100 object-fit-cover h-100" alt="Chef">
+                                <div class="col-4 bg-dark d-flex align-items-center">
+                                    <img src="./assets/img/registrate.png"
+                                        class="img-fluid rounded-start w-100 object-fit-cover h-100" alt="Mesas">
                                 </div>
-                                <div class="col-12 col-sm-8">
-                                    <div class="card-body d-flex flex-column h-100">
-                                        <h2 class="card-title ">Nuestros Productos</h2>
-                                        <p class="card-text flex-grow-1">Sumérgete en los auténticos sabores del Caribe
-                                            colombiano, donde cada plato es una celebración de tradición, frescura y
-                                            pasión por la buena comida. ¡Ven y disfruta la experiencia caribeña en cada
-                                            bocado!</p>
+                                <div class="col-8">
+                                    <div class="card-body d-flex flex-column h-100 bg-gradient-primary-to-success">
+                                        <h2 class="card-title">¡Registrate!</h2>
+                                        <p class="card-text flex-grow-1">¿Eres un amante de la buena comida? Únete a
+                                            nuestra familia y descubre un mundo de sabores exclusivos, eventos
+                                            especiales y beneficios para miembros. ¡Regístrate y forma parte de esta
+                                            experiencia gastronómica única!</p>
                                         <div class="mt-auto">
-                                            <a class="btn btn-primary" href="ubicaciones.html">Ver Menú</a>
-                                            <p class="card-text"><small class="text-body-secondary">Actualizado hace 3
+                                            <a class="btn bg-white" href="#ubicaciones">Registrarse</a>
+                                            <p class="card-text mt-2"><small class="text-white-50">Actualizado hace 3
                                                     minutos</small></p>
                                         </div>
                                     </div>
@@ -150,24 +245,51 @@
                         </div>
                     </div>
 
-                    <!-- Tarjeta 3 -->
-                    <div class="col-12 col-md-6 order-2 order-md-1">
-                        <div class="card h-100 shadow">
+                    <!-- Card 2 -->
+                    <div class="col-12 col-md-6">
+                        <div class="card h-100 shadow card-hover">
                             <div class="row g-0 h-100">
-                                <div class="col-12 col-sm-4 bg-dark d-flex align-items-center">
-                                    <img src="./assets/img/call-center.png"
-                                        class="img-fluid rounded-start w-100 object-fit-cover h-100" alt="Chef">
+                                <div class="col-4 bg-dark d-flex align-items-center">
+                                    <img src="./assets/img/vacante.png"
+                                        class="img-fluid rounded-start w-100 object-fit-cover h-100" alt="Menú">
                                 </div>
-                                <div class="col-12 col-sm-8">
+                                <div class="col-8">
                                     <div class="card-body d-flex flex-column h-100">
-                                        <h2 class="card-title ">Servicio al Cliente</h2>
+                                        <h2 class="card-title">Trabaja con Nosotros</h2>
+                                        <p class="card-text flex-grow-1">¿Apasionado por la cocina y el servicio? Únete
+                                            a nuestro equipo y ayuda a crear momentos inolvidables para nuestros
+                                            clientes. Aquí no solo cocinamos, ¡creamos experiencias! Ven y crece junto a
+                                            nosotros.</p>
+                                        <div class="mt-auto">
+                                            <a class="btn btn-primary" href="#menu">Consultar Vacantes</a>
+                                            <p class="card-text mt-2"><small class="text-muted">Actualizado hace 3
+                                                    minutos</small></p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Card 3 -->
+                    <div class="col-12 col-md-6">
+                        <div class="card h-100 shadow card-hover">
+                            <div class="row g-0 h-100">
+                                <div class="col-4 bg-dark d-flex align-items-center">
+                                    <img src="./assets/img/call-center.png"
+                                        class="img-fluid rounded-start w-100 object-fit-cover h-100"
+                                        alt="Servicio al Cliente">
+                                </div>
+                                <div class="col-8">
+                                    <div class="card-body d-flex flex-column h-100">
+                                        <h2 class="card-title">Servicio al Cliente</h2>
                                         <p class="card-text flex-grow-1">Nuestro equipo de atención al cliente está
                                             disponible para ayudarte con cualquier consulta o sugerencia. No dudes en
                                             comunicarte con nosotros a través de nuestros canales de contacto, y te
                                             atenderemos lo antes posible.</p>
                                         <div class="mt-auto">
-                                            <a class="btn btn-primary" href="ubicaciones.html">Escribenos</a>
-                                            <p class="card-text"><small class="text-body-secondary">Actualizado hace 3
+                                            <a class="btn btn-primary" href="#contacto">Escríbenos</a>
+                                            <p class="card-text mt-2"><small class="text-muted">Actualizado hace 3
                                                     minutos</small></p>
                                         </div>
                                     </div>
@@ -176,27 +298,76 @@
                         </div>
                     </div>
 
-                    <!-- Tarjeta 4 -->
-                    <div class="col-12 col-md-6 order-1 order-md-2">
-                        <div class="card h-100 shadow">
+                    <!-- Card 4 -->
+                    <div class="col-12 col-md-6">
+                        <div class="card h-100 shadow card-hover">
                             <div class="row g-0 h-100">
-                                <div class="col-12 col-sm-4 bg-dark d-flex align-items-center">
+                                <div class="col-4 bg-dark d-flex align-items-center">
                                     <img src="./assets/img/chef.png"
                                         class="img-fluid rounded-start w-100 object-fit-cover h-100" alt="Chef">
                                 </div>
-                                <div class="col-12 col-sm-8">
+                                <div class="col-8">
                                     <div class="card-body d-flex flex-column h-100 bg-gradient-primary-to-success">
-                                        <h2 class="card-title">Conocenos</h2>
-                                        <p class="card-text flex-grow-1"> nos apasiona crear experiencias inolvidables a
+                                        <h2 class="card-title">Conócenos</h2>
+                                        <p class="card-text flex-grow-1">Nos apasiona crear experiencias inolvidables a
                                             través de la gastronomía. Cada platillo es preparado con ingredientes
                                             frescos y de alta calidad, cuidando cada detalle para que disfrutes de una
-                                            comida deliciosa en un ambiente acogedor.
-                                            Nuestro equipo se dedica a brindarte el mejor servicio, siempre con una
-                                            sonrisa y dispuestos a hacer de tu visita algo especial. ¡Te invitamos a
-                                            conocernos y ser parte de nuestra historia!</p>
+                                            comida deliciosa en un ambiente acogedor.</p>
                                         <div class="mt-auto">
-                                            <a class="btn bg-white" href="menu.html">¡Vamos!</a>
-                                            <p class="card-text"><small class="text-body-secondary">Actualizado hace 3
+                                            <a class="btn bg-white" href="#nosotros">¡Vamos!</a>
+                                            <p class="card-text mt-2"><small class="text-white-50">Actualizado hace 3
+                                                    minutos</small></p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Card 5 -->
+                    <div class="col-12 col-md-6">
+                        <div class="card h-100 shadow card-hover">
+                            <div class="row g-0 h-100">
+                                <div class="col-4 bg-dark d-flex align-items-center">
+                                    <img src="./assets/img/mesas.png"
+                                        class="img-fluid rounded-start w-100 object-fit-cover h-100" alt="Mesas">
+                                </div>
+                                <div class="col-8">
+                                    <div class="card-body d-flex flex-column h-100 bg-gradient-primary-to-success">
+                                        <h2 class="card-title">¡Encuentra tu Punto más Cercano!</h2>
+                                        <p class="card-text flex-grow-1">Nunca estarás lejos de una experiencia
+                                            culinaria excepcional. Contamos con numerosas sedes en todo el país para que
+                                            puedas disfrutar de nuestros sabores auténticos en la ubicación más
+                                            conveniente para ti.</p>
+                                        <div class="mt-auto">
+                                            <a class="btn bg-white" href="#ubicaciones">Consultar</a>
+                                            <p class="card-text mt-2"><small class="text-white-50">Actualizado hace 3
+                                                    minutos</small></p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Card 6 -->
+                    <div class="col-12 col-md-6">
+                        <div class="card h-100 shadow card-hover">
+                            <div class="row g-0 h-100">
+                                <div class="col-4 bg-dark d-flex align-items-center">
+                                    <img src="./assets/img/menu.jpeg"
+                                        class="img-fluid rounded-start w-100 object-fit-cover h-100" alt="Menú">
+                                </div>
+                                <div class="col-8">
+                                    <div class="card-body d-flex flex-column h-100">
+                                        <h2 class="card-title">Nuestros Productos</h2>
+                                        <p class="card-text flex-grow-1">Sumérgete en los auténticos sabores del Caribe
+                                            colombiano, donde cada plato es una celebración de tradición, frescura y
+                                            pasión por la buena comida. ¡Ven y disfruta la experiencia caribeña en cada
+                                            bocado!</p>
+                                        <div class="mt-auto">
+                                            <a class="btn btn-primary" href="#menu">Ver Menú</a>
+                                            <p class="card-text mt-2"><small class="text-muted">Actualizado hace 3
                                                     minutos</small></p>
                                         </div>
                                     </div>
@@ -207,29 +378,34 @@
                 </div>
             </div>
         </section>
-
     </main>
-    <!-- Footer-->
-    <footer class="bg-white py-4 mt-auto">
+
+    <!-- Footer -->
+    <footer class="bg-dark text-white py-4 mt-auto">
         <div class="container px-5">
-            <div class="row align-items-center justify-content-between flex-column flex-sm-row">
+            <div class="row align-items-center justify-content-between">
                 <div class="col-auto">
-                    <div class="small m-0">Copyright &copy; TechSysDesign 2024</div>
+                    <div class="small m-0">Copyright &copy; Delicias del 2024</div>
                 </div>
                 <div class="col-auto">
-                    <a class="small" href="#!">Política de privacidad</a>
-                    <span class="mx-1">&middot;</span>
-                    <a class="small" href="#!">Términos y condiciones</a>
-                    <span class="mx-1">&middot;</span>
-                    <a class="small" href="#!">Contacto</a>
+                    <a class="text-white-50 small" href="#!">Política de privacidad</a>
+                    <span class="mx-1 text-muted">&middot;</span>
+                    <a class="text-white-50 small" href="#!">Términos y condiciones</a>
+                    <span class="mx-1 text-muted">&middot;</span>
+                    <a class="text-white-50 small" href="#!">Contacto</a>
                 </div>
             </div>
         </div>
     </footer>
-    <!-- Bootstrap core JS-->
+
+    <!-- Swiper core JS -->
+    <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+
+    <!-- Bootstrap core JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
-    <!-- Core theme JS-->
-    <script src="./assets/js/scripts.js"></script>
+
+    <!-- Core theme JS -->
+    <script src="./assets/js/index.js"></script>
 </body>
 
 </html>

@@ -1,11 +1,116 @@
-.img-cover {
-    object-fit: cover;
-    height: 100%;
-    width: 100%;
+.banner-image {
+    background-image: url('/assets/img/menu.jpeg');
+    background-size: cover;
+    background-position: center;
 }
 
-.carousel-item img {
-    max-height: 500px;
-    max-width: 500px;
-    object-fit: contain;
+.carousel-image {
+
+    object-fit: cover;
+}
+
+.card-hover:hover {
+    transform: translateY(-5px);
+    transition: transform 0.3s ease;
+}
+
+@media (max-width: 768px) {
+    .carousel-image {
+        width: 200px;
+        height: 200px;
+    }
+}
+
+/* Ajuste para el espaciado en contenido con navbar fijo */
+body {
+    padding-top: 70px;
+    /* Ajusta el padding-top para no solapar contenido con el navbar */
+}
+
+/* Ajusta el Viewport quitando el espacio ocupado por la navbar */
+.min-vh-100-custom {
+    min-height: calc(100vh - 70px) !important;
+}
+
+.banner-overlay {
+    background-color: rgba(0, 0, 0, 0.5); /* Fondo negro con 50% de opacidad */
+    padding: 20px;
+    border-radius: 15px;
+}
+
+.swiper {
+    width: 100%;
+    padding-top: 50px;
+    padding-bottom: 50px;
+}
+.swiper-slide {
+    width: 300px;
+    height: 400px;
+}
+.card {
+    height: 100%;
+    border-radius: 15px;
+    overflow: hidden;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease-in-out;
+}
+.card:hover {
+    transform: translateY(-5px);
+}
+.card-img-top {
+    height: 200px;
+    object-fit: cover;
+}
+.card-body {
+    background-color: #f8f9fa;
+}
+.card-title {
+    color: #343a40;
+    font-weight: bold;
+}
+.card-text {
+    color: #6c757d;
+}
+
+.novedades-title {
+    font-size: 2.5rem;
+    font-weight: bold;
+    color: white;
+    margin-bottom: 2rem;
+    text-align: center;
+}
+.novedades-swiper {
+    width: 100%;
+    padding-top: 50px;
+    padding-bottom: 50px;
+}
+.novedades-swiper .swiper-slide {
+    background-position: center;
+    background-size: cover;
+    width: 300px;
+    height: 400px;
+}
+.novedades-card {
+    height: 100%;
+}
+.novedades-icon-bg {
+    width: 64px;
+    height: 64px;
+    background-color: #e9ecef;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 1rem;
+}
+.novedades-card-title {
+    font-size: 1.25rem;
+    margin-bottom: 0.5rem;
+}
+.novedades-card-text {
+    color: #6c757d;
+    margin-bottom: 1rem;
+}
+.novedades-btn {
+    margin-top: auto;
 }
