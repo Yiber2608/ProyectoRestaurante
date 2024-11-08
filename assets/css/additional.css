@@ -5,7 +5,17 @@
 }
 
 .banner-image-menu {
-    background-image: url('https://img.freepik.com/foto-gratis/composicion-plana-laicos-hojas-pizarra-vacia_23-2148831224.jpg?t=st=1731025452~exp=1731029052~hmac=d721609eab450d16f1428113cce39aa55ce765b7444ca47f26f55525e61dff81&w=1380');
+    background-image: url('../img/menu-black.png');
+    background-size: cover;
+    background-position: center;
+}
+.bg-image-white {
+    background-image: url('../img/bg-white.png');
+    background-size: cover;
+    background-position: center;
+}
+.bg-image-black {
+    background-image: url('../img/bg-black.png');
     background-size: cover;
     background-position: center;
 }

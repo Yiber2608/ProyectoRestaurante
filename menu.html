@@ -44,11 +44,40 @@
 
         <!-- Header-->
         <header class="banner-image-menu">
-            <div class=" d-flex align-items-center min-vh-100-custom banner-overlay">
-                <div class="container ">
-                    <div class="row align-items-center ">
-                        <div class="col-12 text-center mb-5 mb-lg-0  ">
-                            <h1 class="display-1 fw-bold text-white">MENU</h1>
+            <div class="d-flex align-items-center justify-content-center min-vh-100 banner-overlay">
+                <div class="container">
+                    <div class="row justify-content-center">
+                        <div class="col-12 text-center mb-5">
+                            <h1 class="display-1 fw-bold text-white mb-4">MENU</h1>
+                            <nav class="menu-nav">
+                                <ul class="list-unstyled d-flex flex-wrap justify-content-center">
+                                    <li class="m-2">
+                                        <a href="#containerEntradas" class="btn btn-outline-light btn-lg">
+                                            <span class="fs-4">🍤</span> Entradas
+                                        </a>
+                                    </li>
+                                    <li class="m-2">
+                                        <a href="#containerPlatosPrincipales" class="btn btn-outline-light btn-lg">
+                                            <span class="fs-4">🍛</span> Platos Principales
+                                        </a>
+                                    </li>
+                                    <li class="m-2">
+                                        <a href="#containerPostres" class="btn btn-outline-light btn-lg">
+                                            <span class="fs-4">🍰</span> Postres
+                                        </a>
+                                    </li>
+                                    <li class="m-2">
+                                        <a href="#containerBebidasCalientes" class="btn btn-outline-light btn-lg">
+                                            <span class="fs-4">☕</span> Bebidas Calientes
+                                        </a>
+                                    </li>
+                                    <li class="m-2">
+                                        <a href="#containerOtrasBebidas" class="btn btn-outline-light btn-lg">
+                                            <span class="fs-4">🥤</span> Otras Bebidas
+                                        </a>
+                                    </li>
+                                </ul>
+                            </nav>
                         </div>
                     </div>
                 </div>
@@ -59,8 +88,8 @@
             <div class="container-fluid">
                 <div class="row justify-content-center ">
 
-                    <div id="containerEntradas" class="col-12 bg-gradient-primary-to-success p-1 p-md-4">
-                        <h1 class=" display-3 fw-bold  text-center">Entradas</h1>
+                    <div id="containerEntradas" class="col-12 bg-image-white p-2 p-md-5">
+                        <h1 class="fw-bold text-center text-black ">🌮 Entradas</h1>
                         <div class="swiper mySwiper">
                             <div class="swiper-wrapper pb-5 pt-3">
                                 <!-- Add more entrada items here -->
@@ -69,8 +98,18 @@
                         </div>
                     </div>
 
-                    <div id="containerPlatosPrincipales" class="col-12  p-1 p-md-5">
-                        <h1 class="fw-bold text-center">Platos Principales</h1>
+                    <div id="containerPlatosPrincipales" class="col-12 bg-image-black p-2 p-md-5  ">
+                        <h1 class="fw-bold text-center text-white-50"> 🍽️ Platos Principales</h1>
+                        <div class="swiper mySwiper">
+                            <div class="swiper-wrapper pb-5 pt-3">
+                                <!-- Add more postres items here -->
+                            </div>
+                            <div class=" swiper-pagination "></div>
+                        </div>
+                    </div>
+
+                    <div id="containerPostres" class="col-12 bg-image-white p-2 p-md-5">
+                        <h1 class="fw-bold text-center"> 🍨 Postres</h1>
                         <div class="swiper mySwiper">
                             <div class="swiper-wrapper pb-5 pt-3">
                                 <!-- Add more postres items here -->
@@ -79,8 +118,8 @@
                         </div>
                     </div>
 
-                    <div id="containerPostres" class="col-12 bg-gradient-primary-to-success p-1 p-md-5">
-                        <h1 class="fw-bold text-center">Postres</h1>
+                    <div id="containerBebidasCalientes" class="col-12 p-2 p-md-5 bg-image-black">
+                        <h1 class="fw-bold text-center text-white-50"> ☕ Bebidas Calientes</h1>
                         <div class="swiper mySwiper">
                             <div class="swiper-wrapper pb-5 pt-3">
                                 <!-- Add more postres items here -->
@@ -89,18 +128,8 @@
                         </div>
                     </div>
 
-                    <div id="containerBebidasCalientes" class="col-12 p-1 p-md-5">
-                        <h1 class="fw-bold text-center">Bebidas Calientes</h1>
-                        <div class="swiper mySwiper">
-                            <div class="swiper-wrapper pb-5 pt-3">
-                                <!-- Add more postres items here -->
-                            </div>
-                            <div class="swiper-pagination"></div>
-                        </div>
-                    </div>
-
-                    <div id="containerOtrasBebidas" class="col-12 p-1 p-md-5 bg-gradient-primary-to-success">
-                        <h1 class="fw-bold text-center">Otras Bebidas</h1>
+                    <div id="containerOtrasBebidas" class="col-12 p-2 p-md-5 bg-image-white ">
+                        <h1 class="fw-bold text-center"> 🍹  Otras Bebidas</h1>
                         <div class="swiper mySwiper">
                             <div class="swiper-wrapper pb-5 pt-3">
                                 <!-- Add more postres items here -->
