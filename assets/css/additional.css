@@ -4,6 +4,11 @@
     background-position: center;
 }
 
+.banner-image-menu {
+    background-image: url('https://img.freepik.com/foto-gratis/composicion-plana-laicos-hojas-pizarra-vacia_23-2148831224.jpg?t=st=1731025452~exp=1731029052~hmac=d721609eab450d16f1428113cce39aa55ce765b7444ca47f26f55525e61dff81&w=1380');
+    background-size: cover;
+    background-position: center;
+}
 
 .carousel-image {
 
@@ -32,43 +37,60 @@ body {
 .min-vh-100-custom {
     min-height: calc(100vh - 70px) !important;
 }
+.min-vh-50-custom {
+    min-height: calc(50vh - 70px) !important;
+}
 
 .banner-overlay {
-    background-color: rgba(0, 0, 0, 0.5); /* Fondo negro con 50% de opacidad */
+    background-color: rgba(0, 0, 0, 0.5);
+    /* Fondo negro con 50% de opacidad */
     padding: 20px;
-    border-radius: 15px;
 }
+
+.overlay {
+    background-color: rgba(0, 0, 0, 0.3);
+    /* Fondo negro con 50% de opacidad */
+}
+
 
 .swiper {
     width: 100%;
     padding-top: 50px;
     padding-bottom: 50px;
 }
+
 .swiper-slide {
     width: 300px;
     height: 400px;
 }
+
 .card {
     height: 100%;
     border-radius: 15px;
     overflow: hidden;
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
     transition: transform 0.3s ease-in-out;
+
 }
+
 .card:hover {
     transform: translateY(-5px);
 }
+
 .card-img-top {
     height: 200px;
     object-fit: cover;
 }
+
 .card-body {
     background-color: #f8f9fa;
 }
+
 .card-title {
     color: #343a40;
     font-weight: bold;
 }
+
 .card-text {
     color: #6c757d;
 }
@@ -80,20 +102,24 @@ body {
     margin-bottom: 2rem;
     text-align: center;
 }
+
 .novedades-swiper {
     width: 100%;
     padding-top: 50px;
     padding-bottom: 50px;
 }
+
 .novedades-swiper .swiper-slide {
     background-position: center;
     background-size: cover;
     width: 300px;
     height: 400px;
 }
+
 .novedades-card {
     height: 100%;
 }
+
 .novedades-icon-bg {
     width: 64px;
     height: 64px;
@@ -104,14 +130,17 @@ body {
     justify-content: center;
     margin-bottom: 1rem;
 }
+
 .novedades-card-title {
     font-size: 1.25rem;
     margin-bottom: 0.5rem;
 }
+
 .novedades-card-text {
     color: #6c757d;
     margin-bottom: 1rem;
 }
+
 .novedades-btn {
     margin-top: auto;
 }
