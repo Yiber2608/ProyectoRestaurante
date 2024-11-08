@@ -9,11 +9,13 @@
     background-size: cover;
     background-position: center;
 }
+
 .bg-image-white {
     background-image: url('../img/bg-white.png');
     background-size: cover;
     background-position: center;
 }
+
 .bg-image-black {
     background-image: url('../img/bg-black.png');
     background-size: cover;
@@ -47,6 +49,7 @@ body {
 .min-vh-100-custom {
     min-height: calc(100vh - 70px) !important;
 }
+
 .min-vh-50-custom {
     min-height: calc(50vh - 70px) !important;
 }
@@ -105,14 +108,6 @@ body {
     color: #6c757d;
 }
 
-.novedades-title {
-    font-size: 2.5rem;
-    font-weight: bold;
-    color: white;
-    margin-bottom: 2rem;
-    text-align: center;
-}
-
 .novedades-swiper {
     width: 100%;
     padding-top: 50px;
@@ -127,30 +122,28 @@ body {
 }
 
 .novedades-card {
-    height: 100%;
+    background-color: #ffffff;
+    border-radius: 0.5rem;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
-.novedades-icon-bg {
-    width: 64px;
-    height: 64px;
-    background-color: #e9ecef;
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin-bottom: 1rem;
+.novedades-image img {
+    height: 100%;
+    width: 100%;
+    border-radius: 0.5rem;
+    max-height: 150px;
+    object-fit: cover;
 }
 
 .novedades-card-title {
-    font-size: 1.25rem;
-    margin-bottom: 0.5rem;
+    font-size: 1.5rem;
 }
 
 .novedades-card-text {
+    font-size: 1rem;
     color: #6c757d;
-    margin-bottom: 1rem;
 }
 
-.novedades-btn {
-    margin-top: auto;
+.text-warning {
+    color: #ffc107; /* Color amarillo de Bootstrap */
 }
