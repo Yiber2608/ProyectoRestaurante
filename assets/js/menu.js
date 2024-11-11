@@ -40,14 +40,14 @@ const menuData = {
             description:
                 "Crujientes empanadas de carne y papa acompañadas de ají casero.",
             price: 12000,
-            image:"../assets/img/prueba-entrada.png",
+            image:"./assets/img/prueba-entrada.png",
         },
         {
             id: 2,
             name: "Arepa de Choclo",
             description: "Arepa dulce de maíz servida con queso fundido.",
             price: 15000,
-            image:"../assets/img/prueba-entrada.png",
+            image:"./assets/img/prueba-entrada.png",
         },
         {
             id: 3,
@@ -55,28 +55,28 @@ const menuData = {
             description:
                 "Delicioso ceviche de camarones con limón, cilantro y cebolla morada.",
             price: 18000,
-            image:"../assets/img/prueba-entrada.png",
+            image:"./assets/img/prueba-entrada.png",
         },
         {
             id: 4,
             name: "Nachos con Queso",
             description: "Nachos crujientes cubiertos con queso fundido y jalapeños.",
             price: 14000,
-            image:"../assets/img/prueba-entrada.png",
+            image:"./assets/img/prueba-entrada.png",
         },
         {
             id: 5,
             name: "Tostones",
             description: "Plátanos verdes fritos y aplastados, servidos con salsa.",
             price: 10000,
-            image:"../assets/img/prueba-entrada.png",
+            image:"./assets/img/prueba-entrada.png",
         },
         {
             id: 6,
             name: "Arepas Rellenas",
             description: "Arepas rellenas de queso y carne molida.",
             price: 16000,
-            image:"../assets/img/prueba-entrada.png",
+            image:"./assets/img/prueba-entrada.png",
                 
         },
     ],
@@ -88,7 +88,7 @@ const menuData = {
                 "Tradicional plato venezolano con carne desmechada, arroz, plátano frito y frijoles negros.",
             price: 28000,
             image:
-                "../assets/img/prueba-plato.png",
+                "./assets/img/prueba-plato.png",
         },
         {
             id: 8,
@@ -97,7 +97,7 @@ const menuData = {
                 "Sopa tradicional con carne de res, cerdo y pollo, acompañada de yuca, papa y plátano.",
             price: 32000,
             image:
-                "../assets/img/prueba-plato.png",
+                "./assets/img/prueba-plato.png",
         },
         {
             id: 9,
@@ -106,7 +106,7 @@ const menuData = {
                 "Plato típico colombiano con carne, frijoles, arroz, huevo, plátano y aguacate.",
             price: 30000,
             image:
-                "../assets/img/prueba-plato.png",
+                "./assets/img/prueba-plato.png",
         },
         {
             id: 10,
@@ -115,7 +115,7 @@ const menuData = {
                 "Guiso cremoso de mariscos con leche de coco y especias caribeñas.",
             price: 35000,
             image:
-                "../assets/img/prueba-plato.png",
+                "./assets/img/prueba-plato.png",
         },
         {
             id: 11,
@@ -123,7 +123,7 @@ const menuData = {
             description: "Pescado frito entero con arroz de coco y ensalada.",
             price: 26000,
             image:
-                "../assets/img/prueba-plato.png",
+                "./assets/img/prueba-plato.png",
         },
         {
             id: 12,
@@ -131,7 +131,7 @@ const menuData = {
             description: "Pollo asado con papas y vegetales a la parrilla.",
             price: 24000,
             image:
-                "../assets/img/prueba-plato.png",
+                "./assets/img/prueba-plato.png",
         },
     ],
     Postres: [
@@ -141,7 +141,7 @@ const menuData = {
             description: "Suave y cremoso flan de coco, con un toque tropical.",
             price: 8000,
             image:
-                "../assets/img/prueba-postre.png",
+                "./assets/img/prueba-postre.png",
         },
         {
             id: 14,
@@ -149,7 +149,7 @@ const menuData = {
             description: "Pastel tradicional empapado en tres tipos de leche.",
             price: 9000,
             image:
-            "../assets/img/prueba-postre.png",
+            "./assets/img/prueba-postre.png",
         },
         {
             id: 15,
@@ -157,7 +157,7 @@ const menuData = {
             description: "Cremoso arroz con leche con toque de canela.",
             price: 7000,
             image:
-            "../assets/img/prueba-postre.png",
+            "./assets/img/prueba-postre.png",
         },
         {
             id: 16,
@@ -165,7 +165,7 @@ const menuData = {
             description: "Postre típico navideño de maíz, canela y panela.",
             price: 6000,
             image:
-            "../assets/img/prueba-postre.png",
+            "./assets/img/prueba-postre.png",
         },
         {
             id: 17,
@@ -173,7 +173,7 @@ const menuData = {
             description: "Pastel tradicional navideño con frutas confitadas.",
             price: 10000,
             image:
-            "../assets/img/prueba-postre.png",
+            "./assets/img/prueba-postre.png",
         },
         {
             id: 18,
@@ -181,7 +181,7 @@ const menuData = {
             description: "Delicado postre cremoso tradicional colombiano.",
             price: 8500,
             image:
-            "../assets/img/prueba-postre.png",
+            "./assets/img/prueba-postre.png",
         },
     ],
     "Bebidas Calientes": [
@@ -191,7 +191,7 @@ const menuData = {
             description: "Café orgánico 100% colombiano, servido caliente.",
             price: 5000,
             image:
-            "../assets/img/prueba-bcaliente.png",
+            "./assets/img/prueba-bcaliente.png",
         },
         {
             id: 20,
@@ -199,7 +199,7 @@ const menuData = {
             description: "Delicioso chocolate caliente hecho con cacao puro.",
             price: 6000,
             image:
-            "../assets/img/prueba-bcaliente.png",
+            "./assets/img/prueba-bcaliente.png",
         },
         {
             id: 21,
@@ -207,7 +207,7 @@ const menuData = {
             description: "Infusión de hierbas frescas con un toque de miel.",
             price: 4000,
             image:
-            "../assets/img/prueba-bcaliente.png",
+            "./assets/img/prueba-bcaliente.png",
         },
         {
             id: 20,
@@ -215,7 +215,7 @@ const menuData = {
             description: "Delicioso chocolate caliente hecho con cacao puro.",
             price: 6000,
             image:
-            "../assets/img/prueba-bcaliente.png",
+            "./assets/img/prueba-bcaliente.png",
         },
         {
             id: 21,
@@ -223,7 +223,7 @@ const menuData = {
             description: "Infusión de hierbas frescas con un toque de miel.",
             price: 4000,
             image:
-            "../assets/img/prueba-bcaliente.png",
+            "./assets/img/prueba-bcaliente.png",
         },
     ],
     "Otras Bebidas": [
@@ -233,7 +233,7 @@ const menuData = {
             description: "Refrescante jugo de mango natural.",
             price: 7000,
             image:
-            "../assets/img/prueba-bfria.png",
+            "./assets/img/prueba-bfria.png",
         },
         {
             id: 23,
@@ -241,7 +241,7 @@ const menuData = {
             description: "Limonada casera con un toque de coco.",
             price: 7500,
             image:
-            "../assets/img/prueba-bfria.png",
+            "./assets/img/prueba-bfria.png",
         },
         {
             id: 24,
@@ -249,7 +249,7 @@ const menuData = {
             description: "Bebida refrescante de tamarindo natural.",
             price: 6500,
             image:
-            "../assets/img/prueba-bfria.png",
+            "./assets/img/prueba-bfria.png",
         },
         {
             id: 23,
@@ -257,7 +257,7 @@ const menuData = {
             description: "Limonada casera con un toque de coco.",
             price: 7500,
             image:
-            "../assets/img/prueba-bfria.png",
+            "./assets/img/prueba-bfria.png",
         },
         {
             id: 23,
@@ -265,7 +265,7 @@ const menuData = {
             description: "Limonada casera con un toque de coco.",
             price: 7500,
             image:
-            "../assets/img/prueba-bfria.png",
+            "./assets/img/prueba-bfria.png",
         },
     ],
 };

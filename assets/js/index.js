@@ -133,7 +133,7 @@ const novedadesDatabase = [
         description: "Participa en nuestra clase de cocina y aprende a preparar platos caribeños con nuestro chef.",
         date: "10 de Noviembre, 2024",
         icon: "mortarboard",
-        image: "/assets/img/menu-black.png",
+        image: "./assets/img/menu-black.png",
         buttonText: "Inscríbete",
         buttonLink: "#"
     },
@@ -143,7 +143,7 @@ const novedadesDatabase = [
         description: "Participa en nuestra clase de cocina y aprende a preparar platos caribeños con nuestro chef.",
         date: "10 de Noviembre, 2024",
         icon: "mortarboard",
-        image: "/assets/img/menu-black.png",
+        image: "./assets/img/menu-black.png",
         buttonText: "Inscríbete",
         buttonLink: "#"
     }
