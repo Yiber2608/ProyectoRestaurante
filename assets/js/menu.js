@@ -40,16 +40,14 @@ const menuData = {
             description:
                 "Crujientes empanadas de carne y papa acompañadas de ají casero.",
             price: 12000,
-            image:
-                "https://img.freepik.com/foto-gratis/empanadas-tradicionales-rellenas-carne_23-2148541990.jpg",
+            image:"../assets/img/prueba-entrada.png",
         },
         {
             id: 2,
             name: "Arepa de Choclo",
             description: "Arepa dulce de maíz servida con queso fundido.",
             price: 15000,
-            image:
-                "https://img.freepik.com/foto-gratis/arepa-colombiana-tradicional-maiz_23-2148542001.jpg",
+            image:"../assets/img/prueba-entrada.png",
         },
         {
             id: 3,
@@ -57,32 +55,29 @@ const menuData = {
             description:
                 "Delicioso ceviche de camarones con limón, cilantro y cebolla morada.",
             price: 18000,
-            image:
-                "https://img.freepik.com/foto-gratis/delicioso-ceviche-camarones-preparado_23-2148542015.jpg",
+            image:"../assets/img/prueba-entrada.png",
         },
         {
             id: 4,
             name: "Nachos con Queso",
             description: "Nachos crujientes cubiertos con queso fundido y jalapeños.",
             price: 14000,
-            image:
-                "https://img.freepik.com/foto-gratis/nachos-mexicanos-queso-derretido_23-2148542030.jpg",
+            image:"../assets/img/prueba-entrada.png",
         },
         {
             id: 5,
             name: "Tostones",
             description: "Plátanos verdes fritos y aplastados, servidos con salsa.",
             price: 10000,
-            image:
-                "https://img.freepik.com/foto-gratis/tostones-platanos-fritos-tipicos-latinoamericanos_23-2148542045.jpg",
+            image:"../assets/img/prueba-entrada.png",
         },
         {
             id: 6,
             name: "Arepas Rellenas",
             description: "Arepas rellenas de queso y carne molida.",
             price: 16000,
-            image:
-                "https://img.freepik.com/foto-gratis/arepas-rellenas-queso-carne_23-2148542060.jpg",
+            image:"../assets/img/prueba-entrada.png",
+                
         },
     ],
     "Platos Principales": [
@@ -93,7 +88,7 @@ const menuData = {
                 "Tradicional plato venezolano con carne desmechada, arroz, plátano frito y frijoles negros.",
             price: 28000,
             image:
-                "https://img.freepik.com/foto-gratis/pabellon-criollo-plato-tipico-venezolano_23-2148542075.jpg",
+                "../assets/img/prueba-plato.png",
         },
         {
             id: 8,
@@ -102,7 +97,7 @@ const menuData = {
                 "Sopa tradicional con carne de res, cerdo y pollo, acompañada de yuca, papa y plátano.",
             price: 32000,
             image:
-                "https://img.freepik.com/foto-gratis/sancocho-colombiano-tradicional-tres-carnes_23-2148542090.jpg",
+                "../assets/img/prueba-plato.png",
         },
         {
             id: 9,
@@ -111,7 +106,7 @@ const menuData = {
                 "Plato típico colombiano con carne, frijoles, arroz, huevo, plátano y aguacate.",
             price: 30000,
             image:
-                "https://img.freepik.com/foto-gratis/bandeja-paisa-plato-tipico-colombiano_23-2148542105.jpg",
+                "../assets/img/prueba-plato.png",
         },
         {
             id: 10,
@@ -120,7 +115,7 @@ const menuData = {
                 "Guiso cremoso de mariscos con leche de coco y especias caribeñas.",
             price: 35000,
             image:
-                "https://img.freepik.com/foto-gratis/cazuela-mariscos-plato-costa-colombiana_23-2148542120.jpg",
+                "../assets/img/prueba-plato.png",
         },
         {
             id: 11,
@@ -128,7 +123,7 @@ const menuData = {
             description: "Pescado frito entero con arroz de coco y ensalada.",
             price: 26000,
             image:
-                "https://img.freepik.com/foto-gratis/pescado-frito-entero-arroz-cocina-latina_23-2148542135.jpg",
+                "../assets/img/prueba-plato.png",
         },
         {
             id: 12,
@@ -136,7 +131,7 @@ const menuData = {
             description: "Pollo asado con papas y vegetales a la parrilla.",
             price: 24000,
             image:
-                "https://img.freepik.com/foto-gratis/pollo-asado-parrilla-verduras_23-2148542150.jpg",
+                "../assets/img/prueba-plato.png",
         },
     ],
     Postres: [
@@ -146,7 +141,7 @@ const menuData = {
             description: "Suave y cremoso flan de coco, con un toque tropical.",
             price: 8000,
             image:
-                "https://img.freepik.com/foto-gratis/flan-coco-postre-cremoso_23-2148542165.jpg",
+                "../assets/img/prueba-postre.png",
         },
         {
             id: 14,
@@ -154,7 +149,7 @@ const menuData = {
             description: "Pastel tradicional empapado en tres tipos de leche.",
             price: 9000,
             image:
-                "https://img.freepik.com/foto-gratis/pastel-tres-leches-postre-tradicional-latino_23-2148542180.jpg",
+            "../assets/img/prueba-postre.png",
         },
         {
             id: 15,
@@ -162,7 +157,7 @@ const menuData = {
             description: "Cremoso arroz con leche con toque de canela.",
             price: 7000,
             image:
-                "https://img.freepik.com/foto-gratis/arroz-leche-postre-tradicional_23-2148542195.jpg",
+            "../assets/img/prueba-postre.png",
         },
         {
             id: 16,
@@ -170,7 +165,7 @@ const menuData = {
             description: "Postre típico navideño de maíz, canela y panela.",
             price: 6000,
             image:
-                "https://img.freepik.com/foto-gratis/natilla-postre-navideno-colombiano_23-2148542210.jpg",
+            "../assets/img/prueba-postre.png",
         },
         {
             id: 17,
@@ -178,7 +173,7 @@ const menuData = {
             description: "Pastel tradicional navideño con frutas confitadas.",
             price: 10000,
             image:
-                "https://img.freepik.com/foto-gratis/torta-negra-pastel-navideno-colombiano_23-2148542225.jpg",
+            "../assets/img/prueba-postre.png",
         },
         {
             id: 18,
@@ -186,7 +181,7 @@ const menuData = {
             description: "Delicado postre cremoso tradicional colombiano.",
             price: 8500,
             image:
-                "https://img.freepik.com/foto-gratis/postre-natas-delicado-cremoso_23-2148542240.jpg",
+            "../assets/img/prueba-postre.png",
         },
     ],
     "Bebidas Calientes": [
@@ -196,7 +191,7 @@ const menuData = {
             description: "Café orgánico 100% colombiano, servido caliente.",
             price: 5000,
             image:
-                "https://img.freepik.com/foto-gratis/cafe-colombiano-taza-caliente_23-2148542255.jpg",
+            "../assets/img/prueba-bcaliente.png",
         },
         {
             id: 20,
@@ -204,7 +199,7 @@ const menuData = {
             description: "Delicioso chocolate caliente hecho con cacao puro.",
             price: 6000,
             image:
-                "https://img.freepik.com/foto-gratis/chocolate-caliente-taza-blanca_23-2148542270.jpg",
+            "../assets/img/prueba-bcaliente.png",
         },
         {
             id: 21,
@@ -212,7 +207,7 @@ const menuData = {
             description: "Infusión de hierbas frescas con un toque de miel.",
             price: 4000,
             image:
-                "https://img.freepik.com/foto-gratis/te-hierbas-taza-transparente_23-2148542285.jpg",
+            "../assets/img/prueba-bcaliente.png",
         },
         {
             id: 20,
@@ -220,7 +215,7 @@ const menuData = {
             description: "Delicioso chocolate caliente hecho con cacao puro.",
             price: 6000,
             image:
-                "https://img.freepik.com/foto-gratis/chocolate-caliente-taza-blanca_23-2148542270.jpg",
+            "../assets/img/prueba-bcaliente.png",
         },
         {
             id: 21,
@@ -228,7 +223,7 @@ const menuData = {
             description: "Infusión de hierbas frescas con un toque de miel.",
             price: 4000,
             image:
-                "https://img.freepik.com/foto-gratis/te-hierbas-taza-transparente_23-2148542285.jpg",
+            "../assets/img/prueba-bcaliente.png",
         },
     ],
     "Otras Bebidas": [
@@ -238,7 +233,7 @@ const menuData = {
             description: "Refrescante jugo de mango natural.",
             price: 7000,
             image:
-                "https://img.freepik.com/foto-gratis/jugo-mango-taza-vidrio_23-2148542300.jpg",
+            "../assets/img/prueba-bfria.png",
         },
         {
             id: 23,
@@ -246,7 +241,7 @@ const menuData = {
             description: "Limonada casera con un toque de coco.",
             price: 7500,
             image:
-                "https://img.freepik.com/foto-gratis/limonada-coco-vaso-alto_23-2148542315.jpg",
+            "../assets/img/prueba-bfria.png",
         },
         {
             id: 24,
@@ -254,7 +249,7 @@ const menuData = {
             description: "Bebida refrescante de tamarindo natural.",
             price: 6500,
             image:
-                "https://img.freepik.com/foto-gratis/refresco-tamarindo-vaso-cristal_23-2148542330.jpg",
+            "../assets/img/prueba-bfria.png",
         },
         {
             id: 23,
@@ -262,7 +257,7 @@ const menuData = {
             description: "Limonada casera con un toque de coco.",
             price: 7500,
             image:
-                "https://img.freepik.com/foto-gratis/limonada-coco-vaso-alto_23-2148542315.jpg",
+            "../assets/img/prueba-bfria.png",
         },
         {
             id: 23,
@@ -270,7 +265,7 @@ const menuData = {
             description: "Limonada casera con un toque de coco.",
             price: 7500,
             image:
-                "https://img.freepik.com/foto-gratis/limonada-coco-vaso-alto_23-2148542315.jpg",
+            "../assets/img/prueba-bfria.png",
         },
     ],
 };
@@ -307,12 +302,12 @@ function createMenuItems() {
             const slide = document.createElement('div');
             slide.className = 'swiper-slide';
             slide.innerHTML = `
-                <div class="card h-100 shadow-sm">
+                <div class="card h-100 shadow-sm bg overlay py-1">
                             <img src="${item.image}" class="card-img-top" alt="${item.name}">
                             <div class="card-body">
-                                <h5 class="card-title">${item.name}</h5>
-                                <p class="card-text">${item.description}</p>
-                                <p class="card-text text-success fw-bold">$${item.price.toLocaleString()}</p>
+                                <h5 class="fw-bold">${item.name}</h5>
+                                <p class="card-text text-black-50">${item.description}</p>
+                                <p class="card-text text-danger fw-bold">$${item.price.toLocaleString()}</p>
                             </div>
                         </div>
             `;

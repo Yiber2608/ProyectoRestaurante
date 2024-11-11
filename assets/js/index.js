@@ -169,7 +169,7 @@ function loadNovedades() {
                     ` : ''}
                     
                     <!-- Título de la novedad -->
-                    <h3 class="novedades-card-title fw-bold text-primary mb-2">${novedad.title}</h3>
+                    <h3 class=" fw-bold text-primary mb-2">${novedad.title}</h3>
                     
                     <!-- Descripción de la novedad -->
                     <p class="novedades-card-text text-muted">${novedad.description}</p>
