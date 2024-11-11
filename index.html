@@ -16,60 +16,66 @@
     <link rel="stylesheet" href="./assets/css/additional.css">
     <!-- core swiper -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
+    <!-- core sweetalert2 css -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.14.5/dist/sweetalert2.min.css"
+        integrity="sha256-qWVM38RAVYHA4W8TAlDdszO1hRaAq0ME7y2e9aab354=" crossorigin="anonymous">
 </head>
 
 <body class="d-flex flex-column h-100">
-    <main class="flex-shrink-0">
-        <!-- Navigation-->
-        <nav class="navbar navbar-expand-lg navbar-light bg-dark shadow-sm py-3 fixed-top">
-            <div class="container px-2">
-                <a class="navbar-brand fs-3 fw-bold text-primary" href="index.html">Sabores del Caribe</a>
-                <button class="navbar-toggler bg-white" type="button" data-bs-toggle="collapse"
-                    data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
-                    aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                    <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
-                        <li class="nav-item"><a class="nav-link fw-bold text-white" href="menu.html">Menú</a></li>
-                        <li class="nav-item"><a class="nav-link fw-bold text-white" href="empleos.html">Empleos</a>
-                        </li>
-                        <li class="nav-item"><a class="nav-link fw-bold text-white" href="concocenos.html">Nosotros</a>
-                        </li>
-                        <li class="nav-item"><a class="nav-link fw-bold text-white" href="contactanos.html">Contacto</a>
-                        </li>
-                    </ul>
-                </div>
+    <!-- Navigation-->
+    <nav class="navbar navbar-expand-lg navbar-light bg-dark shadow-sm py-3 fixed-top">
+        <div class="container px-2">
+            <a class="navbar-brand fs-3 fw-bold text-primary" href="index.html">Sabores del Caribe</a>
+            <button class="navbar-toggler bg-white" type="button" data-bs-toggle="collapse"
+                data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
+                aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+                    <li class="nav-item"><a class="nav-link fw-bold text-white" href="menu.html">Menú</a></li>
+                    <li class="nav-item"><a class="nav-link fw-bold text-white" href="empleos.html">Empleos</a>
+                    </li>
+                    <li class="nav-item"><a class="nav-link fw-bold text-white" href="conocenos.html">Nosotros</a>
+                    </li>
+                    <li class="nav-item"><a class="nav-link fw-bold text-white" href="contactanos.html">Contacto</a>
+                    </li>
+                </ul>
             </div>
-        </nav>
+        </div>
+    </nav>
 
-        <!-- Header-->
-        <header class="banner-image ">
-            <div class=" d-flex align-items-center min-vh-100-custom  banner-overlay">
-                <div class="container ">
-                    <div class="row align-items-center ">
-                        <div class="col-12 text-center mb-5 mb-lg-0  ">
-                            <tittle class="display-1 fw-bolder  text-white mb-4">Bienvenido a Sabores del Caribe
-                            </tittle>
-                            <p class="fs-2 mb-5 text-white-50">Descubre la auténtica gastronomía caribeña en cada
-                                bocado.</p>
-                            <a href="#novedades" class="btn btn-outline-secondary btn-lg m-2">
-                                <span class="fs-4">🪧</span> Novedades
-                            </a>
-                            <a href="#servicios" class="btn btn-outline-secondary btn-lg m-2">
-                                <span class="fs-4">🚹</span> Servicios
-                            </a>
-                            <a href="#reseñas" class="btn btn-outline-secondary btn-lg m-2">
-                                <span class="fs-4">☁️</span> Reseñas
-                            </a>
-                        </div>
+    <!-- Header-->
+    <header class="banner-image ">
+        <div class=" d-flex align-items-center min-vh-100-custom  banner-overlay">
+            <div class="container ">
+                <div class="row align-items-center ">
+                    <div class="col-12 text-center mb-5 mb-lg-0  ">
+                        <h1 class="display-1 fw-bolder  text-white mb-4">Bienvenido a Sabores del Caribe
+                        </h1>
+                        <p class="fs-2 mb-5 text-white-50">Descubre la auténtica gastronomía caribeña en cada
+                            bocado.</p>
+                        <a href="#novedades" class="btn btn-outline-secondary btn-lg m-2">
+                            <span class="fs-4">🪧</span> Novedades
+                        </a>
+                        <a href="#servicios" class="btn btn-outline-secondary btn-lg m-2">
+                            <span class="fs-4">🚹</span> Servicios
+                        </a>
+                        <a href="#reseñas" class="btn btn-outline-secondary btn-lg m-2">
+                            <span class="fs-4">☁️</span> Reseñas
+                        </a>
+                        <a href="#contactanos" class="btn btn-outline-secondary btn-lg m-2">
+                            <span class="fs-4">📧</span> Contactanos
+                        </a>
                     </div>
                 </div>
             </div>
-        </header>
+        </div>
+    </header>
+    <main class="flex-shrink-0">
 
         <!-- Featured Section -->
-        <section id="novedades" class="container-fluid bg-gradient-primary-to-success py-4">
+        <section id="novedades" class="bg-gradient-primary-to-success py-5">
             <div class="container">
                 <h1 class="fw-bold text-center text-black mb-4">🪧 Novedades</h1>
                 <div class="swiper novedades-swiper">
@@ -246,6 +252,7 @@
             </div>
         </section>
 
+        <!-- seccion reseñas -->
         <section id="reseñas" class="py-5 bg-gradient-primary-to-success">
             <div class="container">
                 <h1 class="fw-bold text-center text-black mb-5">☁️ Reseñas</h1>
@@ -254,6 +261,54 @@
                         <!-- Las reseñas se cargarán aquí dinámicamente -->
                     </div>
                     <div class="swiper-pagination"></div>
+                </div>
+            </div>
+        </section>
+
+        <section id="contactanos" class="container-fluid py-5">
+            <div class="row justify-content-center">
+                <div class="col-12 col-lg-8">
+                    <div class="card shadow-lg border-0 rounded-lg ">
+                        <div class="row g-0">
+                            <div class="col-md-4 bg-primary d-flex align-items-stretch d-none d-md-block">
+                                <img src="./assets/img/call-center.png" class="img-fluid w-100 h-100 object-fit-cover"
+                                    alt="Servicio al Cliente">
+                            </div>
+                            <div class="col-md-8">
+                                <div class="card-body p-4 p-lg-5">
+                                    <h2 class="card-title text-primary mb-4">Servicio al Cliente</h2>
+                                    <p class="card-text mb-4">Nuestro equipo de atención al cliente está listo para
+                                        asistirte con cualquier consulta o sugerencia. Contáctanos a través de nuestros
+                                        canales y te responderemos lo antes posible.</p>
+                                    <form>
+                                        <div class="row g-2">
+                                            <div class="col-md-6">
+                                                <label for="nombre" class="form-label">Nombre</label>
+                                                <input type="text" class="form-control" id="nombre" required>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <label for="email" class="form-label">Correo electrónico</label>
+                                                <input type="email" class="form-control" id="email" required>
+                                            </div>
+                                            <div class="col-12">
+                                                <label for="asunto" class="form-label">Asunto</label>
+                                                <input type="text" class="form-control" id="asunto" required>
+                                            </div>
+                                            <div class="col-12">
+                                                <label for="mensaje" class="form-label">Mensaje</label>
+                                                <textarea class="form-control" id="mensaje" rows="4"
+                                                    required></textarea>
+                                            </div>
+                                            <div class="col-12">
+                                                <button type="submit" class="btn btn-primary w-100">Enviar
+                                                    mensaje</button>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </section>
@@ -285,6 +340,11 @@
 
     <!-- Core theme JS -->
     <script src="./assets/js/index.js"></script>
+
+    <!-- core sweetalert2 -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.14.5/dist/sweetalert2.all.min.js"
+        integrity="sha256-1m4qVbsdcSU19tulVTbeQReg0BjZiW6yGffnlr/NJu4=" crossorigin="anonymous"></script>
+
 </body>
 
 </html>

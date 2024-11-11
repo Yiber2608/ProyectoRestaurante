@@ -16,127 +16,140 @@
     <link rel="stylesheet" href="./assets/css/additional.css">
     <!-- core swiper css -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
+    <!-- core sweetalert2 css -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.14.5/dist/sweetalert2.min.css"
+        integrity="sha256-qWVM38RAVYHA4W8TAlDdszO1hRaAq0ME7y2e9aab354=" crossorigin="anonymous">
 </head>
 
 <body class="d-flex flex-column h-100 ">
+    <!-- Navigation-->
+    <nav class="navbar navbar-expand-lg navbar-light bg-dark shadow-sm py-3 fixed-top">
+        <div class="container px-2">
+            <a class="navbar-brand fs-3 fw-bold text-primary" href="index.html">Sabores del Caribe</a>
+            <button class="navbar-toggler bg-white" type="button" data-bs-toggle="collapse"
+                data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
+                aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+                    <li class="nav-item"><a class="nav-link fw-bold text-white" href="menu.html">Menú</a></li>
+                    <li class="nav-item"><a class="nav-link fw-bold text-white" href="empleos.html">Empleos</a></li>
+                    <li class="nav-item"><a class="nav-link fw-bold text-white" href="conocenos.html">Nosotros</a>
+                    </li>
+                    <li class="nav-item"><a class="nav-link fw-bold text-white" href="contactanos.html">Contacto</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Header-->
+    <header class="banner-image-menu">
+        <div class="d-flex align-items-center justify-content-center min-vh-100-custom banner-overlay">
+            <div class="container">
+                <div class="row justify-content-center">
+                    <div class="col-12 text-center mb-5">
+                        <h1 class="display-1 fw-bold text-primary mb-5 mb-md-4">MENU</h1>
+                        <nav class="menu-nav">
+                            <ul class="list-unstyled d-flex flex-wrap justify-content-center">
+                                <li class="m-2">
+                                    <a href="#containerEntradas" class="btn btn-outline-light btn-lg">
+                                        <span class="fs-4">🍤</span> Entradas
+                                    </a>
+                                </li>
+                                <li class="m-2">
+                                    <a href="#containerPlatosPrincipales" class="btn btn-outline-light btn-lg">
+                                        <span class="fs-4">🍛</span> Platos Principales
+                                    </a>
+                                </li>
+                                <li class="m-2">
+                                    <a href="#containerPostres" class="btn btn-outline-light btn-lg">
+                                        <span class="fs-4">🍰</span> Postres
+                                    </a>
+                                </li>
+                                <li class="m-2">
+                                    <a href="#containerBebidasCalientes" class="btn btn-outline-light btn-lg">
+                                        <span class="fs-4">☕</span> Bebidas Calientes
+                                    </a>
+                                </li>
+                                <li class="m-2">
+                                    <a href="#containerOtrasBebidas" class="btn btn-outline-light btn-lg">
+                                        <span class="fs-4">🥤</span> Otras Bebidas
+                                    </a>
+                                </li>
+                            </ul>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main -->
     <main class="flex-shrink-0">
-        <!-- Navigation-->
-        <nav class="navbar navbar-expand-lg navbar-light bg-dark shadow-sm py-3 fixed-top">
-            <div class="container px-2">
-                <a class="navbar-brand fs-3 fw-bold text-primary" href="index.html">Sabores del Caribe</a>
-                <button class="navbar-toggler bg-white" type="button" data-bs-toggle="collapse"
-                    data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
-                    aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                    <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
-                        <li class="nav-item"><a class="nav-link fw-bold text-white" href="menu.html">Menú</a></li>
-                        <li class="nav-item"><a class="nav-link fw-bold text-white" href="empleos.html">Empleos</a></li>
-                        <li class="nav-item"><a class="nav-link fw-bold text-white" href="concocenos.html">Nosotros</a>
-                        </li>
-                        <li class="nav-item"><a class="nav-link fw-bold text-white" href="contactanos.html">Contacto</a>
-                        </li>
-                    </ul>
+
+        <!-- tab entradas -->
+        <section id="containerEntradas" class="py-5 bg-gradient-primary-to-success ">
+            <div class="container">
+                <h1 class="fw-bold text-center text-black ">🌮 Entradas</h1>
+                <div class="swiper mySwiper">
+                    <div class="swiper-wrapper pb-5 pt-3">
+                        <!-- Add more entrada items here -->
+                    </div>
+                    <div class="swiper-pagination"></div>
                 </div>
             </div>
-        </nav>
+        </section>
 
-        <!-- Header-->
-        <header class="banner-image-menu">
-            <div class="d-flex align-items-center justify-content-center min-vh-100 banner-overlay">
-                <div class="container">
-                    <div class="row justify-content-center">
-                        <div class="col-12 text-center mb-5">
-                            <h1 class="display-1 fw-bold text-white mb-4">MENU</h1>
-                            <nav class="menu-nav">
-                                <ul class="list-unstyled d-flex flex-wrap justify-content-center">
-                                    <li class="m-2">
-                                        <a href="#containerEntradas" class="btn btn-outline-light btn-lg">
-                                            <span class="fs-4">🍤</span> Entradas
-                                        </a>
-                                    </li>
-                                    <li class="m-2">
-                                        <a href="#containerPlatosPrincipales" class="btn btn-outline-light btn-lg">
-                                            <span class="fs-4">🍛</span> Platos Principales
-                                        </a>
-                                    </li>
-                                    <li class="m-2">
-                                        <a href="#containerPostres" class="btn btn-outline-light btn-lg">
-                                            <span class="fs-4">🍰</span> Postres
-                                        </a>
-                                    </li>
-                                    <li class="m-2">
-                                        <a href="#containerBebidasCalientes" class="btn btn-outline-light btn-lg">
-                                            <span class="fs-4">☕</span> Bebidas Calientes
-                                        </a>
-                                    </li>
-                                    <li class="m-2">
-                                        <a href="#containerOtrasBebidas" class="btn btn-outline-light btn-lg">
-                                            <span class="fs-4">🥤</span> Otras Bebidas
-                                        </a>
-                                    </li>
-                                </ul>
-                            </nav>
-                        </div>
+        <!-- tab platos principales -->
+        <section id="containerPlatosPrincipales" class="py-5">
+            <div class=" container  ">
+                <h1 class="fw-bold text-center "> 🍽️ Platos Principales</h1>
+                <div class="swiper mySwiper">
+                    <div class="swiper-wrapper pb-5 pt-3">
+                        <!-- Add more postres items here -->
                     </div>
+                    <div class=" swiper-pagination "></div>
                 </div>
             </div>
-        </header>
+        </section>
 
-        <section>
-            <div class="container-fluid">
-                <div class="row justify-content-center ">
-
-                    <div id="containerEntradas" class="col-12 bg-image-white p-2 p-md-5">
-                        <h1 class="fw-bold text-center text-black ">🌮 Entradas</h1>
-                        <div class="swiper mySwiper">
-                            <div class="swiper-wrapper pb-5 pt-3">
-                                <!-- Add more entrada items here -->
-                            </div>
-                            <div class="swiper-pagination"></div>
-                        </div>
+        <!-- tab postres -->
+        <section id="containerPostres" class="py-5 bg-gradient-primary-to-success">
+            <div class=" container  ">
+                <h1 class="fw-bold text-center"> 🍨 Postres</h1>
+                <div class="swiper mySwiper">
+                    <div class="swiper-wrapper pb-5 pt-3">
+                        <!-- Add more postres items here -->
                     </div>
+                    <div class="swiper-pagination"></div>
+                </div>
+            </div>
+        </section>
 
-                    <div id="containerPlatosPrincipales" class="col-12 bg-image-black p-2 p-md-5  ">
-                        <h1 class="fw-bold text-center text-white-50"> 🍽️ Platos Principales</h1>
-                        <div class="swiper mySwiper">
-                            <div class="swiper-wrapper pb-5 pt-3">
-                                <!-- Add more postres items here -->
-                            </div>
-                            <div class=" swiper-pagination "></div>
-                        </div>
+        <!-- tab bebidas calientes -->
+        <section id="containerBebidasCalientes" class="py-5">
+            <div class=" container  ">
+                <h1 class="fw-bold text-center "> ☕ Bebidas Calientes</h1>
+                <div class="swiper mySwiper">
+                    <div class="swiper-wrapper pb-5 pt-3">
+                        <!-- Add more postres items here -->
                     </div>
+                    <div class="swiper-pagination"></div>
+                </div>
+            </div>
+        </section>
 
-                    <div id="containerPostres" class="col-12 bg-image-white p-2 p-md-5">
-                        <h1 class="fw-bold text-center"> 🍨 Postres</h1>
-                        <div class="swiper mySwiper">
-                            <div class="swiper-wrapper pb-5 pt-3">
-                                <!-- Add more postres items here -->
-                            </div>
-                            <div class="swiper-pagination"></div>
-                        </div>
+        <!-- tab otras bebidas -->
+        <section id="containerOtrasBebidas" class="py-5 bg-gradient-primary-to-success">
+            <div class=" container  ">
+                <h1 class="fw-bold text-center"> 🍹 Otras Bebidas</h1>
+                <div class="swiper mySwiper">
+                    <div class="swiper-wrapper pb-5 pt-3">
+                        <!-- Add more postres items here -->
                     </div>
-
-                    <div id="containerBebidasCalientes" class="col-12 p-2 p-md-5 bg-image-black">
-                        <h1 class="fw-bold text-center text-white-50"> ☕ Bebidas Calientes</h1>
-                        <div class="swiper mySwiper">
-                            <div class="swiper-wrapper pb-5 pt-3">
-                                <!-- Add more postres items here -->
-                            </div>
-                            <div class="swiper-pagination"></div>
-                        </div>
-                    </div>
-
-                    <div id="containerOtrasBebidas" class="col-12 p-2 p-md-5 bg-image-white ">
-                        <h1 class="fw-bold text-center"> 🍹  Otras Bebidas</h1>
-                        <div class="swiper mySwiper">
-                            <div class="swiper-wrapper pb-5 pt-3">
-                                <!-- Add more postres items here -->
-                            </div>
-                            <div class="swiper-pagination"></div>
-                        </div>
-                    </div>
+                    <div class="swiper-pagination"></div>
                 </div>
             </div>
         </section>
@@ -164,6 +177,10 @@
     <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
     <!-- Bootstrap core JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- core sweetalert2 -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.14.5/dist/sweetalert2.all.min.js"
+        integrity="sha256-1m4qVbsdcSU19tulVTbeQReg0BjZiW6yGffnlr/NJu4=" crossorigin="anonymous"></script>
+
     <!-- Core theme JS -->
     <script src="./assets/js/menu.js"></script>
 </body>
