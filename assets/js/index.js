@@ -93,7 +93,7 @@ const novedadesDatabase = [
         description: "Un evento especial donde podrás probar los mejores sabores de la temporada.",
         date: "15 de Agosto, 2024",
         icon: "calendar-event",  
-        image: "/assets/img/menu-black.png",
+        image: "./assets/img/menu-black.png",
         buttonText: "Reservar",
         buttonLink: "#"
     },
@@ -103,7 +103,7 @@ const novedadesDatabase = [
         description: "¡Damos la bienvenida al Chef María García, quien aportará su visión y talento a nuestro restaurante!",
         date: "20 de Julio, 2024",
         icon: "person",
-        image: "/assets/img/chef.png",
+        image: "./assets/img/chef.png",
         buttonText: "Conoce más",
         buttonLink: "#"
     },
@@ -113,7 +113,7 @@ const novedadesDatabase = [
         description: "¡Descubre nuestros nuevos platos con ingredientes frescos y sabores auténticos!",
         date: "1 de Septiembre, 2024",
         icon: "journal-text",
-        image: "/assets/img/menu-black.png",
+        image: "./assets/img/menu-black.png",
         buttonText: "Ver menú",
         buttonLink: "#"
     },
@@ -123,7 +123,7 @@ const novedadesDatabase = [
         description: "Hemos sido reconocidos como el Mejor Restaurante del Año gracias a la dedicación de nuestro equipo y el apoyo de nuestros clientes.",
         date: "5 de Octubre, 2024",
         icon: "award",
-        image: "/assets/img/menu.jpeg",
+        image: "./assets/img/menu.jpeg",
         buttonText: "Leer más",
         buttonLink: "#"
     },
