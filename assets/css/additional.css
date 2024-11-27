@@ -27,10 +27,6 @@
     object-fit: cover;
 }
 
-.card-hover:hover {
-    transform: translateY(-5px);
-    transition: transform 0.3s ease;
-}
 
 @media (max-width: 768px) {
     .carousel-image {
@@ -64,12 +60,16 @@ body {
     /* Fondo negro con 50% de opacidad */
 }
 
-.swiper-slide {
-    width: 300px;
-    height: 400px;
+.card-basic{
+    height: 100%;
+    border-radius: 15px;
+    overflow: hidden;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease-in-out;
+
 }
 
-.card {
+.card{
     height: 100%;
     border-radius: 15px;
     overflow: hidden;
@@ -77,9 +77,10 @@ body {
     transition: transform 0.3s ease-in-out;
 }
 
-.card:hover {
+.card-basic:hover{
     transform: translateY(-5px);
 }
+
 
 .card-img-top {
     height: 200px;
@@ -90,7 +91,7 @@ body {
     background-position: center;
     background-size: cover;
     width: 300px;
-    height: 400px;
+    height: 300px;
 }
 
 .novedades-card {

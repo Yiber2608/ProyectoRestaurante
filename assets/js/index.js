@@ -30,7 +30,7 @@ function loadReviews() {
         const reviewElement = document.createElement('div');
         reviewElement.className = 'swiper-slide';
         reviewElement.innerHTML = `
-            <div class="card h-100 shadow ">
+            <div class="card card-basic h-100 shadow ">
                 <div class="card-body d-flex flex-column">
                     <h3 class="card-title h5 mb-3">${review.name}</h3>
                     <div class="mb-3">
@@ -92,10 +92,7 @@ const novedadesDatabase = [
         title: "Noche de Degustación",
         description: "Un evento especial donde podrás probar los mejores sabores de la temporada.",
         date: "15 de Agosto, 2024",
-        icon: "calendar-event",  
-        image: "./assets/img/menu-black.png",
-        buttonText: "Reservar",
-        buttonLink: "#"
+        icon: ""
     },
     {
         id: 2,
@@ -159,15 +156,11 @@ function loadNovedades() {
         const novedadElement = document.createElement('div');
         novedadElement.className = 'swiper-slide';
         novedadElement.innerHTML = `
-            <div class="card novedades-card border-0 ">
+            <div class="card card-basic novedades-card border-0 ">
                 <div class="card-body d-flex flex-column p-4">
-                    <!-- Contenedor de la imagen (opcional) -->
-                    ${novedad.image ? `
-                    <div class="novedades-image mb-3">
-                        <img src="${novedad.image}" alt="${novedad.title}" class="img-fluid rounded">
-                    </div>
-                    ` : ''}
-                    
+                    <!-- Título de la novedad -->
+                    <h3 class=" fw-bold text-primary mb-2"><i class="bi bi-calendar-date"></i></h3>
+
                     <!-- Título de la novedad -->
                     <h3 class=" fw-bold text-primary mb-2">${novedad.title}</h3>
                     

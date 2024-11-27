@@ -40,7 +40,7 @@ const menuData = {
             description:
                 "Crujientes empanadas de carne y papa acompañadas de ají casero.",
             price: 12000,
-            image:"./assets/img/prueba-entrada.png",
+            image:"https://drive.google.com/file/d/14q34dc83IyjNjV5I_ACjkfA6pAGaYKFK/view",
         },
         {
             id: 2,
@@ -270,30 +270,6 @@ const menuData = {
     ],
 };
 
-
-// function createMenuItems() {
-//     for (const [category, items] of Object.entries(menuData)) {
-//         const wrapper = document.querySelector(`#collapse${category.replace(/\s+/g, '')} .swiper-wrapper`);
-//         items.forEach(item => {
-//             const slide = document.createElement('div');
-//             slide.className = 'swiper-slide';
-//             slide.innerHTML = `
-//                 <div class="card h-100">
-//                     <img src="${item.image}" class="card-img-top" alt="${item.name}">
-//                     <div class="card-body d-flex flex-column">
-//                         <h5 class="card-title">${item.name}</h5>
-//                         <p class="card-text flex-grow-1">${item.description}</p>
-//                         <div class="d-flex justify-content-between align-items-center mt-3">
-//                             <span class="h5 mb-0">$${item.price.toLocaleString()}</span>
-//                             <button class="btn btn-primary">Ordenar</button>
-//                         </div>
-//                     </div>
-//                 </div>
-//             `;
-//             wrapper.appendChild(slide);
-//         });
-//     }
-// }
 
 function createMenuItems() {
     for (const [category, items] of Object.entries(menuData)) {
