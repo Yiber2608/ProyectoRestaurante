@@ -1,33 +1,4 @@
-var swiper = new Swiper(".mySwiper", {
-    slidesPerView: 1,
-    spaceBetween: 30,
-    pagination: {
-        el: ".swiper-pagination",
-        clickable: true,
-    },
-    navigation: {
-        nextEl: ".swiper-button-next",
-        prevEl: ".swiper-button-prev",
-    },
-    autoplay: {
-        delay: 3000,
-        disableOnInteraction: false,
-    },
-    breakpoints: {
-        640: {
-            slidesPerView: 2,
-            spaceBetween: 20,
-        },
-        768: {
-            slidesPerView: 3,
-            spaceBetween: 30,
-        },
-        1024: {
-            slidesPerView: 4,
-            spaceBetween: 30,
-        },
-    },
-});
+
 
 // tab configurar datos db
 
@@ -278,7 +249,7 @@ function createMenuItems() {
             const slide = document.createElement('div');
             slide.className = 'swiper-slide';
             slide.innerHTML = `
-                <div class="card h-100 shadow-sm bg overlay py-1">
+                <div class="card h-100 shadow-sm bg bg-gradient-primary-to-success py-1">
                             <img src="${item.image}" class="card-img-top" alt="${item.name}">
                             <div class="card-body">
                                 <h5 class="fw-bold">${item.name}</h5>
@@ -291,6 +262,37 @@ function createMenuItems() {
         });
     }
 }
+var swiper = new Swiper(".mySwiper", {
+    grabCursor: true,
+    slidesPerView: 1,
+    spaceBetween: 30,
+    pagination: {
+        el: ".swiper-pagination",
+        clickable: true,
+    },
+    navigation: {
+        nextEl: ".swiper-button-next",
+        prevEl: ".swiper-button-prev",
+    },
+    autoplay: {
+        delay: 3000,
+        disableOnInteraction: false,
+    },
+    breakpoints: {
+        640: {
+            slidesPerView: 2,
+            spaceBetween: 20,
+        },
+        768: {
+            slidesPerView: 3,
+            spaceBetween: 30,
+        },
+        1024: {
+            slidesPerView: 4,
+            spaceBetween: 30,
+        },
+    },
+});
 
 // Call this function after the DOM is loaded
 document.addEventListener('DOMContentLoaded', createMenuItems);

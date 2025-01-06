@@ -19,33 +19,39 @@
     <!-- core sweetalert2 css -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.14.5/dist/sweetalert2.min.css"
         integrity="sha256-qWVM38RAVYHA4W8TAlDdszO1hRaAq0ME7y2e9aab354=" crossorigin="anonymous">
-
+    <!-- core leaflet css -->
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
         integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="" />
+    <!-- core AOS css  -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.css" />
 </head>
 
 <body class="d-flex flex-column h-100 ">
     <!-- Navigation-->
-        <nav class="navbar navbar-expand-lg navbar-light bg-dark shadow-sm py-3 fixed-top">
-            <div class="container px-2">
-                <a class="navbar-brand fs-3 fw-bold text-primary" href="index.html">BurguerBoom</a>
-                <button class="navbar-toggler bg-white" type="button" data-bs-toggle="collapse"
-                    data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
-                    aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                    <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
-                        <li class="nav-item"><a class="nav-link fw-bold text-white" href="menu.html">Menú</a></li>
-                        <li class="nav-item"><a class="nav-link fw-bold text-white" href="empleos.html">Empleos</a></li>
-                        <li class="nav-item"><a class="nav-link fw-bold text-white" href="conocenos.html">Nosotros</a>
-                        </li>
-                        <li class="nav-item"><a class="nav-link fw-bold text-white" href="contactanos.html">Contacto</a>
-                        </li>
-                    </ul>
-                </div>
+    <nav class="navbar navbar-expand-lg navbar-light bg-dark shadow-sm py-3 fixed-top">
+        <div class="container px-2">
+            <a class="navbar-brand fs-3 fw-bold text-primary" href="index.html">BurguerBoom</a>
+            <button class="navbar-toggler bg-white" type="button" data-bs-toggle="collapse"
+                data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
+                aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+                    <li class="nav-item"><a class="nav-link fw-bold text-white" href="menu.html">Menú</a></li>
+                    <li class="nav-item"><a class="nav-link fw-bold text-white" href="empleos.html">Empleos</a>
+                    </li>
+                    <li class="nav-item"><a class="nav-link fw-bold text-white" href="conocenos.html">Nosotros</a>
+                    </li>
+                    <li class="nav-item"><a class="nav-link fw-bold text-white" href="contactanos.html">Contacto</a>
+                    </li>
+                    <li class="nav-item ms-2"><button id="authButton" class="btn btn-primary fw-bold ">Iniciar
+                            Sesión</button>
+                    </li>
+                </ul>
             </div>
-        </nav>
+        </div>
+    </nav>
     <main class="flex-shrink-0">
         <!-- banner  -->
         <header class="bg-image-black min-vh-100-custom ">
@@ -53,14 +59,14 @@
                 <div class="row ">
                     <div class="col-12 col-md-7 d-flex align-items-center">
                         <div class="text-center text-xxl-start">
-                            <h1 class="display-1 fw-bolder  text-white mb-4">Nuestro Comienzo </h1>
-                            <p class="fs-2 mb-5 text-white-50">A mediados de 1985 nuestro fundador Antonio Moreno abrio
+                            <h1 class="display-1 fw-bolder  text-white mb-4" data-aos="zoom-in-down" data-aos-delay="500" >Nuestro Comienzo </h1>
+                            <p class="fs-2 mb-5 text-white-50" data-aos="zoom-in-down" data-aos-delay="1000">A mediados de 1985 nuestro fundador Antonio Moreno abrio
                                 la primera cede.</p>
                         </div>
                     </div>
                     <div class="col-12 col-md-5 d-flex justify-content-center ">
-                        <div class="profile  bg-gradient-primary-to-success rounded-circle ">
-                            <img class="profile-img img-flex " src="./assets/img/fundador.png" alt="..." />
+                        <div class="profile  bg-gradient-primary-to-success rounded-circle " data-aos="zoom-in-down" data-aos-delay="1500">
+                            <img class="profile-img img-flex "  src="./assets/img/fundador.png" alt="..."  />
                         </div>
                     </div>
                 </div>
@@ -68,18 +74,17 @@
         </header>
 
         <!-- tab mission and vision  -->
-        <section class="py-5 ">
+        <section class="py-5 bg-gradient-primary-to-success-opaco">
             <div class="container">
                 <div class="row justify-content-center">
                     <div class="col-md-6 mb-4">
-                        <div class="card-flip">
+                        <div class="card-flip" data-aos="zoom-in-down" data-aos-delay="200" >
                             <div class="card-inner">
                                 <div
                                     class="card-front bg-primary text-white d-flex align-items-center justify-content-center">
                                     <h2 class="display-4 fw-bold">MISIÓN</h2>
                                 </div>
                                 <div class="card-back ">
-
                                     <div class="card-body p-4 h-100 d-flex align-items-center">
                                         <div>
                                             <h2 class="card-title text-primary fw-bold mb-3 ">Nuestra Misión</h2>
@@ -98,7 +103,7 @@
                         </div>
                     </div>
                     <div class="col-md-6 mb-4">
-                        <div class="card-flip">
+                        <div class="card-flip" data-aos="zoom-in-down" data-aos-delay="500">
                             <div class="card-inner">
                                 <div
                                     class="card-front bg-success text-white d-flex align-items-center justify-content-center">
@@ -130,7 +135,7 @@
         </section>
 
         <!-- tab map  -->
-        <section id="buscarSede" class="bg-gradient-primary-to-success py-5">
+        <section id="buscarSede" class="bg-gradient-primary-to-success py-5" data-aos="zoom-in-down" data-aos-delay="800">
             <div class="container">
                 <div class="row">
                     <div class="col-12 col-md-6">
@@ -157,17 +162,43 @@
 
     <!-- Footer -->
     <footer class="bg-dark text-white py-4 mt-auto">
-        <div class="container px-5">
-            <div class="row align-items-center justify-content-between">
-                <div class="col-auto">
-                    <div class="small m-0">Copyright &copy; Delicias del 2024</div>
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-4 mb-4 mb-lg-0">
+                    <h5>BurguerBoom</h5>
+                    <p>Descubre la auténtica gastronomía caribeña en cada bocado.</p>
+                    <div class="social-icons">
+                        <a href="#" class="text-white me-3"><i class="bi bi-facebook"></i></a>
+                        <a href="#" class="text-white me-3"><i class="bi bi-instagram"></i></a>
+                        <a href="#" class="text-white me-3"><i class="bi bi-twitter"></i></a>
+                    </div>
                 </div>
-                <div class="col-auto">
-                    <a class="text-white-50 small" href="#!">Política de privacidad</a>
-                    <span class="mx-1 text-muted">&middot;</span>
-                    <a class="text-white-50 small" href="#!">Términos y condiciones</a>
-                    <span class="mx-1 text-muted">&middot;</span>
-                    <a class="text-white-50 small" href="#!">Contacto</a>
+                <div class="col-lg-4 mb-4 mb-lg-0">
+                    <h5>Enlaces Rápidos</h5>
+                    <ul class="list-unstyled">
+                        <li><a href="#home" class="text-white">Inicio</a></li>
+                        <li><a href="#menu" class="text-white">Menú</a></li>
+                        <li><a href="#servicios" class="text-white">Servicios</a></li>
+                        <li><a href="#contacto" class="text-white">Contacto</a></li>
+                    </ul>
+                </div>
+                <div class="col-lg-4">
+                    <h5>Contacto</h5>
+                    <address>
+                        <p><i class="bi bi-geo-alt-fill me-2"></i>123 Calle Principal, Ciudad, País</p>
+                        <p><i class="bi bi-telephone-fill me-2"></i>(123) 456-7890</p>
+                        <p><i class="bi bi-envelope-fill me-2"></i>info@burguerboom.com</p>
+                    </address>
+                </div>
+            </div>
+            <hr class="my-4">
+            <div class="row align-items-center">
+                <div class="col-md-6 text-center text-md-start">
+                    <p class="mb-0">&copy; 2024 BurguerBoom. Todos los derechos reservados.</p>
+                </div>
+                <div class="col-md-6 text-center text-md-end">
+                    <a href="#" class="text-white-50 me-2">Política de privacidad</a>
+                    <a href="#" class="text-white-50">Términos y condiciones</a>
                 </div>
             </div>
         </div>
@@ -185,6 +216,11 @@
     <!-- core sweetalert2 -->
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.14.5/dist/sweetalert2.all.min.js"
         integrity="sha256-1m4qVbsdcSU19tulVTbeQReg0BjZiW6yGffnlr/NJu4=" crossorigin="anonymous"></script>
+    <!--  core AOS -->
+    <script src="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.js"></script>
+    <script>
+        AOS.init();
+    </script>
 
 </body>
 

@@ -4,6 +4,12 @@
     background-position: center;
 }
 
+.banner-image-mesas {
+    background-image: url('../img/mesas.png');
+    background-size: cover;
+    background-position: center;
+}
+
 .banner-image-menu {
     background-image: url('../img/menu-black.png');
     background-size: cover;
@@ -21,6 +27,7 @@
     background-size: cover;
     background-position: center;
 }
+
 
 .carousel-image {
 
@@ -164,4 +171,7 @@ body {
     width: 100%;
     object-fit: cover;
 }
-
+.bg-gradient-primary-to-success-opaco {
+    background: linear-gradient(to right, rgba(255, 179, 128, 0.2), rgba(240, 228, 155, 0.2));
+}
+  

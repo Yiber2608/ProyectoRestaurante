@@ -19,6 +19,10 @@
     <!-- core sweetalert2 css -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.14.5/dist/sweetalert2.min.css"
         integrity="sha256-qWVM38RAVYHA4W8TAlDdszO1hRaAq0ME7y2e9aab354=" crossorigin="anonymous">
+    <!-- core AOS css  -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.css" />
+
+
 </head>
 
 <body class="d-flex flex-column h-100">
@@ -40,22 +44,23 @@
                     </li>
                     <li class="nav-item"><a class="nav-link fw-bold text-white" href="contactanos.html">Contacto</a>
                     </li>
+                    <li class="nav-item ms-2"><button id="authButton" class="btn btn-primary fw-bold ">Iniciar Sesión</button>
+                    </li>
                 </ul>
             </div>
         </div>
     </nav>
 
     <!-- Header-->
-    <header class="banner-image ">
-        <div class=" d-flex align-items-center min-vh-100-custom  banner-overlay">
-            <div class="container ">
-                <div class="row align-items-center ">
-                    <div class="col-12 text-center mb-5 mb-lg-0  ">
-                        <h1 class="display-1 fw-bolder  text-white mb-4">Bienvenido a BurguerBoom
-                        </h1>
-                        <p class="fs-2 mb-5 text-white-50">Descubre la auténtica gastronomía caribeña en cada
-                            bocado.</p>
-                        <a href="#novedades" class="btn btn-outline-secondary btn-lg m-2">
+    <header id="home" class="banner-image" >
+        <div class="d-flex align-items-center min-vh-100-custom banner-overlay "  >
+            <div class="container">
+                <div class="row align-items-center" data-aos="zoom-in">
+                    <div class="col-12 text-center mb-5 mb-lg-0">
+                        <h1 class="display-1 fw-bolder text-white mb-4" >Bienvenido a BurguerBoom</h1>
+                        <p class="fs-2 mb-5 text-white-50"  >Descubre la auténtica gastronomía caribeña en cada bocado.</p>
+                        <div >
+                            <a href="#novedades" class="btn btn-outline-secondary btn-lg m-2">
                             <span class="fs-4">🪧</span> Novedades
                         </a>
                         <a href="#servicios" class="btn btn-outline-secondary btn-lg m-2">
@@ -67,6 +72,7 @@
                         <a href="#contactanos" class="btn btn-outline-secondary btn-lg m-2">
                             <span class="fs-4">📧</span> Contactanos
                         </a>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -74,14 +80,49 @@
     </header>
 
     <!-- contenidos -->
-    <main class="flex-shrink-0">
+    <main class="flex-shrink-0 ">
 
-        <!-- Featured Section -->
+        <section id="menu" class="py-5 bg-gradient-primary-to-success-opaco">
+            <div class="container">
+                <h2 class="text-center mb-5 fw-bold">Nuestras Especialidades</h2>
+                <div class="row g-4">
+                    <div class="col-md-4" data-aos="fade-up">
+                        <div class="card h-100 shadow-sm bg-gradient-primary-to-success">
+                            <img src="/assets/img/hamburguesa.png" class="card-img-top" alt="Hamburguesa Clásica">
+                            <div class="card-body">
+                                <h5 class="card-title">Hamburguesa Clásica</h5>
+                                <p class="card-text">Nuestra hamburguesa estrella con carne 100% de res, queso cheddar, lechuga y tomate.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4" data-aos="fade-up" data-aos-delay="200">
+                        <div class="card h-100 shadow-sm bg-gradient-primary-to-success">
+                            <img src="/assets/img/hamburguesa.png" class="card-img-top" alt="Hamburguesa Caribeña">
+                            <div class="card-body">
+                                <h5 class="card-title">Hamburguesa Caribeña</h5>
+                                <p class="card-text">Sabores tropicales con piña asada, salsa de mango y pollo a la parrilla.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4" data-aos="fade-up" data-aos-delay="400">
+                        <div class="card h-100 shadow-sm bg-gradient-primary-to-success">
+                            <img src="/assets/img/hamburguesa.png" class="card-img-top" alt="Hamburguesa Vegana">
+                            <div class="card-body">
+                                <h5 class="card-title">Hamburguesa Vegana</h5>
+                                <p class="card-text">Deliciosa opción vegana con patty de frijoles negros y aguacate fresco.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Sección de Novedades (mantenida como estaba) -->
         <section id="novedades" class="bg-gradient-primary-to-success py-5">
             <div class="container">
-                <h1 class="fw-bold text-center text-black mb-4">🪧 Novedades</h1>
+                <h2 class="fw-bold text-center text-black mb-4">🪧 Novedades</h2>
                 <div class="swiper novedades-swiper">
-                    <div class="swiper-wrapper pb-5 pt-3" id="novedadesContainer">
+                    <div class="swiper-wrapper pb-5 pt-3" id="novedadesContainer" data-aos="fade-right">
                         <!-- Las novedades se cargarán aquí dinámicamente -->
                     </div>
                     <div class="swiper-pagination"></div>
@@ -90,13 +131,13 @@
         </section>
 
         <!-- Content Cards -->
-        <section id="servicios" class="py-5 ">
+        <section id="servicios" class="py-5 bg-gradient-primary-to-success-opaco">
             <h1 class="fw-bold text-center text-black ">🚹 Servicios</h1>
             <div class="container my-5" id="contenido">
                 <div class="row g-4">
                     <!-- Card 1 -->
                     <div class="col-12 col-md-6">
-                        <div class="card h-100 shadow card-hover">
+                        <div class="card h-100 shadow card-hover " data-aos="fade-up-right">
                             <div class="row g-0 h-100">
                                 <div class="col-4 bg-dark d-flex align-items-center">
                                     <img src="./assets/img/registrate.png"
@@ -110,9 +151,7 @@
                                             especiales y beneficios para miembros. ¡Regístrate y forma parte de esta
                                             experiencia gastronómica única!</p>
                                         <div class="mt-auto">
-                                            <a class="btn bg-white" href="#ubicaciones">Registrarse</a>
-                                            <p class="card-text mt-2"><small class="text-white-50">Actualizado hace 3
-                                                    minutos</small></p>
+                                            <button id="registerButton" class="btn btn bg-white fw-bold">Registrarse</button>
                                         </div>
                                     </div>
                                 </div>
@@ -122,7 +161,7 @@
 
                     <!-- Card 2 -->
                     <div class="col-12 col-md-6">
-                        <div class="card h-100 shadow card-hover">
+                        <div class="card h-100 shadow card-hover" data-aos="fade-up-left">
                             <div class="row g-0 h-100">
                                 <div class="col-4 bg-dark d-flex align-items-center">
                                     <img src="./assets/img/vacante.png"
@@ -148,7 +187,7 @@
 
                     <!-- Card 3 -->
                     <div class="col-12 col-md-6">
-                        <div class="card h-100 shadow card-hover">
+                        <div class="card h-100 shadow card-hover" data-aos="fade-up-right">
                             <div class="row g-0 h-100">
                                 <div class="col-4 bg-dark d-flex align-items-center">
                                     <img src="./assets/img/call-center.png"
@@ -175,7 +214,7 @@
 
                     <!-- Card 4 -->
                     <div class="col-12 col-md-6">
-                        <div class="card h-100 shadow card-hover">
+                        <div class="card h-100 shadow card-hover" data-aos="fade-up-left">
                             <div class="row g-0 h-100">
                                 <div class="col-4 bg-dark d-flex align-items-center">
                                     <img src="./assets/img/chef.png"
@@ -201,7 +240,7 @@
 
                     <!-- Card 5 -->
                     <div class="col-12 col-md-6">
-                        <div class="card h-100 shadow card-hover">
+                        <div class="card h-100 shadow card-hover" data-aos="fade-up-right">
                             <div class="row g-0 h-100">
                                 <div class="col-4 bg-dark d-flex align-items-center">
                                     <img src="./assets/img/mesas.png"
@@ -227,7 +266,7 @@
 
                     <!-- Card 6 -->
                     <div class="col-12 col-md-6">
-                        <div class="card h-100 shadow card-hover">
+                        <div class="card h-100 shadow card-hover" data-aos="fade-up-left">
                             <div class="row g-0 h-100">
                                 <div class="col-4 bg-dark d-flex align-items-center">
                                     <img src="./assets/img/menu.jpeg"
@@ -254,62 +293,48 @@
             </div>
         </section>
 
-        <!-- seccion reseñas -->
-        <section id="reseñas" class="py-5 bg-gradient-primary-to-success">
-            <div class="container">
-                <h1 class="fw-bold text-center text-black mb-5">☁️ Reseñas</h1>
-                <div class="swiper reviews-swiper">
-                    <div class="swiper-wrapper pb-5 pt-3" id="reviewsContainer">
-                        <!-- Las reseñas se cargarán aquí dinámicamente -->
-                    </div>
-                    <div class="swiper-pagination"></div>
+       <!-- Sección de Reseñas (mantenida como estaba) -->
+       <section id="reseñas" class="py-5 bg-gradient-primary-to-success">
+        <div class="container">
+            <h2 class="fw-bold text-center text-black mb-5">☁️ Reseñas</h2>
+            <div class="swiper reviews-swiper">
+                <div class="swiper-wrapper pb-5 pt-3" id="reviewsContainer">
+                    <!-- Las reseñas se cargarán aquí dinámicamente -->
                 </div>
+                <div class="swiper-pagination"></div>
             </div>
-        </section>
+        </div>
+    </section>
 
-        <section id="contactanos" class="container-fluid py-5">
-            <div class="row justify-content-center">
-                <div class="col-12 col-lg-8">
-                    <div class="card shadow-lg border-0 rounded-lg ">
-                        <div class="row g-0">
-                            <div class="col-md-4 bg-primary d-flex align-items-stretch d-none d-md-block">
-                                <img src="./assets/img/call-center.png" class="img-fluid w-100 h-100 object-fit-cover"
-                                    alt="Servicio al Cliente">
-                            </div>
-                            <div class="col-md-8">
-                                <div class="card-body p-4 p-lg-5">
-                                    <h2 class="card-title text-primary mb-4">Servicio al Cliente</h2>
-                                    <p class="card-text mb-4">Nuestro equipo de atención al cliente está listo para
-                                        asistirte con cualquier consulta o sugerencia. Contáctanos a través de nuestros
-                                        canales y te responderemos lo antes posible.</p>
-                                    <form>
-                                        <div class="row g-2">
-                                            <div class="col-md-6">
-                                                <label for="nombre" class="form-label">Nombre</label>
-                                                <input type="text" class="form-control" id="nombre" required>
-                                            </div>
-                                            <div class="col-md-6">
-                                                <label for="email" class="form-label">Correo electrónico</label>
-                                                <input type="email" class="form-control" id="email" required>
-                                            </div>
-                                            <div class="col-12">
-                                                <label for="asunto" class="form-label">Asunto</label>
-                                                <input type="text" class="form-control" id="asunto" required>
-                                            </div>
-                                            <div class="col-12">
-                                                <label for="mensaje" class="form-label">Mensaje</label>
-                                                <textarea class="form-control" id="mensaje" rows="4"
-                                                    required></textarea>
-                                            </div>
-                                            <div class="col-12">
-                                                <button type="submit" class="btn btn-primary w-100">Enviar
-                                                    mensaje</button>
-                                            </div>
-                                        </div>
-                                    </form>
+         <!-- Sección de Contacto Mejorada -->
+         <section id="contacto" class="py-5 bg-gradient-primary-to-success-opaco">
+            <div class="container">
+                <div class="row justify-content-center">
+                    <div class="col-lg-8" data-aos="fade-up">
+                        <h2 class="text-center mb-5 fw-bold">📧 Contáctanos</h2>
+                        <form id="contactForm" >
+                            <div class="row g-3">
+                                <div class="col-md-6">
+                                    <label for="nombre" class="form-label">Nombre</label>
+                                    <input type="text" class="form-control" id="nombre" required>
+                                </div>
+                                <div class="col-md-6">
+                                    <label for="email" class="form-label">Correo electrónico</label>
+                                    <input type="email" class="form-control" id="email" required>
+                                </div>
+                                <div class="col-12">
+                                    <label for="asunto" class="form-label">Asunto</label>
+                                    <input type="text" class="form-control" id="asunto" required>
+                                </div>
+                                <div class="col-12">
+                                    <label for="mensaje" class="form-label">Mensaje</label>
+                                    <textarea class="form-control" id="mensaje" rows="4" required></textarea>
+                                </div>
+                                <div class="col-12">
+                                    <button type="submit" class="btn btn-primary w-100">Enviar mensaje</button>
                                 </div>
                             </div>
-                        </div>
+                        </form>
                     </div>
                 </div>
             </div>
@@ -318,21 +343,48 @@
 
     <!-- Footer -->
     <footer class="bg-dark text-white py-4 mt-auto">
-        <div class="container px-5">
-            <div class="row align-items-center justify-content-between">
-                <div class="col-auto">
-                    <div class="small m-0">Copyright &copy; Delicias del 2024</div>
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-4 mb-4 mb-lg-0">
+                    <h5>BurguerBoom</h5>
+                    <p>Descubre la auténtica gastronomía caribeña en cada bocado.</p>
+                    <div class="social-icons">
+                        <a href="#" class="text-white me-3"><i class="bi bi-facebook"></i></a>
+                        <a href="#" class="text-white me-3"><i class="bi bi-instagram"></i></a>
+                        <a href="#" class="text-white me-3"><i class="bi bi-twitter"></i></a>
+                    </div>
                 </div>
-                <div class="col-auto">
-                    <a class="text-white-50 small" href="#!">Política de privacidad</a>
-                    <span class="mx-1 text-muted">&middot;</span>
-                    <a class="text-white-50 small" href="#!">Términos y condiciones</a>
-                    <span class="mx-1 text-muted">&middot;</span>
-                    <a class="text-white-50 small" href="#!">Contacto</a>
+                <div class="col-lg-4 mb-4 mb-lg-0">
+                    <h5>Enlaces Rápidos</h5>
+                    <ul class="list-unstyled">
+                        <li><a href="#home" class="text-white">Inicio</a></li>
+                        <li><a href="#menu" class="text-white">Menú</a></li>
+                        <li><a href="#servicios" class="text-white">Servicios</a></li>
+                        <li><a href="#contacto" class="text-white">Contacto</a></li>
+                    </ul>
+                </div>
+                <div class="col-lg-4">
+                    <h5>Contacto</h5>
+                    <address>
+                        <p><i class="bi bi-geo-alt-fill me-2"></i>123 Calle Principal, Ciudad, País</p>
+                        <p><i class="bi bi-telephone-fill me-2"></i>(123) 456-7890</p>
+                        <p><i class="bi bi-envelope-fill me-2"></i>info@burguerboom.com</p>
+                    </address>
+                </div>
+            </div>
+            <hr class="my-4">
+            <div class="row align-items-center">
+                <div class="col-md-6 text-center text-md-start">
+                    <p class="mb-0">&copy; 2024 BurguerBoom. Todos los derechos reservados.</p>
+                </div>
+                <div class="col-md-6 text-center text-md-end">
+                    <a href="#" class="text-white-50 me-2">Política de privacidad</a>
+                    <a href="#" class="text-white-50">Términos y condiciones</a>
                 </div>
             </div>
         </div>
     </footer>
+
 
     <!-- Swiper core JS -->
     <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
@@ -342,13 +394,18 @@
 
     <!-- Core theme JS -->
     <script src="./assets/js/index.js"></script>
-
     <!-- Core theme JS -->
-    <script src="./assets/js/login"></script>
+    <script src="./assets/js/auth.js"></script>
 
     <!-- core sweetalert2 -->
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.14.5/dist/sweetalert2.all.min.js"
         integrity="sha256-1m4qVbsdcSU19tulVTbeQReg0BjZiW6yGffnlr/NJu4=" crossorigin="anonymous"></script>
+    <!--  core AOS -->
+    <script src="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.js"></script>
+    <script>
+        AOS.init();
+    </script>
+
 
 </body>
 
