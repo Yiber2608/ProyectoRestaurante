@@ -1,0 +1,153 @@
+/* Mantener el diseño del wrapper y main */
+.wrapper {
+    display: flex;
+    transition: all 0.35s ease-in-out;
+}
+
+.main {
+    min-height: 100vh;
+    width: calc(100% - 90px); /* Ajustar cuando el sidebar está visible */
+    overflow: hidden;
+    transition: all 0.35s ease-in-out;
+}
+
+/* Sidebar */
+.sidebar {
+    z-index: 1000;
+    transition: max-width 0.4s ease-in-out, opacity 0.4s ease-in-out;
+    display: flex;
+    flex-direction: column;
+    color: #fff;
+    max-width: 90px; /* Control de tamaño en lugar de display */
+    opacity: 1; /* El sidebar es visible */
+    overflow: hidden;
+}
+
+/* Sidebar oculto */
+.sidebar.hidden {
+    max-width: 0; /* Ancho del sidebar reducido a 0 */
+    opacity: 0; /* El sidebar se vuelve invisible */
+    pointer-events: none; /* Para evitar interacciones cuando está oculto */
+}
+
+/* Ajustes adicionales */
+.sidebar-logo {
+    text-align: center;
+    padding: 1.5rem;
+}
+
+.sidebar-nav {
+    padding: 0;
+    flex: 1 1 auto;
+}
+
+a.sidebar-link {
+    padding: 1rem;
+    color: #FFF;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    font-size: 0.65rem;
+    text-decoration: none;
+    white-space: nowrap;
+    transition: all 0.1s ease-in-out;
+    border-left: 3px solid transparent;
+}
+
+/* Íconos */
+.sidebar-link i {
+    font-size: 1.5rem;
+    margin-bottom: 0.5rem;
+}
+
+/* Hover Effect */
+a.sidebar-link:hover {
+    background-color: rgba(255, 255, 255, .075);
+    border-left: 3px solid #41D78C;
+}
+
+/* Hover Effect */
+a.sidebar-link>i:hover {
+    color:#41D78C;
+}
+
+/* Estilo activo */
+a.sidebar-link.active {
+    background-color: rgba(255, 255, 255, .075);
+    border-left: 3px solid #41D78C;
+}
+
+a.sidebar-link.active>i {
+    color: #41D78C;
+}
+
+/* Separador de la sección de usuarios */
+.sidebar-item + .sidebar-item {
+    margin-top: 0.5rem;
+}
+
+/* Ajuste del botón toggle */
+.toggle-btn {
+    color: #1a1a3d;
+    border: none;
+    padding: 0.2rem 0.5rem;
+    cursor: pointer;
+}
+
+.toggle-btn i {
+    font-size: 1.2rem;
+}
+
+
+.toggle-switch{
+    position:  relative;
+    display: inline-block;
+    width: 40px;
+    height: 20px;
+}
+
+.toggle-switch input {
+    display: none;
+}
+
+.slider{
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #F54E41;
+    transition: 0.4s;
+    border-radius: 10px;
+}
+
+.slider::before{
+    position: absolute;
+    content: '';
+    height: 15px;
+    width: 15px;
+    left: 2px;
+    bottom: 3px;
+    background-color: white;
+    transition: 0.4s;
+    
+    border-radius: 50%;
+}
+
+input:checked + .slider{ 
+    background-color: #41D78C;
+}
+
+input:checked + .slider::before{ 
+    transform: translateX(20px);
+}
+
+.icon-shape {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    height: 3rem;
+    width: 3rem;
+    font-size: 1.25rem;
+}

@@ -1,8 +1,6 @@
 
 
 // tab configurar datos db
-
-// This would typically be loaded from a file or database
 const menuData = {
     Entradas: [
         {
