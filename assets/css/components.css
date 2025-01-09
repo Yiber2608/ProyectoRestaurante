@@ -151,3 +151,16 @@ input:checked + .slider::before{
     width: 3rem;
     font-size: 1.25rem;
 }
+
+.tabulator-cell {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.fondo-amarillo { background-color: #F7E283; }  /* Amarillo Claro */
+.fondo-verde { background-color: #A7D65B; }    /* Verde Claro */
+.fondo-rojo { background-color: #FF5460; }     /* Rojo Brillante */
+.fondo-verde-agua { background-color: #8DDCB8; } /* Verde Agua */
+.fondo-naranja { background-color: #FF8B00; }  /* Naranja */
+
