@@ -1,50 +1,60 @@
 const itemsGlobal = [
     {
         id: 1,
-        tipo: "Electrónico",
-        nombre: "Smartphone X",
-        descripcion: "Teléfono inteligente de última generación con cámara dual y pantalla OLED.",
-        precio: 899.99,
+        tipo: "Entradas",
+        nombre: "Bruschetta",
+        descripcion: "Deliciosos panecillos tostados con tomate fresco, albahaca y aceite de oliva.",
+        precio: 5.99,
         imagen: "./assets/img/prueba-entrada.png", // URL de una imagen de ejemplo
         estado: true, // Estado activo
     },
     {
         id: 2,
-        tipo: "Electrodoméstico",
-        nombre: "Lavadora Turbo",
-        descripcion: "Lavadora de alta eficiencia con capacidad de 20 kg y múltiples modos de lavado.",
-        precio: 499.99,
+        tipo: "Plato Principal",
+        nombre: "Filete de Res",
+        descripcion: "Jugoso filete de res a la parrilla acompañado de papas al horno y ensalada.",
+        precio: 15.99,
         imagen: "./assets/img/prueba-entrada.png",
         estado: true,
     },
     {
         id: 3,
-        tipo: "Mueble",
-        nombre: "Sofá de Cuero",
-        descripcion: "Sofá cómodo de cuero genuino, ideal para salas modernas.",
-        precio: 1299.99,
+        tipo: "Postres",
+        nombre: "Tarta de Queso",
+        descripcion: "Tarta de queso cremosa con base de galleta y cobertura de frutas del bosque.",
+        precio: 6.99,
         imagen: "./assets/img/prueba-entrada.png",
-        estado: false, // Estado inactivo
+        estado: true,
     },
     {
         id: 4,
-        tipo: "Accesorio",
-        nombre: "Reloj Inteligente",
-        descripcion: "Reloj con funciones avanzadas como monitoreo de salud y GPS integrado.",
-        precio: 199.99,
+        tipo: "Bebidas Calientes",
+        nombre: "Café Latte",
+        descripcion: "Café espresso con leche espumada, ideal para las tardes frías.",
+        precio: 3.99,
         imagen: "./assets/img/prueba-entrada.png",
         estado: true,
     },
     {
         id: 5,
-        tipo: "Deportivo",
-        nombre: "Bicicleta de Montaña",
-        descripcion: "Bicicleta con marco de aluminio y suspensión doble, diseñada para terrenos difíciles.",
-        precio: 749.99,
+        tipo: "Otras Bebidas",
+        nombre: "Limonada de Coco",
+        descripcion: "Refrescante limonada mezclada con crema de coco y hielo.",
+        precio: 4.99,
         imagen: "./assets/img/prueba-entrada.png",
-        estado: false,
+        estado: true,
+    },
+    {
+        id: 6,
+        tipo: "Otras Bebidas",
+        nombre: "Combo Familiar",
+        descripcion: "Incluye una pizza grande, alitas de pollo, papas fritas y una bebida de 2 litros.",
+        precio: 24.99,
+        imagen: "./assets/img/prueba-entrada.png",
+        estado: true,
     },
 ];
+
 
 
 // Cargar datos con jQuery AJAX
@@ -68,11 +78,11 @@ function loadData() {
 
 
 //funcio que crea la tabla con tabulator 
-function buildTable() {
+function buildTable(data) {
     const tableContainer = document.getElementById("table-container");
 
     const table = new Tabulator(tableContainer, {
-        data: itemsGlobal, // Usa los datos de la constante global
+        data: data, // Usa los datos de la constante global
         layout: "fitColumns", // Ajusta las columnas al contenedor
         responsiveLayout: "collapse", // Habilita el diseño responsive
         tableClass: "table table-striped table-bordered table-hover",
@@ -189,6 +199,35 @@ function buildTable() {
     console.log("Tabla creada con éxito");
 }
 
+//Funcion de cargar cantidades 
+function conteoItemsTarjetas() {
+    const conteos = {
+        total: 0,
+        "Entradas": 0,
+        "Plato Principal": 0,
+        "Postres": 0,
+        "Bebidas Calientes": 0,
+        "Otras Bebidas": 0
+    };
+
+    // Itera sobre itemsGlobal para contar
+    for (let item of itemsGlobal) {
+        conteos.total++;
+        if (conteos[item.tipo] !== undefined) {
+            conteos[item.tipo]++;
+        }
+    }
+
+    // Actualiza los contadores en el DOM
+    document.getElementById('totalItems').innerText = conteos.total;
+    document.getElementById('totalEntradas').innerText = conteos["Entradas"];
+    document.getElementById('totalPlatos').innerText = conteos["Plato Principal"];
+    document.getElementById('totalPostres').innerText = conteos["Postres"];
+    document.getElementById('totalBebidasCalientes').innerText = conteos["Bebidas Calientes"];
+    document.getElementById('totalOtrasBebidas').innerText = conteos["Otras Bebidas"];
+}
+
+
 
 // Función para mostrar la imagen en un modal
 function showImageModal(imageUrl) {
@@ -201,13 +240,6 @@ function showImageModal(imageUrl) {
     modal.show();
 }
 
-
-
-// Método para ejecutar al cargar la página
-document.addEventListener("DOMContentLoaded", () => {
-    buildTable(); // Llama a la función para crear la tabla
-    console.log("Tabla creada al cargar la página");
-});
 
 // Toggle Sidebar
 document.querySelector('.toggle-btn').addEventListener('click', function () {
@@ -222,4 +254,153 @@ document.querySelector('.toggle-btn').addEventListener('click', function () {
     } else {
         main.style.width = 'calc(100% - 90px)';
     }
+});
+
+
+let searchTimeout; // Variable para almacenar el timeout
+
+// Evento de Escuchar el filtro
+document.getElementById("searchInput").addEventListener("input", function () {
+    const searchTerm = this.value.trim().toLowerCase(); // Elimina espacios en blanco y convierte a minúsculas
+
+    // Si hay menos de 3 caracteres, limpia la tabla
+    if (searchTerm.length < 4) {
+        buildTable(itemsGlobal); // Muestra todos los elementos
+        return; // Sal del listener
+    }
+
+    // Retrasar la búsqueda para reducir eventos
+    clearTimeout(searchTimeout); // Limpia cualquier timeout previo
+    searchTimeout = setTimeout(() => {
+        const filteredItems = itemsGlobal.filter(item => 
+            item.nombre.toLowerCase().includes(searchTerm)
+        );
+
+        // Si no se encuentran resultados
+        if (filteredItems.length === 0) {
+            Swal.fire({
+                icon: 'info',
+                title: 'No se encontraron resultados',
+                text: 'No hay productos que coincidan con tu búsqueda.',
+                showConfirmButton: false,
+                timer: 1500 // 1.5 segundos de duración
+            });
+
+            // No cargar la tabla vacía
+            return;
+        }
+
+        // Si hay resultados, actualiza la tabla con los elementos filtrados
+        buildTable(filteredItems);
+    }, 300); // Retraso de 300ms antes de ejecutar el filtro
+});
+
+
+//Evento de previsuaviliazr imagen
+document.getElementById('imagePreview').addEventListener('click', function () {
+    document.getElementById('itemImage').click();
+});
+
+document.getElementById('itemImage').addEventListener('change', function (event) {
+    const file = event.target.files[0];
+    const preview = document.getElementById('previewImage');
+    const placeholder = document.getElementById('imagePlaceholder');
+    const removeBtn = document.getElementById('removeImage');
+
+    if (file) {
+        const reader = new FileReader();
+        reader.onload = function (e) {
+            preview.src = e.target.result;
+            preview.style.display = 'block';
+            placeholder.style.display = 'none';
+            removeBtn.classList.remove('d-none');
+        };
+        reader.readAsDataURL(file);
+    }
+});
+
+// Evento de remover imagen
+document.getElementById('removeImage').addEventListener('click', function () {
+    const preview = document.getElementById('previewImage');
+    const placeholder = document.getElementById('imagePlaceholder');
+    const fileInput = document.getElementById('itemImage');
+    const removeBtn = document.getElementById('removeImage');
+
+    preview.src = '';
+    preview.style.display = 'none';
+    placeholder.style.display = 'block';
+    fileInput.value = '';
+    removeBtn.classList.add('d-none');
+});
+
+
+// Evento de filtro de tarjetas 
+document.querySelectorAll('.card-clickeable').forEach(card => {
+    card.addEventListener('click', () => {
+        const cardId = card.id;
+
+        // Diccionario de tipos para simplificar los filtros
+        const tipos = {
+            'cardEntradas': 'Entradas',
+            'cardPlatosPrincipales': 'Plato Principal',
+            'cardPostres': 'Postres',
+            'cardBebidasCalientes': 'Bebidas Calientes',
+            'cardOtrasBebidas': 'Otras Bebidas',
+            'cardTodos': 'Todos'
+        };
+        // Mostrar spinner de carga
+        Swal.fire({
+            title: 'Cargando...',
+            html: 'Por favor espera mientras se carga la información.',
+            allowOutsideClick: false,
+            didOpen: () => {
+                Swal.showLoading();
+            }
+        });
+
+        setTimeout(() => {
+            let filteredItems;
+            if (cardId === 'cardTodos') {
+                filteredItems = itemsGlobal;
+            } else if (tipos[cardId]) {
+                const tipo = tipos[cardId];
+                filteredItems = itemsGlobal.filter(item => item.tipo === tipo);
+            } else {
+                Swal.close();
+                alert('¡Hiciste clic en otra tarjeta!');
+                return;
+            }
+            Swal.close();
+
+            if (filteredItems.length > 0) {
+                Swal.fire({
+                    icon: "success",
+                    title: "¡Datos cargados!",
+                    text: `Se encontraron ${filteredItems.length} ${tipos[cardId]}${filteredItems.length > 1 ? '' : ''}.`,
+                    timer: 2000, // 2 segundos
+                    showConfirmButton: false,
+                }).then(() => {
+                    buildTable(filteredItems);
+                });
+            } else {
+                Swal.fire({
+                    icon: "error",
+                    title: "Sin resultados",
+                    text: `No se encontraron productos del tipo ${tipos[cardId]}.`,
+                    timer: 2000, // 2 segundos
+                    showConfirmButton: false,
+                }).then(() => {
+                    buildTable(itemsGlobal);
+                });
+            }
+        }, 1000); 
+    });
+});
+
+
+// Método para ejecutar al cargar la página
+document.addEventListener("DOMContentLoaded", () => {
+    buildTable(itemsGlobal); // Llama a la función para crear la tabla
+    conteoItemsTarjetas();
+    console.log("Tabla creada al cargar la página");
 });

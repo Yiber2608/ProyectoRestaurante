@@ -26,7 +26,7 @@
 <body class="d-flex flex-column h-100">
     <div class="wrapper">
         <!-- Sidebar -->
-        <div class="sidebar bg-primary">
+        <div class="sidebar bg-primary ">
             <div class="text-center p-2">
                 <!-- Logo -->
                 <i class='bx bxs-cube-alt bx-lg text-whithe'></i>
@@ -63,14 +63,14 @@
 
                 <li class="sidebar-item">
                     <a href="admin-novedades.html" class="sidebar-link">
-                        <i class='bx bxs-edit-alt' ></i>
+                        <i class='bx bxs-edit-alt'></i>
                         <span>Novedades</span>
                     </a>
                 </li>
 
                 <li class="sidebar-item">
                     <a href="admin-sedes.html" class="sidebar-link ">
-                        <i class='bx bxs-building-house' ></i>
+                        <i class='bx bxs-building-house'></i>
                         <span>sedes</span>
                     </a>
                 </li>
@@ -88,7 +88,7 @@
         <!-- Main content -->
         <div class="main">
             <!-- Navbar -->
-            <nav class="navbar navbar-expand-lg navbar-light bg-whithe shadow p-0">
+            <nav class="navbar navbar-expand-lg navbar-light bg-whithe shadow p-0 ">
                 <div class="container-fluid">
                     <!-- Sidebar Toggle Button -->
                     <div class="toggle-btn" type="button">
@@ -121,25 +121,54 @@
 
                 <div class="row">
                     <!-- tab botones  -->
-                    <div class="col-12">
+                    <div class="col-9">
                         <button class="btn btn-outline-dark my-3" id="addItemsButton" data-bs-toggle="modal"
                             data-bs-target="#addItems">Crear
-                            Nuevo
-                            Item</button>
+                            Nuevo Item</button>
+                    </div>
+
+                    <div class="col-3">
+                        <div class="d-flex justify-content-center align-items-center h-100">
+                            <div class="input-group">
+                                <input type="text" id="searchInput" class="form-control rounded"
+                                    placeholder="Escribe para buscar... " aria-label="Buscar " />
+                                <span class="input-group-text">
+                                    <i class="bi bi-search"></i>
+                                </span>
+                            </div>
+
+                        </div>
                     </div>
 
                     <!-- tab cantidades menu -->
                     <div class="col-12">
                         <div class="row row-cols-1 row-cols-md-6 g-3 mb-4">
 
+                            <!-- tab Todos -->
+                            <div class="col">
+                                <div class="card card-clickeable h-100 border-0 shadow" id="cardTodos">
+                                    <div class="card-body">
+                                        <div class="d-flex justify-content-between align-items-center">
+                                            <div>
+                                                <h6 class="card-subtitle mb-1 text-muted">Todos</h6>
+                                                <h2 id="totalItems" class="card-title mb-0">34</h2>
+                                            </div>
+                                            <div class="icon-shape fondo-naranja text-white rounded-circle shadow">
+                                                <i class="bi bi-box"></i>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
                             <!-- tab entradas -->
                             <div class="col">
-                                <div class="card h-100 border-0 shadow">
+                                <div class="card card-clickeable h-100 border-0 shadow" id="cardEntradas">
                                     <div class="card-body">
                                         <div class="d-flex justify-content-between align-items-center">
                                             <div>
                                                 <h6 class="card-subtitle mb-1 text-muted">Entradas</h6>
-                                                <h2 id="totalProductos" class="card-title mb-0">789</h2>
+                                                <h2 id="totalEntradas" class="card-title mb-0">789</h2>
                                             </div>
                                             <div class="icon-shape fondo-verde text-white rounded-circle shadow">
                                                 <i class='bx bxs-bowl-rice'></i>
@@ -151,12 +180,12 @@
 
                             <!-- tab platos principales -->
                             <div class="col">
-                                <div class="card h-100 border-0 shadow">
+                                <div class="card card-clickeable h-100 border-0 shadow " id="cardPlatosPrincipales">
                                     <div class="card-body">
                                         <div class="d-flex justify-content-between align-items-center">
                                             <div>
                                                 <h6 class="card-subtitle mb-1 text-muted">Platos Principales</h6>
-                                                <h2 id="totalServicios" class="card-title mb-0">345</h2>
+                                                <h2 id="totalPlatos" class="card-title mb-0">345</h2>
                                             </div>
                                             <div class="icon-shape fondo-amarillo text-white rounded-circle shadow">
                                                 <i class='bx bxs-dish'></i>
@@ -168,12 +197,12 @@
 
                             <!-- tab postres -->
                             <div class="col">
-                                <div class="card h-100 border-0 shadow">
+                                <div class="card card-clickeable h-100 border-0 shadow" id="cardPostres">
                                     <div class="card-body">
                                         <div class="d-flex justify-content-between align-items-center">
                                             <div>
                                                 <h6 class="card-subtitle mb-1 text-muted">Postres</h6>
-                                                <h2 id="totalServicios" class="card-title mb-0">345</h2>
+                                                <h2 id="totalPostres" class="card-title mb-0">345</h2>
                                             </div>
                                             <div class="icon-shape fondo-rojo text-white rounded-circle shadow">
                                                 <i class='bx bxs-cookie'></i>
@@ -185,12 +214,12 @@
 
                             <!-- tab bebidas calientes  -->
                             <div class="col">
-                                <div class="card h-100 border-0 shadow">
+                                <div class="card  card-clickeable h-100 border-0 shadow" id="cardBebidasCalientes">
                                     <div class="card-body">
                                         <div class="d-flex justify-content-between align-items-center">
                                             <div>
                                                 <h6 class="card-subtitle mb-1 text-muted">Bebidas Calientes</h6>
-                                                <h2 id="totalCombos" class="card-title mb-0">100</h2>
+                                                <h2 id="totalBebidasCalientes" class="card-title mb-0">100</h2>
                                             </div>
                                             <div class="icon-shape fondo-verde-agua text-white rounded-circle shadow">
                                                 <i class='bx bxs-coffee'></i>
@@ -202,12 +231,12 @@
 
                             <!-- tab otras bebidas -->
                             <div class="col">
-                                <div class="card h-100 border-0 shadow">
+                                <div class="card card-clickeable h-100 border-0 shadow" id="cardOtrasBebidas">
                                     <div class="card-body">
                                         <div class="d-flex justify-content-between align-items-center">
                                             <div>
                                                 <h6 class="card-subtitle mb-1 text-muted">Otras Bebidas</h6>
-                                                <h2 id="totalCombos" class="card-title mb-0">100</h2>
+                                                <h2 id="totalOtrasBebidas" class="card-title mb-0">100</h2>
                                             </div>
                                             <div class="icon-shape bg-warning text-white rounded-circle shadow">
                                                 <i class='bx bxs-wine'></i>
@@ -216,24 +245,6 @@
                                     </div>
                                 </div>
                             </div>
-
-                            <!-- tab combos -->
-                            <div class="col">
-                                <div class="card h-100 border-0 shadow">
-                                    <div class="card-body">
-                                        <div class="d-flex justify-content-between align-items-center">
-                                            <div>
-                                                <h6 class="card-subtitle mb-1 text-muted">Combos</h6>
-                                                <h2 id="totalItems" class="card-title mb-0">34</h2>
-                                            </div>
-                                            <div class="icon-shape fondo-naranja text-white rounded-circle shadow">
-                                                <i class="bi bi-box"></i>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
                         </div>
 
                         <!-- tab tabla de items -->
@@ -257,66 +268,98 @@
                 </div>
                 <div class="modal-body">
                     <form id="addItemForm" class="needs-validation" novalidate>
-                        <div class="row mb-3">
-                            <div class="col-md-5">
-                                <label for="name" class="form-label">Nombre del Producto <span
-                                        class="text-danger">*</span></label>
-                                <input type="text" class="form-control" id="name"
-                                    placeholder="Ingresa el nombre del producto" required minlength="3">
-                                <div class="invalid-feedback">Por favor, ingresa un nombre válido (mínimo 3
-                                    caracteres).
-                                </div>
-                            </div>
-                            <div class="col-md-5">
-                                <label for="itemCode" class="form-label">Código <span
-                                        class="text-danger">*</span></label>
-                                <input type="text" class="form-control" id="itemCode"
-                                    placeholder="Ingresa el código del producto" required pattern="^[A-Za-z0-9\-]+$">
-                                <div class="invalid-feedback">El código debe ser alfanumérico y puede incluir
-                                    guiones.
-                                </div>
-                            </div>
-                            <div class="col-md-2">
-                                <div class="row p-0">
-                                    <div class="col-12"><label for="status" class="form-label">Estado <span
-                                                class="text-danger">*</span></label></div>
-                                    <div class="col-12 d-flex justify-content-start align-content-center">
-                                        <label class="toggle-switch">
-                                            <input type="checkbox" id="status">
-                                            <span class="slider"></span>
-                                        </label>
+                        <div class="row">
+
+                            <div class="col-5">
+                                <div class="row">
+                                    <!-- Imagen con previsualización -->
+                                    <div class="col-12">
+                                        <label for="name" class="form-label">Imagen del Producto <span
+                                                class="text-danger">*</span></label>
+                                        <div class="d-flex flex-column align-items-center">
+                                            <div id="imagePreview" class="border border-secondary mb-2 image-preview">
+                                                <span id="imagePlaceholder" class="text-muted">Previsualizar</span>
+                                                <img id="previewImage" src="" alt="Previsualización"
+                                                    class="preview-image">
+                                            </div>
+                                            <input type="file" id="itemImage" class="form-control d-none"
+                                                accept="image/*">
+                                            <button type="button" id="removeImage"
+                                                class="btn btn-sm btn-danger d-none">Eliminar Imagen</button>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                        <div class="row mb-3">
-                            <div class="col-md">
-                                <label for="typeItem" class="form-label">Tipo de Item <span
-                                        class="text-danger">*</span></label>
-                                <div id="typeItem"></div>
-                            </div>
-                            <div class="col-md">
-                                <label for="unitPrice" class="form-label">Precio Unitario <span
-                                        class="text-danger">*</span></label>
-                                <input type="number" class="form-control" id="unitPrice"
-                                    placeholder="Ingresa el precio unitario" required step="0.01" min="0">
-                                <div class="invalid-feedback">Por favor, ingresa un precio válido mayor o igual
-                                    a 0.
+                            <div class="col-7">
+                                <div class="row g-3">
+                                    <div class="col-md-9">
+                                        <label for="name" class="form-label">Nombre del Producto <span
+                                                class="text-danger">*</span></label>
+                                        <input type="text" class="form-control" id="name"
+                                            placeholder="Ingresa el nombre del producto" required minlength="3">
+                                        <div class="invalid-feedback">Por favor, ingresa un nombre válido (mínimo 3
+                                            caracteres).
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-3">
+                                        <div class="row p-0">
+                                            <div class="col-12"><label for="status" class="form-label">Estado <span
+                                                        class="text-danger">*</span></label></div>
+                                            <div class="col-12 d-flex justify-content-start align-content-center">
+                                                <label class="toggle-switch">
+                                                    <input type="checkbox" id="status">
+                                                    <span class="slider"></span>
+                                                </label>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-12">
+                                        <label for="typeItem" class="form-label">Tipo de Item <span
+                                                class="text-danger">*</span></label>
+                                        <select id="typeItem" class="form-select" required>
+                                            <option value="">Selecciona el tipo</option>
+                                            <option value="Electrónico">Electrónico</option>
+                                            <option value="Ropa">Ropa</option>
+                                            <option value="Hogar">Hogar</option>
+                                            <!-- Agrega más opciones según sea necesario -->
+                                        </select>
+                                        <div class="invalid-feedback">Por favor, selecciona un tipo de item.</div>
+                                    </div>
+                                    <div class="col-md-12">
+                                        <label for="unitPrice" class="form-label">Precio Unitario <span
+                                                class="text-danger">*</span></label>
+                                        <input type="number" class="form-control" id="unitPrice"
+                                            placeholder="Ingresa el precio unitario" required step="0.01" min="0">
+                                        <div class="invalid-feedback">Por favor, ingresa un precio válido mayor o igual
+                                            a 0.
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                        <div class="mb-3">
-                            <label for="itemDescription" class="form-label">Descripción <span
-                                    class="text-danger">*</span></label>
-                            <textarea class="form-control" id="itemDescription" rows="3"
-                                placeholder="Ingresa la descripción del producto" required minlength="10"></textarea>
-                            <div class="invalid-feedback">La descripción debe tener al menos 10 caracteres.
+
+                            <div class="col-md-12">
+                                <label for="itemDescription" class="form-label">Descripción <span
+                                        class="text-danger">*</span></label>
+                                <textarea class="form-control" id="itemDescription" rows="3"
+                                    placeholder="Ingresa la descripción del producto" required
+                                    minlength="10"></textarea>
+                                <div class="invalid-feedback">La descripción debe tener al menos 10 caracteres.</div>
                             </div>
                         </div>
+
+
+                        <!-- Botones -->
                         <div class="d-flex justify-content-end mt-3">
                             <button type="button" class="btn btn-dark me-3" data-bs-dismiss="modal">Cancelar</button>
                             <button type="submit" id="saveItems" class="btn btn-primary">Guardar</button>
                         </div>
+
+
+
+
+
                     </form>
                 </div>
             </div>

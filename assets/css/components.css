@@ -6,7 +6,8 @@
 
 .main {
     min-height: 100vh;
-    width: calc(100% - 90px); /* Ajustar cuando el sidebar está visible */
+    width: calc(100% - 90px);
+    /* Ajustar cuando el sidebar está visible */
     overflow: hidden;
     transition: all 0.35s ease-in-out;
 }
@@ -18,16 +19,21 @@
     display: flex;
     flex-direction: column;
     color: #fff;
-    max-width: 90px; /* Control de tamaño en lugar de display */
-    opacity: 1; /* El sidebar es visible */
+    max-width: 90px;
+    /* Control de tamaño en lugar de display */
+    opacity: 1;
+    /* El sidebar es visible */
     overflow: hidden;
 }
 
 /* Sidebar oculto */
 .sidebar.hidden {
-    max-width: 0; /* Ancho del sidebar reducido a 0 */
-    opacity: 0; /* El sidebar se vuelve invisible */
-    pointer-events: none; /* Para evitar interacciones cuando está oculto */
+    max-width: 0;
+    /* Ancho del sidebar reducido a 0 */
+    opacity: 0;
+    /* El sidebar se vuelve invisible */
+    pointer-events: none;
+    /* Para evitar interacciones cuando está oculto */
 }
 
 /* Ajustes adicionales */
@@ -68,7 +74,7 @@ a.sidebar-link:hover {
 
 /* Hover Effect */
 a.sidebar-link>i:hover {
-    color:#41D78C;
+    color: #41D78C;
 }
 
 /* Estilo activo */
@@ -82,7 +88,7 @@ a.sidebar-link.active>i {
 }
 
 /* Separador de la sección de usuarios */
-.sidebar-item + .sidebar-item {
+.sidebar-item+.sidebar-item {
     margin-top: 0.5rem;
 }
 
@@ -99,8 +105,8 @@ a.sidebar-link.active>i {
 }
 
 
-.toggle-switch{
-    position:  relative;
+.toggle-switch {
+    position: relative;
     display: inline-block;
     width: 40px;
     height: 20px;
@@ -110,7 +116,7 @@ a.sidebar-link.active>i {
     display: none;
 }
 
-.slider{
+.slider {
     position: absolute;
     cursor: pointer;
     top: 0;
@@ -122,7 +128,7 @@ a.sidebar-link.active>i {
     border-radius: 10px;
 }
 
-.slider::before{
+.slider::before {
     position: absolute;
     content: '';
     height: 15px;
@@ -131,15 +137,15 @@ a.sidebar-link.active>i {
     bottom: 3px;
     background-color: white;
     transition: 0.4s;
-    
+
     border-radius: 50%;
 }
 
-input:checked + .slider{ 
+input:checked+.slider {
     background-color: #41D78C;
 }
 
-input:checked + .slider::before{ 
+input:checked+.slider::before {
     transform: translateX(20px);
 }
 
@@ -158,9 +164,55 @@ input:checked + .slider::before{
     white-space: nowrap;
 }
 
-.fondo-amarillo { background-color: #F7E283; }  /* Amarillo Claro */
-.fondo-verde { background-color: #A7D65B; }    /* Verde Claro */
-.fondo-rojo { background-color: #FF5460; }     /* Rojo Brillante */
-.fondo-verde-agua { background-color: #8DDCB8; } /* Verde Agua */
-.fondo-naranja { background-color: #FF8B00; }  /* Naranja */
+.fondo-amarillo {
+    background-color: #F7E283;
+}
 
+/* Amarillo Claro */
+.fondo-verde {
+    background-color: #A7D65B;
+}
+
+/* Verde Claro */
+.fondo-rojo {
+    background-color: #FF5460;
+}
+
+/* Rojo Brillante */
+.fondo-verde-agua {
+    background-color: #8DDCB8;
+}
+
+/* Verde Agua */
+.fondo-naranja {
+    background-color: #FF8B00;
+}
+
+/* Naranja */
+
+
+.image-preview {
+    width: 150px;
+    height: 150px;
+    background-color: #f8f9fa;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+}
+
+.preview-image {
+    max-width: 100%;
+    max-height: 100%;
+    display: none;
+}
+
+.card-clickeable{
+        cursor: pointer; /* Cambia el cursor para indicar que es clickeable */
+        transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.card-clickeable:hover {
+    transform: scale(1.05); /* Añade un efecto de zoom al pasar el mouse */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Añade sombra al hacer hover */
+  }
