@@ -9,14 +9,14 @@ const menuData = {
             description:
                 "Crujientes empanadas de carne y papa acompañadas de ají casero.",
             price: 12000,
-            image:"https://drive.google.com/file/d/14q34dc83IyjNjV5I_ACjkfA6pAGaYKFK/view",
+            image:"https://res.cloudinary.com/dgabtcr2m/image/upload/v1736490069/prueba-entrada_pnlyjr.png",
         },
         {
             id: 2,
             name: "Arepa de Choclo",
             description: "Arepa dulce de maíz servida con queso fundido.",
             price: 15000,
-            image:"./assets/img/prueba-entrada.png",
+            image:"https://res.cloudinary.com/dgabtcr2m/image/upload/v1736490069/prueba-entrada_pnlyjr.png",
         },
         {
             id: 3,
@@ -24,14 +24,14 @@ const menuData = {
             description:
                 "Delicioso ceviche de camarones con limón, cilantro y cebolla morada.",
             price: 18000,
-            image:"./assets/img/prueba-entrada.png",
+            image:"https://res.cloudinary.com/dgabtcr2m/image/upload/v1736490069/prueba-entrada_pnlyjr.png",
         },
         {
             id: 4,
             name: "Nachos con Queso",
             description: "Nachos crujientes cubiertos con queso fundido y jalapeños.",
             price: 14000,
-            image:"./assets/img/prueba-entrada.png",
+            image:"https://res.cloudinary.com/dgabtcr2m/image/upload/v1736490069/prueba-entrada_pnlyjr.png",
         },
         {
             id: 5,

@@ -5,7 +5,7 @@ const itemsGlobal = [
         nombre: "Bruschetta",
         descripcion: "Deliciosos panecillos tostados con tomate fresco, albahaca y aceite de oliva.",
         precio: 5.99,
-        imagen: "./assets/img/prueba-entrada.png", // URL de una imagen de ejemplo
+        imagen: "https://res.cloudinary.com/dgabtcr2m/image/upload/v1736489776/naaa_vh6fiq.jpg", // URL de una imagen de ejemplo
         estado: true, // Estado activo
     },
     {
@@ -14,7 +14,7 @@ const itemsGlobal = [
         nombre: "Filete de Res",
         descripcion: "Jugoso filete de res a la parrilla acompañado de papas al horno y ensalada.",
         precio: 15.99,
-        imagen: "./assets/img/prueba-entrada.png",
+        imagen: "https://res.cloudinary.com/dgabtcr2m/image/upload/v1736489776/naaa_vh6fiq.jpg",
         estado: true,
     },
     {
