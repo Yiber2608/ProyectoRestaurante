@@ -38,16 +38,20 @@
             </button>
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
-                    
+
                     <li class="nav-item"><a class="nav-link fw-bold text-white" href="inicio-menu.html">Menú</a></li>
 
-                    <li class="nav-item"><a class="nav-link fw-bold text-white" href="inicio-empleos.html">Empleos</a></li>
+                    <li class="nav-item"><a class="nav-link fw-bold text-white" href="inicio-empleos.html">Empleos</a>
+                    </li>
 
-                    <li class="nav-item"><a class="nav-link fw-bold text-white" href="inicio-nosotros.html">Nosotros</a></li>
+                    <li class="nav-item"><a class="nav-link fw-bold text-white" href="inicio-nosotros.html">Nosotros</a>
+                    </li>
 
-                    <li class="nav-item"><a class="nav-link fw-bold text-white" href="inicio-contactanos.html">Contacto</a></li>
+                    <li class="nav-item"><a class="nav-link fw-bold text-white"
+                            href="inicio-contactanos.html">Contacto</a></li>
 
-                    <li class="nav-item ms-2"><button id="authButton" class="btn btn-primary fw-bold ">Iniciar Sesión</button></li>
+                    <li class="nav-item ms-2"><button id="authButton" class="btn btn-primary fw-bold ">Iniciar
+                            Sesión</button></li>
 
 
                 </ul>
@@ -61,14 +65,17 @@
                 <div class="row ">
                     <div class="col-12 col-md-7 d-flex align-items-center">
                         <div class="text-center text-xxl-start">
-                            <h1 class="display-1 fw-bolder  text-white mb-4" data-aos="zoom-in-down" data-aos-delay="500" >Nuestro Comienzo </h1>
-                            <p class="fs-2 mb-5 text-white-50" data-aos="zoom-in-down" data-aos-delay="1000">A mediados de 1985 nuestro fundador Antonio Moreno abrio
+                            <h1 class="display-1 fw-bolder  text-white mb-4" data-aos="zoom-in-down"
+                                data-aos-delay="500">Nuestro Comienzo </h1>
+                            <p class="fs-2 mb-5 text-white-50" data-aos="zoom-in-down" data-aos-delay="1000">A mediados
+                                de 1985 nuestro fundador Antonio Moreno abrio
                                 la primera cede.</p>
                         </div>
                     </div>
                     <div class="col-12 col-md-5 d-flex justify-content-center ">
-                        <div class="profile  bg-gradient-primary-to-success rounded-circle " data-aos="zoom-in-down" data-aos-delay="1500">
-                            <img class="profile-img img-flex "  src="./assets/img/fundador.png" alt="..."  />
+                        <div class="profile  bg-gradient-primary-to-success rounded-circle " data-aos="zoom-in-down"
+                            data-aos-delay="1500">
+                            <img class="profile-img img-flex " src="./assets/img/fundador.png" alt="..." />
                         </div>
                     </div>
                 </div>
@@ -80,7 +87,7 @@
             <div class="container">
                 <div class="row justify-content-center">
                     <div class="col-md-6 mb-4">
-                        <div class="card-flip" data-aos="zoom-in-down" data-aos-delay="200" >
+                        <div class="card-flip" data-aos="zoom-in-down" data-aos-delay="200">
                             <div class="card-inner">
                                 <div
                                     class="card-front bg-primary text-white d-flex align-items-center justify-content-center">
@@ -137,7 +144,8 @@
         </section>
 
         <!-- tab map  -->
-        <section id="buscarSede" class="bg-gradient-primary-to-success py-5" data-aos="zoom-in-down" data-aos-delay="800">
+        <section id="buscarSede" class="bg-gradient-primary-to-success py-5" data-aos="zoom-in-down"
+            data-aos-delay="800">
             <div class="container">
                 <div class="row">
                     <div class="col-12 col-md-6">
@@ -214,7 +222,7 @@
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
         integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
     <!-- Core theme JS -->
-    <script src="./assets/js/inicio-nosotros.js"></script>
+    <script src="./assets/js/inicio/inicio-nosotros.js"></script>
     <!-- core sweetalert2 -->
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.14.5/dist/sweetalert2.all.min.js"
         integrity="sha256-1m4qVbsdcSU19tulVTbeQReg0BjZiW6yGffnlr/NJu4=" crossorigin="anonymous"></script>
@@ -223,8 +231,12 @@
     <script>
         AOS.init();
     </script>
-        <!-- Core theme JS -->
-        <script src="./assets/js/auth.js"></script>
+    <!-- Core theme JS -->
+    <script src="./assets/js/config/jwt-decode.js"></script>
+    <script src="./assets/js/config/validate-auth.js"></script>
+    <script src="./assets/js/config/protect-routes.js"></script>
+    <script src="./assets/js/auth.js"></script>
+    <script src="./assets/js/config/logout.js"></script>
 
 
 </body>

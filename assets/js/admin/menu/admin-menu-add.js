@@ -97,30 +97,83 @@ function validateImageFile(file) {
 // Prevent multiple clicks
 let isSubmitting = false;
 
-saveButton.addEventListener('click', (e) => {
-    e.preventDefault(); // Prevent default form submission
-
-    if (isSubmitting) return;
-
-    // Get field values
+function obtenerDatosFormulario() {
     const name = document.getElementById('name').value;
     const description = document.getElementById('itemDescription').value;
     const typeItem = document.getElementById('typeItem').value;
     const unitPrice = document.getElementById('unitPrice').value;
     const status = document.getElementById('status').checked;
 
-    // Custom validations for each field
+    return { name, description, typeItem, unitPrice, status };
+}
+function validarCamposFormulario(name, description, typeItem, unitPrice) {
+    // Validación de cada campo
     if (
         !validateTextInput(name, 3, 50, 'Nombre') ||
         !validateTextInput(description, 20, 150, 'Descripción') ||
         !validateTextInput(typeItem, 3, 30, 'Tipo de ítem') ||
         !validatePrice(unitPrice)
     ) {
+        return false;
+    }
+    return true;
+}
+function subirImagen(file) {
+    const url = `https://api.cloudinary.com/v1_1/${cloudName}/image/upload`;
+    const cloudinaryFormData = new FormData();
+    cloudinaryFormData.append('file', file);
+    cloudinaryFormData.append('upload_preset', uploadPreset);
+    cloudinaryFormData.append('api_key', apiKey);
+
+    return fetch(url, {
+        method: 'POST',
+        body: cloudinaryFormData,
+    }).then(response => response.json());
+}
+function crearObjetoProducto(name, description, typeItem, unitPrice, status, imageUrl, imageName) {
+    return {
+        name: name.trim(),
+        status: status, // True or False directamente, en lugar de 'Activo'/'Inactivo'
+        typeItem: typeItem.trim(),
+        unitPrice: parseFloat(unitPrice).toFixed(2),
+        description: description.trim(),
+        imageUrl,
+        imageName,
+    };
+}
+function mostrarResultado(itemData) {
+    Swal.fire({
+        icon: 'success',
+        title: 'Producto guardado con éxito',
+        html: `
+            <strong>Nombre:</strong> ${itemData.name}<br>
+            <strong>Estado:</strong> ${itemData.status ? 'Activo' : 'Inactivo'}<br>
+            <strong>Tipo:</strong> ${itemData.typeItem}<br>
+            <strong>Precio:</strong> $${itemData.unitPrice}<br>
+            <strong>Descripción:</strong> ${itemData.description}<br>
+            <strong>Imagen URL:</strong> <a href="${itemData.imageUrl}" target="_blank">${itemData.imageUrl}</a><br>
+            <strong>Nombre Imagen:</strong> ${itemData.imageName}
+        `,
+    }).then(() => {
+        resetForm(); // Restablece los campos del formulario
+    });
+}
+saveButton.addEventListener('click', (e) => {
+    e.preventDefault(); // Prevenir el envío por defecto del formulario
+
+    if (isSubmitting) return;
+
+    // Obtener los datos del formulario
+    const { name, description, typeItem, unitPrice, status } = obtenerDatosFormulario();
+
+    // Validar campos
+    if (!validarCamposFormulario(name, description, typeItem, unitPrice)) {
         return;
     }
 
     const file = imageInput.files[0];
 
+    // Validar si hay imagen seleccionada
     if (!file) {
         Swal.fire({
             icon: 'warning',
@@ -134,75 +187,100 @@ saveButton.addEventListener('click', (e) => {
         return;
     }
 
-    const url = `https://api.cloudinary.com/v1_1/${cloudName}/image/upload`;
-
-    const cloudinaryFormData = new FormData();
-    cloudinaryFormData.append('file', file);
-    cloudinaryFormData.append('upload_preset', uploadPreset);
-    cloudinaryFormData.append('api_key', apiKey);
-
     isSubmitting = true;
     saveButton.disabled = true;
 
-    fetch(url, {
-        method: 'POST',
-        body: cloudinaryFormData,
-    })
-        .then(response => {
-            if (!response.ok) {
-                throw new Error('Network response was not ok');
-            }
-            return response.json();
-        })
-        .then(result => {
-            if (result.secure_url && result.public_id) {
-                const imageUrl = result.secure_url;
-                const imageName = result.public_id;
+    // Subir la imagen
+    subirImagen(file).then(result => {
+        if (result.secure_url && result.public_id) {
+            const imageUrl = result.secure_url;
+            const imageName = result.public_id;
 
-                // Create object with form data
-                const itemData = {
-                    name: name.trim(),
-                    status: status ? 'Activo' : 'Inactivo',
-                    typeItem: typeItem.trim(),
-                    unitPrice: parseFloat(unitPrice).toFixed(2),
-                    description: description.trim(),
-                    imageUrl,
-                    imageName,
-                };
+            // Crear objeto del producto
+            const itemData = crearObjetoProducto(name, description, typeItem, unitPrice, status, imageUrl, imageName);
 
-                // Show data in a SweetAlert
+            // Enviar los datos al servidor
+            enviarDatosAlServidor(itemData).then(response => {
+                // Si la respuesta es exitosa, limpiar los campos
+                resetForm();
+            }).catch(error => {
+                // Manejar el error si no se guarda en el servidor
                 Swal.fire({
-                    icon: 'success',
-                    title: 'Producto guardado con éxito',
-                    html: `
-                        <strong>Nombre:</strong> ${itemData.name}<br>
-                        <strong>Estado:</strong> ${itemData.status}<br>
-                        <strong>Tipo:</strong> ${itemData.typeItem}<br>
-                        <strong>Precio:</strong> $${itemData.unitPrice}<br>
-                        <strong>Descripción:</strong> ${itemData.description}<br>
-                        <strong>Imagen URL:</strong> <a href="${itemData.imageUrl}" target="_blank">${itemData.imageUrl}</a><br>
-                        <strong>Nombre Imagen:</strong> ${itemData.imageName}
-                    `,
-                }).then(() => {
-                    resetForm();
+                    icon: 'error',
+                    title: 'Error al guardar',
+                    text: 'Hubo un problema al guardar los datos en el servidor. Inténtalo nuevamente.',
                 });
-            } else {
-                throw new Error('Invalid response from Cloudinary');
-            }
-        })
-        .catch(error => {
-            console.error('Error al subir la imagen:', error);
+            });
+
+        } else {
+            throw new Error('Respuesta inválida de Cloudinary');
+        }
+    }).catch(error => {
+        console.error('Error al subir la imagen:', error);
+        Swal.fire({
+            icon: 'error',
+            title: 'Error',
+            text: 'Error al subir la imagen. Por favor, inténtalo de nuevo.',
+        });
+    }).finally(() => {
+        isSubmitting = false;
+        saveButton.disabled = false;
+    });
+});
+
+async function enviarDatosAlServidor(itemData) {
+    const token = localStorage.getItem('token'); // Obtener el token de autenticación
+
+    if (!token) {
+        Swal.fire({
+            icon: 'error',
+            title: 'Autenticación requerida',
+            text: 'No se encontró un token de autenticación. Por favor, inicia sesión nuevamente.',
+        });
+        return;
+    }
+
+    try {
+        const response = await fetch('http://localhost:8080/api/v1/item', { // Cambiar según la ruta correcta de tu servidor
+            method: 'POST',
+            headers: {
+                'Authorization': `Bearer ${token}`, // Añadir el token al encabezado Authorization
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(itemData), // Convertir los datos a formato JSON
+        });
+
+        const responseData = await response.json();
+
+        if (response.ok && responseData.success) {
+            // Respuesta exitosa del servidor
+            loadData(); // Recargar datos si tienes un método para actualizar la UI
+            Swal.fire({
+                icon: 'success',
+                title: '¡Éxito!',
+                text: responseData.message || 'El producto ha sido guardado correctamente en el servidor.',
+            });
+        } else {
+            // Manejar errores del servidor usando el formato del ResponseDto
             Swal.fire({
                 icon: 'error',
-                title: 'Error',
-                text: 'Error al subir la imagen. Por favor, inténtalo de nuevo.',
+                title: 'Error al guardar el producto',
+                text: responseData.message || 'Error desconocido al guardar el producto',
             });
-        })
-        .finally(() => {
-            isSubmitting = false;
-            saveButton.disabled = false;
+        }
+    } catch (error) {
+        // Manejar errores de red o problemas en la solicitud
+        console.error('Error al guardar el producto:', error);
+        Swal.fire({
+            icon: 'error',
+            title: 'Error al guardar el producto',
+            text: 'Hubo un problema al conectar con el servidor. Por favor, intenta nuevamente.',
         });
-});
+    }
+}
+
+
+
 
 // Function to clear image preview
 function resetImagePreview() {

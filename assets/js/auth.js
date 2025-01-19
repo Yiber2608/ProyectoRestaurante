@@ -1,151 +1,340 @@
-document.addEventListener('DOMContentLoaded', function() {
-    const authButton = document.getElementById('authButton');
-    const registerButton = document.getElementById('registerButton')
-    authButton.addEventListener('click', showAuthModal);
-    registerButton.addEventListener('click', showRegisterForm )
-});
+const API_BASE_URL = 'http://localhost:8080';
+const API_ENDPOINTS = {
+    LOGIN: `${API_BASE_URL}/user/login`,
+    SIGNUP: `${API_BASE_URL}/user/signup`
+};
 
-function showAuthModal() {
-    Swal.fire({
-        title: 'Inicio de Seccion',
-        html: `
-            <form id="authForm">
-                <div class="mb-3">
-                    <input type="email" id="email" class="form-control" placeholder="Correo electrónico" required>
+// Utility functions for validation
+const ValidationUtils = {
+    isValidEmail: (email) => {
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        return emailRegex.test(email);
+    },
+
+    isValidPassword: (password) => {
+        // At least 8 characters, 1 uppercase, 1 lowercase, 1 number
+        const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$/;
+        return passwordRegex.test(password);
+    },
+
+    isValidPhone: (phone) => {
+        const phoneRegex = /^[0-9]{10}$/;
+        return phoneRegex.test(phone);
+    },
+
+    isAdult: (birthdate) => {
+        const today = new Date();
+        const birthdateDate = new Date(birthdate);
+        const age = today.getFullYear() - birthdateDate.getFullYear();
+        return age >= 18;
+    }
+};
+
+class AuthenticationSystem {
+    constructor() {
+        this.initializeModals();
+        this.attachEventListeners();
+        this.setupFormValidation();
+    }
+
+    initializeModals() {
+        // Add modals to the DOM
+        document.body.insertAdjacentHTML('beforeend', `
+            <!-- Login Modal -->
+            <div class="modal fade" id="loginModal" tabindex="-1" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title">Iniciar Sesión</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <form id="loginForm" novalidate>
+                                <div class="mb-3">
+                                    <input type="email" class="form-control" id="loginEmail" 
+                                           placeholder="Correo electrónico" required>
+                                    <div class="invalid-feedback">
+                                        Por favor ingrese un correo válido
+                                    </div>
+                                </div>
+                                <div class="mb-3">
+                                    <input type="password" class="form-control" id="loginPassword" 
+                                           placeholder="Contraseña" required>
+                                    <div class="invalid-feedback">
+                                        La contraseña es requerida
+                                    </div>
+                                </div>
+                                <div class="d-grid gap-2">
+                                    <button type="submit" class="btn btn-primary">Iniciar Sesión</button>
+                                </div>
+                                <div class="mt-3 text-center">
+                                    <a href="#" id="forgotPasswordLink">¿Olvidaste tu contraseña?</a>
+                                    <br>
+                                    <a href="#" id="showRegisterLink">¿No tienes cuenta? Regístrate</a>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
                 </div>
-                <div class="mb-3">
-                    <input type="password" id="password" class="form-control" placeholder="Contraseña" required>
+            </div>
+
+            <!-- Register Modal -->
+            <div class="modal fade" id="registerModal" tabindex="-1" aria-hidden="true">
+                <div class="modal-dialog modal-lg">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title">Registro</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <form id="registerForm" class="needs-validation" novalidate>
+                                <div class="row">
+                                    <div class="col-md-6 mb-3">
+                                        <input type="text" class="form-control" id="registerName" 
+                                               placeholder="Nombre" required>
+                                        <div class="invalid-feedback">
+                                            El nombre es requerido
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6 mb-3">
+                                        <input type="text" class="form-control" id="registerSurname" 
+                                               placeholder="Apellido" required>
+                                        <div class="invalid-feedback">
+                                            El apellido es requerido
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-6 mb-3">
+                                        <input type="email" class="form-control" id="registerEmail" 
+                                               placeholder="Correo electrónico" required>
+                                        <div class="invalid-feedback">
+                                            Ingrese un correo válido
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6 mb-3">
+                                        <input type="tel" class="form-control" id="registerPhone" 
+                                               placeholder="Teléfono" required>
+                                        <div class="invalid-feedback">
+                                            Ingrese un número de teléfono válido
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="mb-3">
+                                    <input type="text" class="form-control" id="registerAddress" 
+                                           placeholder="Dirección" required>
+                                    <div class="invalid-feedback">
+                                        La dirección es requerida
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-6 mb-3">
+                                        <input type="text" class="form-control" id="registerCity" 
+                                               placeholder="Ciudad" required>
+                                        <div class="invalid-feedback">
+                                            La ciudad es requerida
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6 mb-3">
+                                        <input type="date" class="form-control" id="registerBirthdate" required>
+                                        <div class="invalid-feedback">
+                                            Debe ser mayor de edad
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-6 mb-3">
+                                        <input type="password" class="form-control" id="registerPassword" 
+                                               placeholder="Contraseña" required>
+                                        <div class="invalid-feedback">
+                                            La contraseña debe tener al menos 8 caracteres, una mayúscula y un número
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6 mb-3">
+                                        <input type="password" class="form-control" id="registerConfirmPassword" 
+                                               placeholder="Confirmar contraseña" required>
+                                        <div class="invalid-feedback">
+                                            Las contraseñas no coinciden
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="d-grid gap-2">
+                                    <button type="submit" class="btn btn-primary">Registrarse</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
                 </div>
-            </form>
-        `,
-        confirmButtonText: 'Iniciar Sesión',
-        showCloseButton: true,
-        footer: '<a href="#" id="forgotPassword">¿Olvidaste tu contraseña?</a> | <a href="#" id="registerLink">Registrarse</a>',
-        preConfirm: () => {
-            const email = Swal.getPopup().querySelector('#email').value;
-            const password = Swal.getPopup().querySelector('#password').value;
-            if (!email || !password) {
-                Swal.showValidationMessage('Por favor, completa todos los campos');
+            </div>
+        `);
+    }
+
+    setupFormValidation() {
+        const fields = document.querySelectorAll('.validate');
+        fields.forEach(field => {
+            field.addEventListener('keyup', () => {
+                field.classList.remove('errorField');
+            });
+        });
+    }
+
+    attachEventListeners() {
+        // Initialize Bootstrap modals
+        this.loginModal = new bootstrap.Modal(document.getElementById('loginModal'));
+        this.registerModal = new bootstrap.Modal(document.getElementById('registerModal'));
+
+        // Attach event listeners to buttons
+        document.getElementById('authButton')?.addEventListener('click', () => this.loginModal.show());
+        document.getElementById('registerButton')?.addEventListener('click', () => this.registerModal.show());
+
+        // Form submissions
+        document.getElementById('loginForm')?.addEventListener('submit', (e) => this.handleLogin(e));
+        document.getElementById('registerForm')?.addEventListener('submit', (e) => this.handleRegister(e));
+
+        // Modal navigation
+        document.getElementById('showRegisterLink')?.addEventListener('click', (e) => {
+            e.preventDefault();
+            this.loginModal.hide();
+            this.registerModal.show();
+        });
+
+        // Forgot password
+        document.getElementById('forgotPasswordLink')?.addEventListener('click', (e) => {
+            e.preventDefault();
+            this.showForgotPasswordModal();
+        });
+    }
+
+    async handleLogin(event) {
+        event.preventDefault();
+        const form = event.target;
+        form.classList.add('was-validated');
+
+        const email = document.getElementById('loginEmail').value;
+        const password = document.getElementById('loginPassword').value;
+
+        // Validación básica
+        if (!ValidationUtils.isValidEmail(email) || !password) {
+            this.showAlert('Error', 'Por favor complete todos los campos correctamente', 'error');
+            return;
+        }
+
+        try {
+            const response = await fetch(API_ENDPOINTS.LOGIN, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ email, password })
+            });
+
+            const data = await response.json();
+
+            if (data.token) {
+                localStorage.setItem('token', data.token);
+                // Usar el AuthValidator para la redirección basada en rol
+                AuthValidator.redirectBasedOnRole();
+            } else {
+                this.showAlert('Error', 'Credenciales inválidas', 'error');
             }
-            return { email, password };
+        } catch (error) {
+            console.error('Error en login:', error);
+            this.showAlert('Error', 'Error al iniciar sesión', 'error');
         }
-    }).then((result) => {
-        if (result.isConfirmed) {
-            handleLogin(result.value);
+    }
+
+    async handleRegister(event) {
+        event.preventDefault();
+        const form = event.target;
+        form.classList.add('was-validated');
+            const formData = this.getRegisterFormData();
+        const validationErrors = this.validateRegisterData(formData);
+        if (validationErrors.length > 0) {
+            this.showAlert('Error', validationErrors.join('<br>'), 'error');
+            return;
         }
-    });
-
-    document.getElementById('forgotPassword').addEventListener('click', showForgotPasswordForm);
-    document.getElementById('registerLink').addEventListener('click', showRegisterForm);
-}
-
-function showForgotPasswordForm() {
-    Swal.fire({
-        title: 'Recuperar Contraseña',
-        input: 'email',
-        inputPlaceholder: 'Ingresa tu correo electrónico',
-        confirmButtonText: 'Enviar',
-        showLoaderOnConfirm: true,
-        preConfirm: (email) => {
-            if (!email) {
-                Swal.showValidationMessage('Por favor, ingresa tu correo electrónico');
-            }
-            return { email };
-        },
-        allowOutsideClick: () => !Swal.isLoading()
-    }).then((result) => {
-        if (result.isConfirmed) {
-            handleForgotPassword(result.value);
-        }
-    });
-}
-
-function showRegisterForm() {
-    Swal.fire({
-        title: 'Registrarse',
-        html: `
-            <form id="registerForm">
-                <div class="mb-3">
-                    <input type="text" id="name" class="form-control" placeholder="Nombre" required>
-                </div>
-                <div class="mb-3">
-                    <input type="text" id="surname" class="form-control" placeholder="Apellido" required>
-                </div>
-                <div class="mb-3">
-                    <input type="date" id="birthdate" class="form-control" placeholder="Fecha de nacimiento" required>
-                </div>
-                <div class="mb-3">
-                    <input type="email" id="email" class="form-control" placeholder="Correo electrónico" required>
-                </div>
-                <div class="mb-3">
-                    <input type="tel" id="phone" class="form-control" placeholder="Número de teléfono" required>
-                </div>
-                <div class="mb-3">
-                    <input type="text" id="address" class="form-control" placeholder="Dirección" required>
-                </div>
-                <div class="mb-3">
-                    <input type="text" id="city" class="form-control" placeholder="Ciudad de residencia" required>
-                </div>
-                <div class="mb-3">
-                    <input type="password" id="password" class="form-control" placeholder="Contraseña" required>
-                </div>
-                <div class="mb-3">
-                    <input type="password" id="confirmPassword" class="form-control" placeholder="Confirmar contraseña" required>
-                </div>
-            </form>
-        `,
-        confirmButtonText: 'Registrarse',
-        showCloseButton: true,
-        preConfirm: () => {
-            const name = Swal.getPopup().querySelector('#name').value;
-            const surname = Swal.getPopup().querySelector('#surname').value;
-            const birthdate = Swal.getPopup().querySelector('#birthdate').value;
-            const email = Swal.getPopup().querySelector('#email').value;
-            const phone = Swal.getPopup().querySelector('#phone').value;
-            const address = Swal.getPopup().querySelector('#address').value;
-            const city = Swal.getPopup().querySelector('#city').value;
-            const password = Swal.getPopup().querySelector('#password').value;
-            const confirmPassword = Swal.getPopup().querySelector('#confirmPassword').value;
+        try {
+            // Realizar la solicitud al endpoint de registro
+            const response = await fetch(API_ENDPOINTS.SIGNUP, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(formData),
+            });
+            const data = await response.json(); // Parsear la respuesta JSON
             
-            if (!name || !surname || !birthdate || !email || !phone || !address || !city || !password || !confirmPassword) {
-                Swal.showValidationMessage('Por favor, completa todos los campos');
+            if (response.ok && data.success) {
+                // Registro exitoso
+                this.showAlert('¡Éxito!', data.message || 'Registro completado correctamente', 'success');
+                this.registerModal.hide();
+                this.loginModal.show();
+            } else {
+                // Manejo de errores desde el backend
+                this.showAlert('Error', data.message || 'Error al registrar', 'error');
             }
-            if (password !== confirmPassword) {
-                Swal.showValidationMessage('Las contraseñas no coinciden');
+        } catch (error) {
+            // Manejo de errores en el cliente
+            console.error('Error en registro:', error);
+            this.showAlert('Error', 'Error al procesar el registro. Intente nuevamente.', 'error');
+        }
+    }
+    
+
+    getRegisterFormData() {
+
+        return {
+            name: document.getElementById('registerName').value,
+            surname: document.getElementById('registerSurname').value,
+            email: document.getElementById('registerEmail').value,
+            phone: document.getElementById('registerPhone').value,
+            address: document.getElementById('registerAddress').value,
+            city: document.getElementById('registerCity').value,
+            birthdate: document.getElementById('registerBirthdate').value,
+            password: document.getElementById('registerPassword').value,
+            role: 'user' // Por defecto, todos los registros son usuarios normales
+        };
+    }
+
+    validateRegisterData(data) {
+        const errors = [];
+
+        if (!data.name || !data.surname) {
+            errors.push('Nombre y apellido son requeridos');
+        }
+        if (!ValidationUtils.isValidEmail(data.email)) {
+            errors.push('Email inválido');
+        }
+        if (!ValidationUtils.isValidPassword(data.password)) {
+            errors.push('La contraseña debe tener al menos 8 caracteres, una mayúscula y un número');
+        }
+        if (!ValidationUtils.isValidPhone(data.phone)) {
+            errors.push('Número de teléfono inválido');
+        }
+        if (!ValidationUtils.isAdult(data.birthdate)) {
+            errors.push('Debe ser mayor de edad para registrarse');
+        }
+        if (!data.address || !data.city) {
+            errors.push('Dirección y ciudad son requeridos');
+        }
+
+        return errors;
+    }
+
+    showAlert(title, message, icon) {
+        console.log('showAlert ejecutado:', title, message, icon);
+    
+        Swal.fire({
+            icon: icon, // 'success', 'error', 'warning', 'info'
+            title: title,
+            html: message, // Usamos 'html' para formatear mensajes con saltos de línea
+            confirmButtonText: 'Aceptar',
+            customClass: {
+                popup: 'swal-wide' // Clase personalizada opcional para ajustar estilos
             }
-            return { name, surname, birthdate, email, phone, address, city, password };
-        }
-    }).then((result) => {
-        if (result.isConfirmed) {
-            handleRegister(result.value);
-        }
-    });
+        });
+    }
+    
+    
 }
 
-function handleLogin(data) {
-    // Aquí deberías enviar los datos al servidor
-    console.log('Datos de inicio de sesión:', data);
-    // Simulación de una llamada al servidor
-    setTimeout(() => {
-        Swal.fire('¡Éxito!', 'Has iniciado sesión correctamente', 'success');
-    }, 1000);
-}
-
-function handleForgotPassword(data) {
-    // Aquí deberías enviar los datos al servidor
-    console.log('Solicitud de recuperación de contraseña:', data);
-    // Simulación de una llamada al servidor
-    setTimeout(() => {
-        Swal.fire('Enviado', 'Se han enviado las instrucciones a tu correo electrónico', 'success');
-    }, 1000);
-}
-
-function handleRegister(data) {
-    // Aquí deberías enviar los datos al servidor
-    console.log('Datos de registro:', data);
-    // Simulación de una llamada al servidor
-    setTimeout(() => {
-        Swal.fire('¡Registro exitoso!', 'Tu cuenta ha sido creada correctamente', 'success');
-    }, 1000);
-}
-
+// Initialize the authentication system when the DOM is loaded
+document.addEventListener('DOMContentLoaded', () => {
+    new AuthenticationSystem();
+});

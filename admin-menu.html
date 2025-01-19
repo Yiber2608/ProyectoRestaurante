@@ -103,7 +103,7 @@
                                 <i class='bx bxs-user-circle fs-1'></i></a>
 
                             <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownMenuLink">
-                                <li><a class="dropdown-item" href="#">Cerrar Sesión</a></li>
+                                <li><a class="dropdown-item" id="logoutButton" href="#">Cerrar Sesión</a></li>
                             </ul>
                         </div>
                     </div>
@@ -320,13 +320,15 @@
                                                 class="text-danger">*</span></label>
                                         <select id="typeItem" class="form-select" required>
                                             <option value="">Selecciona el tipo</option>
-                                            <option value="Electrónico">Electrónico</option>
-                                            <option value="Ropa">Ropa</option>
-                                            <option value="Hogar">Hogar</option>
-                                            <!-- Agrega más opciones según sea necesario -->
+                                            <option value="Entradas">Entradas</option>
+                                            <option value="Platos Principales">Platos Principales</option>
+                                            <option value="Postres">Postres</option>
+                                            <option value="Bebidas Calientes">Bebidas Calientes</option>
+                                            <option value="Otras Bebidas">Otras Bebidas</option>
                                         </select>
                                         <div class="invalid-feedback">Por favor, selecciona un tipo de item.</div>
                                     </div>
+
                                     <div class="col-md-12">
                                         <label for="unitPrice" class="form-label">Precio Unitario <span
                                                 class="text-danger">*</span></label>
@@ -364,6 +366,103 @@
         </div>
     </div>
 
+    <!-- tab Actualizar Items -->
+    <div class="modal fade" id="updateItems" data-bs-backdrop="static">
+        <div class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="updateModalLabel">Actualizar Item</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="updateItemForm" class="needs-validation" novalidate>
+                        <div class="row">
+                            <!-- Fechas -->
+                            <div class="col-md-12 mb-3">
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <label id="createdDate" class="form-label">Fecha de Creación</label>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label   id="updatedDate" class="form-label">Fecha de Última
+                                            Actualización</label>
+
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Imagen -->
+                            <div class="col-5">
+                                <div class="row">
+                                    <div class="col-12">
+                                        <label for="updateItemImage" class="form-label">Imagen del Producto</label>
+                                        <div class="d-flex flex-column align-items-center">
+                                            <div id="updateImagePreview"
+                                                class="border border-secondary mb-2 image-preview">
+                                                <span id="updateImagePlaceholder"
+                                                    class="text-muted">Previsualizar</span>
+                                                <img id="updatePreviewImage" src="" alt="Previsualización"
+                                                    class="preview-image">
+                                            </div>
+                                            <input type="file" id="updateItemImage" class="form-control d-none"
+                                                accept="image/*">
+                                            <button type="button" id="updateRemoveImage"
+                                                class="btn btn-sm btn-danger d-none">Eliminar Imagen</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Información -->
+                            <div class="col-7">
+                                <div class="row g-3">
+                                    <div class="col-md-9">
+                                        <label for="updateName" class="form-label">Nombre del Producto</label>
+                                        <input type="text" class="form-control" id="updateName" required minlength="3">
+                                    </div>
+                                    <div class="col-md-3">
+                                        <label for="updateStatus" class="form-label">Estado</label>
+                                        <label class="toggle-switch">
+                                            <input type="checkbox" id="updateStatus">
+                                            <span class="slider"></span>
+                                        </label>
+                                    </div>
+                                    <div class="col-md-12">
+                                        <label for="updateTypeItem" class="form-label">Tipo de Item</label>
+                                        <select id="updateTypeItem" class="form-select" required>
+                                            <option value="">Selecciona el tipo</option>
+                                            <option value="Entradas">Entradas</option>
+                                            <option value="Platos Principales">Platos Principales</option>
+                                            <option value="Postres">Postres</option>
+                                            <option value="Bebidas Calientes">Bebidas Calientes</option>
+                                            <option value="Otras Bebidas">Otras Bebidas</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-md-12">
+                                        <label for="updateUnitPrice" class="form-label">Precio Unitario</label>
+                                        <input type="number" class="form-control" id="updateUnitPrice" required
+                                            step="0.01" min="0">
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-md-12">
+                                <label for="updateItemDescription" class="form-label">Descripción</label>
+                                <textarea class="form-control" id="updateItemDescription" rows="3" required
+                                    minlength="10"></textarea>
+                            </div>
+                        </div>
+
+                        <!-- Botones -->
+                        <div class="d-flex justify-content-end mt-3">
+                            <button type="button" class="btn btn-dark me-3" data-bs-dismiss="modal">Cancelar</button>
+                            <button type="submit" id="updateSaveItems" class="btn btn-primary">Guardar Cambios</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
 
 
     <!-- modal imagen -->
@@ -398,13 +497,19 @@
         integrity="sha384-0pUGZvbkm6XF6gxjEnlmuGrJXVbNuzT9qBBavbLwCsOGabYfZo0T0to5eqruptLy"
         crossorigin="anonymous"></script>
 
-
+    
     <script src="./assets/js/admin/menu/admin-menu.js"></script>
     <script src="./assets/js/admin/menu/admin-menu-add.js"></script>
+    <script src="./assets/js/admin/menu/admin-menu-put.js"></script>
+    <script src="./assets/js/admin/menu/admin-menu-delete.js"></script>
+    <script src="./assets/js/config/jwt-decode.js"></script>
+    <script src="./assets/js/config/validate-auth.js"></script>
+    <script src="./assets/js/config/protect-routes.js"></script>
+    <script src="./assets/js/auth.js"></script>
+    <script src="./assets/js/config/logout.js"></script>
+    <script src="./assets/js/auth.js"></script>
+
     <script src="https://widget.cloudinary.com/v2.0/global/all.js" type="text/javascript"></script>
-
-
-
 
 </body>
 

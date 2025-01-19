@@ -1,80 +1,79 @@
-const itemsGlobal = [
-    {
-        id: 1,
-        tipo: "Entradas",
-        nombre: "Bruschetta",
-        descripcion: "Deliciosos panecillos tostados con tomate fresco, albahaca y aceite de oliva.",
-        precio: 5.99,
-        imagen: "https://res.cloudinary.com/dgabtcr2m/image/upload/v1736489776/naaa_vh6fiq.jpg", // URL de una imagen de ejemplo
-        estado: true, // Estado activo
-    },
-    {
-        id: 2,
-        tipo: "Plato Principal",
-        nombre: "Filete de Res",
-        descripcion: "Jugoso filete de res a la parrilla acompañado de papas al horno y ensalada.",
-        precio: 15.99,
-        imagen: "https://res.cloudinary.com/dgabtcr2m/image/upload/v1736489776/naaa_vh6fiq.jpg",
-        estado: true,
-    },
-    {
-        id: 3,
-        tipo: "Postres",
-        nombre: "Tarta de Queso",
-        descripcion: "Tarta de queso cremosa con base de galleta y cobertura de frutas del bosque.",
-        precio: 6.99,
-        imagen: "./assets/img/prueba-entrada.png",
-        estado: true,
-    },
-    {
-        id: 4,
-        tipo: "Bebidas Calientes",
-        nombre: "Café Latte",
-        descripcion: "Café espresso con leche espumada, ideal para las tardes frías.",
-        precio: 3.99,
-        imagen: "./assets/img/prueba-entrada.png",
-        estado: true,
-    },
-    {
-        id: 5,
-        tipo: "Otras Bebidas",
-        nombre: "Limonada de Coco",
-        descripcion: "Refrescante limonada mezclada con crema de coco y hielo.",
-        precio: 4.99,
-        imagen: "./assets/img/prueba-entrada.png",
-        estado: true,
-    },
-    {
-        id: 6,
-        tipo: "Otras Bebidas",
-        nombre: "Combo Familiar",
-        descripcion: "Incluye una pizza grande, alitas de pollo, papas fritas y una bebida de 2 litros.",
-        precio: 24.99,
-        imagen: "./assets/img/prueba-entrada.png",
-        estado: true,
-    },
-];
+
+// Primero validamos que solo los admins puedan acceder
+document.addEventListener("DOMContentLoaded", () => {
+    // Verificar si hay una sesión activa
+    if (!AuthValidator.validateSession()) {
+        window.location.href = '/index.html';
+        return;
+    }
+
+    // Verificar si el usuario es admin
+    if (!AuthValidator.validateRole('admin')) {
+        window.location.href = '/index.html';
+        return;
+    }
+
+    // Si pasa las validaciones, inicializar la aplicación
+    initializeAdminDashboard();
+});
+
+function initializeAdminDashboard() {
+    loadData();
+}
 
 
+let itemsGlobal = []
 
-// Cargar datos con jQuery AJAX
-function loadData() {
-    $.ajax({
-        url: 'http://3.17.151.214/items', // Cambia esta URL por tu endpoint real
-        method: 'GET',
-        dataType: 'json',
-        success: function (response) {
-            if (response.success) {
-                itemsGlobal = response.data; // Guarda los datos en la variable global
-            } else {
-                console.error('Error en la respuesta:', response.message);
+
+async function loadData() {
+    const token = localStorage.getItem('token');
+
+    // Redirigir si no hay token
+    if (!token) {
+        window.location.href = '/index.html';
+        return;
+    }
+    try {
+        const response = await fetch('http://localhost:8080/api/v1/items', {
+            method: 'GET',
+            headers: {
+                'Authorization': `Bearer ${token}`,
+                'Content-Type': 'application/json'
             }
-        },
-        error: function (xhr, status, error) {
-            console.error('Error al realizar la solicitud AJAX:', error);
+        });
+        const data = await response.json();
+
+        if (response.ok && data.success) {
+            // Si la respuesta es exitosa
+            itemsGlobal = data.data;
+            buildTable(itemsGlobal);
+            conteoItemsTarjetas();
+        } else if (response.status === 401 || response.status === 403) {
+            // Token inválido o expirado
+            localStorage.removeItem('token');
+            window.location.href = '/index.html';
+        } else {
+            // Manejo de errores específicos del backend
+            handleError(`Error en la respuesta: ${data.message || 'Error desconocido'}`);
         }
+    } catch (error) {
+        // Manejo de errores de red o problemas en la solicitud
+        console.error('Error al cargar los datos:', error);
+        handleError('Error al cargar los datos. Por favor, intente nuevamente.');
+    }
+}
+
+
+function handleError(message) {
+    console.error(message);
+    Swal.fire({
+        icon: 'error',
+        title: 'Error',
+        text: message,
+        showConfirmButton: true
     });
 }
+
 
 
 //funcio que crea la tabla con tabulator 
@@ -82,7 +81,7 @@ function buildTable(data) {
     const tableContainer = document.getElementById("table-container");
 
     const table = new Tabulator(tableContainer, {
-        data: data, // Usa los datos de la constante global
+        data: data, // Usa directamente los datos tal cual vienen
         layout: "fitColumns", // Ajusta las columnas al contenedor
         responsiveLayout: "collapse", // Habilita el diseño responsive
         tableClass: "table table-striped table-bordered table-hover",
@@ -124,11 +123,11 @@ function buildTable(data) {
         paginationSizeSelector: [10, 20, 50, 100], // Selector de tamaño de página
         columns: [
             { title: "ID", field: "id", width: 80, hozAlign: "center", headerSort: false },
-            { title: "Tipo", field: "tipo", widthGrow: 1 },
-            { title: "Nombre", field: "nombre", widthGrow: 2 },
+            { title: "Tipo", field: "typeItem", widthGrow: 1 }, // Usar 'typeItem' directamente
+            { title: "Nombre", field: "name", widthGrow: 2 }, // Usar 'name' directamente
             {
                 title: "Descripción",
-                field: "descripcion",
+                field: "description", // Usar 'description' directamente
                 formatter: (cell) => {
                     const text = cell.getValue();
                     return `<div style="white-space: pre-wrap; word-wrap: break-word;">${text}</div>`;
@@ -137,14 +136,14 @@ function buildTable(data) {
             },
             {
                 title: "Precio",
-                field: "precio",
+                field: "unitPrice", // Usar 'unitPrice' directamente
                 formatter: "money",
                 formatterParams: { symbol: "$", precision: 2 },
                 widthGrow: 1.2
             },
             {
                 title: "Imagen",
-                field: "imagen",
+                field: "imageUrl", // Usar 'imageUrl' directamente
                 formatter: () => `
                     <button class='btn bg-info btn-sm view-img-btn'>
                         <i class="bi bi-eye"></i>
@@ -153,7 +152,7 @@ function buildTable(data) {
                 hozAlign: "center",
                 widthGrow: 1.5,
                 cellClick: (e, cell) => {
-                    const imageUrl = cell.getRow().getData().imagen;
+                    const imageUrl = cell.getRow().getData().imageUrl;
                     if (imageUrl) {
                         showImageModal(imageUrl);
                     } else {
@@ -163,7 +162,7 @@ function buildTable(data) {
             },
             {
                 title: "Estado",
-                field: "estado",
+                field: "status", // Usar 'status' directamente
                 formatter: "tickCross",
                 sorter: "boolean",
                 hozAlign: "center",
@@ -178,19 +177,18 @@ function buildTable(data) {
                     <button class='btn fondo-rojo btn-sm delete-btn'><i class="bi bi-trash3-fill"></i></button>
                 `,
                 cellClick: (e, cell) => {
-                    const button = e.target;
-                    const row = cell.getRow();
+                    const target = e.target.closest('button');
 
-                    if (button.classList.contains("edit-btn")) {
-                        editItem(row.getData());
-                    } else if (button.classList.contains("delete-btn")) {
-                        const confirmDelete = confirm("¿Estás seguro de que quieres eliminar este ítem?");
-                        if (confirmDelete) {
-                            row.delete();
-                            console.log("Ítem eliminado:", row.getData());
-                        }
+                    if (target && target.classList.contains('edit-btn')) {
+                        const itemId = cell.getRow().getData().id;
+                        loadDataById(itemId);
+                    } else if (target && target.classList.contains('delete-btn')) {
+                        // Lógica para el botón de eliminación
+                        const itemId = cell.getRow().getData().id;
+                        deleteItem(itemId, cell.getRow()); // Llama a la función de eliminación
                     }
-                },
+                }
+                ,
                 widthGrow: 2
             }
         ],
@@ -199,12 +197,12 @@ function buildTable(data) {
     console.log("Tabla creada con éxito");
 }
 
-//Funcion de cargar cantidades 
+// Función de cargar cantidades
 function conteoItemsTarjetas() {
     const conteos = {
         total: 0,
         "Entradas": 0,
-        "Plato Principal": 0,
+        "Platos Principales": 0,
         "Postres": 0,
         "Bebidas Calientes": 0,
         "Otras Bebidas": 0
@@ -213,19 +211,21 @@ function conteoItemsTarjetas() {
     // Itera sobre itemsGlobal para contar
     for (let item of itemsGlobal) {
         conteos.total++;
-        if (conteos[item.tipo] !== undefined) {
-            conteos[item.tipo]++;
+        // Usar el valor de 'typeItem' para contar por tipo
+        if (conteos[item.typeItem] !== undefined) {
+            conteos[item.typeItem]++;
         }
     }
 
     // Actualiza los contadores en el DOM
     document.getElementById('totalItems').innerText = conteos.total;
     document.getElementById('totalEntradas').innerText = conteos["Entradas"];
-    document.getElementById('totalPlatos').innerText = conteos["Plato Principal"];
+    document.getElementById('totalPlatos').innerText = conteos["Platos Principales"];
     document.getElementById('totalPostres').innerText = conteos["Postres"];
     document.getElementById('totalBebidasCalientes').innerText = conteos["Bebidas Calientes"];
     document.getElementById('totalOtrasBebidas').innerText = conteos["Otras Bebidas"];
 }
+
 
 
 
@@ -342,12 +342,13 @@ document.querySelectorAll('.card-clickeable').forEach(card => {
         // Diccionario de tipos para simplificar los filtros
         const tipos = {
             'cardEntradas': 'Entradas',
-            'cardPlatosPrincipales': 'Plato Principal',
+            'cardPlatosPrincipales': 'Platos Principales',
             'cardPostres': 'Postres',
             'cardBebidasCalientes': 'Bebidas Calientes',
             'cardOtrasBebidas': 'Otras Bebidas',
             'cardTodos': 'Todos'
         };
+
         // Mostrar spinner de carga
         Swal.fire({
             title: 'Cargando...',
@@ -360,18 +361,24 @@ document.querySelectorAll('.card-clickeable').forEach(card => {
 
         setTimeout(() => {
             let filteredItems;
+
+            // Si la tarjeta seleccionada es "Todos", no filtra
             if (cardId === 'cardTodos') {
                 filteredItems = itemsGlobal;
             } else if (tipos[cardId]) {
                 const tipo = tipos[cardId];
-                filteredItems = itemsGlobal.filter(item => item.tipo === tipo);
+
+                // Filtrar los elementos de acuerdo al tipo de "typeItem" (campo del JSON)
+                filteredItems = itemsGlobal.filter(item => item.typeItem === tipo);
             } else {
                 Swal.close();
                 alert('¡Hiciste clic en otra tarjeta!');
                 return;
             }
+
             Swal.close();
 
+            // Mostrar el resultado del filtro
             if (filteredItems.length > 0) {
                 Swal.fire({
                     icon: "success",
@@ -390,12 +397,13 @@ document.querySelectorAll('.card-clickeable').forEach(card => {
                     timer: 2000, // 2 segundos
                     showConfirmButton: false,
                 }).then(() => {
-                    buildTable(itemsGlobal);
+                    buildTable(itemsGlobal); // Mostrar todos los elementos si no hay resultados
                 });
             }
         }, 1000); 
     });
 });
+
 
 
 // Método para ejecutar al cargar la página
