@@ -3,7 +3,12 @@
 document.addEventListener('DOMContentLoaded', () => {
     const protectedRoutes = {
         '/admin-menu.html': 'admin',
-        '/inicio-noaotros.html': 'user'
+        '/admin-nosotros.html': 'admin',
+        '/admin-reservas.html': 'admin',
+        '/admin-novedades.html': 'admin',
+        '/admin-sedes.html': 'admin',
+        '/admin-usuarios.html': 'admin',
+        '/admin-resenas': 'admin'
     };
 
     const currentPath = window.location.pathname;
@@ -11,7 +16,9 @@ document.addEventListener('DOMContentLoaded', () => {
     if (protectedRoutes[currentPath]) {
         const requiredRole = protectedRoutes[currentPath];
         
+        // Validar sesión y rol
         if (!AuthValidator.validateSession()) {
+            window.location.href = '/index.html';
             return;
         }
 

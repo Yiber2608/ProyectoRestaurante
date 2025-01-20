@@ -27,12 +27,6 @@ let itemsGlobal = []
 
 async function loadData() {
     const token = localStorage.getItem('token');
-
-    // Redirigir si no hay token
-    if (!token) {
-        window.location.href = '/index.html';
-        return;
-    }
     try {
         const response = await fetch('http://localhost:8080/api/v1/items', {
             method: 'GET',

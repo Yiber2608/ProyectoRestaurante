@@ -2,35 +2,9 @@
 let reviewsTable; // Variable global para la tabla
 let itemsGlobal = []; // Mantener los datos globales
 
-document.addEventListener("DOMContentLoaded", async () => {
-    // Verificar si hay una sesión activa
-    if (!AuthValidator.validateSession()) {
-        window.location.href = '/index.html';
-        return;
-    }
-
-    // Verificar si el usuario es admin
-    if (!AuthValidator.validateRole('admin')) {
-        window.location.href = '/index.html';
-        return;
-    }
-
-    // Si pasa las validaciones, inicializar la aplicación
-    await initializeAdminDashboard();
-});
-
-async function initializeAdminDashboard() {
-    await loadReviews();
-    initializeCardListeners();
-}
 
 async function loadReviews() {
     const token = localStorage.getItem('token');
-
-    if (!token) {
-        window.location.href = '/index.html';
-        return;
-    }
 
     try {
         const response = await fetch('http://localhost:8080/api/v1/reviews', {
@@ -231,4 +205,10 @@ document.querySelector('.toggle-btn').addEventListener('click', function () {
     } else {
         main.style.width = 'calc(100% - 90px)';
     }
+});
+
+document.addEventListener("DOMContentLoaded", () => {
+    loadReviews();
+    initializeCardListeners();
+    console.log("Tabla creada al cargar la página");
 });

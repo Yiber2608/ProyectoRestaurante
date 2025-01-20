@@ -1,48 +1,157 @@
+// URLs del backend
+const API_REVIEWS = 'http://localhost:8080/api/v1/reviews';
+const API_NEWS = 'http://localhost:8080/api/v1/news';
 
-
-// Simulación de bases de datos
-const reviewsDatabase = [
-    { id: 1, name: "María González", rating: 5, comment: "¡Excelente comida y servicio!" },
-    { id: 2, name: "Carlos Rodríguez", rating: 4, comment: "Muy buen ambiente y platos deliciosos." },
-    { id: 3, name: "Ana Martínez", rating: 5, comment: "¡Altamente recomendado!" },
-    { id: 4, name: "Luis Hernández", rating: 4, comment: "Sabores auténticos y personal amable." },
-    { id: 5, name: "Elena Díaz", rating: 5, comment: "Cada visita es una delicia." }
-];
-
-const novedadesDatabase = [
-    { id: 1, title: "Noche de Degustación", description: "Un evento especial donde probarás lo mejor.", date: "15 de Agosto, 2024" },
-    { id: 2, title: "Nuevo Chef Ejecutivo", description: "Damos la bienvenida al Chef María García.", date: "20 de Julio, 2024" },
-    { id: 3, title: "Nuevo Menú de Temporada", description: "Descubre nuestros nuevos platos.", date: "1 de Septiembre, 2024" },
-    { id: 1, title: "Noche de Degustación", description: "Un evento especial donde probarás lo mejor.", date: "15 de Agosto, 2024" },
-    { id: 2, title: "Nuevo Chef Ejecutivo", description: "Damos la bienvenida al Chef María García.", date: "20 de Julio, 2024" },
-    { id: 3, title: "Nuevo Menú de Temporada", description: "Descubre nuestros nuevos platos.", date: "1 de Septiembre, 2024" }
-];
-
-// Generar estrellas HTML
-const generateStars = (rating) => {
-    return Array.from({ length: 5 }, (_, i) => 
-        `<i class="bi ${i < rating ? 'bi-star-fill' : 'bi-star'} text-warning"></i>`
-    ).join('');
+// Generar estrellas HTML dinámicas
+const generateStars = (rating, editable = false, callback = null) => {
+    return Array.from({ length: 5 }, (_, i) => {
+        const starClass = i < rating ? 'bi-star-fill text-warning' : 'bi-star text-muted';
+        return editable
+            ? `<i class="bi ${starClass}" data-rating="${i + 1}" style="cursor: pointer;"></i>`
+            : `<i class="bi ${starClass}"></i>`;
+    }).join('');
 };
+
+// Obtener novedades desde el backend
+async function loadNews() {
+    try {
+        const response = await fetch(API_NEWS);
+        const data = await response.json();
+        if (data.success) {
+            loadContent(data.data, 'novedadesContainer', 'novedad');
+        } else {
+            console.error('Error al cargar novedades:', data.message);
+        }
+    } catch (error) {
+        console.error('Error al cargar novedades:', error);
+    }
+}
+
+// Obtener reseñas desde el backend
+async function loadReviews() {
+    try {
+        const response = await fetch(API_REVIEWS);
+        const data = await response.json();
+        if (data.success) {
+            loadContent(data.data, 'reviewsContainer', 'review');
+        } else {
+            console.error('Error al cargar reseñas:', data.message);
+        }
+    } catch (error) {
+        console.error('Error al cargar reseñas:', error);
+    }
+}
+
+// Guardar reseña (POST)
+async function saveReview(reviewData) {
+    try {
+        const response = await fetch(API_REVIEWS, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(reviewData)
+        });
+        const data = await response.json();
+        if (data.success) {
+            Swal.fire({
+                icon: 'success',
+                title: '¡Reseña guardada!',
+                text: 'Gracias por tu opinión. Tu reseña ha sido registrada.',
+                timer: 2000,
+                showConfirmButton: false
+            });
+            await loadReviews(); // Recargar las reseñas
+        } else {
+            Swal.fire({
+                icon: 'error',
+                title: 'Error al guardar reseña',
+                text: data.message || 'Hubo un problema al guardar tu reseña.',
+                confirmButtonText: 'Aceptar'
+            });
+        }
+    } catch (error) {
+        console.error('Error al guardar reseña:', error);
+        Swal.fire({
+            icon: 'error',
+            title: 'Error',
+            text: 'No se pudo guardar la reseña. Por favor, intenta nuevamente.',
+            confirmButtonText: 'Aceptar'
+        });
+    }
+}
+
+// Mostrar formulario para guardar reseñas con estrellas dinámicas
+function showReviewForm() {
+    let selectedRating = 0;
+
+    Swal.fire({
+        title: 'Deja tu reseña',
+        html: `
+            <div>
+                <label>Tu nombre</label>
+                <input type="text" id="reviewName" class="swal2-input" placeholder="Ej. Juan Pérez">
+            </div>
+            <div>
+                <label>Tu correo</label>
+                <input type="email" id="reviewEmail" class="swal2-input" placeholder="Ej. juan.perez@example.com">
+            </div>
+            <div>
+                <label>Tu calificación</label>
+                <div id="ratingStars" style="font-size: 1.5rem; margin-bottom: 10px;">
+                    ${generateStars(0, true)}
+                </div>
+            </div>
+            <div>
+                <label>Tu comentario</label>
+                <textarea id="reviewComment" class="swal2-textarea" placeholder="Escribe aquí tu comentario"></textarea>
+            </div>
+        `,
+        focusConfirm: false,
+        preConfirm: () => {
+            const name = document.getElementById('reviewName').value;
+            const email = document.getElementById('reviewEmail').value;
+            const comment = document.getElementById('reviewComment').value;
+
+            if (!name || !email || !comment || selectedRating === 0) {
+                Swal.showValidationMessage('Por favor, completa todos los campos y selecciona una calificación.');
+                return false;
+            }
+
+            return { name, email, rating: selectedRating, comment };
+        }
+    }).then((result) => {
+        if (result.isConfirmed) {
+            saveReview(result.value);
+        }
+    });
+
+    // Activar clics en las estrellas para cambiar la calificación
+    document.getElementById('ratingStars').addEventListener('click', (e) => {
+        if (e.target.dataset.rating) {
+            selectedRating = parseInt(e.target.dataset.rating);
+            document.getElementById('ratingStars').innerHTML = generateStars(selectedRating, true);
+        }
+    });
+}
 
 // Generar tarjeta HTML genérica
 const generateCardHTML = (data, type) => {
-    if (type === "review") {
+    if (type === 'review') {
         return `
             <div class="card card-basic h-100 shadow" data-aos="fade-right">
                 <div class="card-body d-flex flex-column">
                     <h3 class="card-title h5 mb-3">${data.name}</h3>
                     <div class="mb-3">${generateStars(data.rating)}</div>
                     <p class="card-text flex-grow-1">${data.comment}</p>
+                    <small class="text-muted">Publicado el: ${new Date(data.createdAt).toLocaleDateString()}</small>
                 </div>
             </div>`;
-    } else if (type === "novedad") {
+    } else if (type === 'novedad') {
         return `
             <div class="card card-basic novedades-card border-0" data-aos="fade-right">
                 <div class="card-body d-flex flex-column p-4">
                     <h3 class="fw-bold text-primary mb-2">${data.title}</h3>
                     <p class="novedades-card-text text-muted">${data.description}</p>
-                    <small class="text-muted mt-auto">Publicado el: ${data.date}</small>
+                    <small class="text-muted mt-auto">Publicado el: ${new Date(data.createdAt).toLocaleDateString()}</small>
                 </div>
             </div>`;
     }
@@ -60,10 +169,21 @@ const loadContent = (database, containerId, type) => {
     });
 };
 
-// Inicializar Swiper genérico
+// Inicializar Swiper
 const initSwiper = (selector, config) => {
     new Swiper(selector, config);
 };
+
+// Eventos DOM
+document.addEventListener('DOMContentLoaded', () => {
+    loadNews();
+    loadReviews();
+    initSwiper('.reviews-swiper', reviewsSwiperConfig);
+    initSwiper('.novedades-swiper', novedadesSwiperConfig);
+});
+
+// Botón para añadir reseñas
+document.getElementById('addReviewButton').addEventListener('click', showReviewForm);
 
 // Configuraciones de Swiper
 const reviewsSwiperConfig = {
@@ -90,22 +210,3 @@ const novedadesSwiperConfig = {
     autoplay: { delay: 3000, disableOnInteraction: false }
 };
 
-// Eventos DOM
-document.addEventListener('DOMContentLoaded', () => {
-    loadContent(reviewsDatabase, 'reviewsContainer', 'review');
-    loadContent(novedadesDatabase, 'novedadesContainer', 'novedad');
-    initSwiper(".reviews-swiper", reviewsSwiperConfig);
-    initSwiper(".novedades-swiper", novedadesSwiperConfig);
-});
-
-
-        // Manejar el envío del formulario de contacto
-        document.getElementById('contactForm').addEventListener('submit', function(e) {
-            e.preventDefault();
-            Swal.fire({
-                title: '¡Mensaje enviado!',
-                text: 'Gracias por contactarnos. Te responderemos pronto.',
-                icon: 'success',
-                confirmButtonText: 'Ok'
-            });
-        });

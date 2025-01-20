@@ -1,38 +1,10 @@
 
-// Primero validamos que solo los admins puedan acceder
-document.addEventListener("DOMContentLoaded", () => {
-    // Verificar si hay una sesión activa
-    if (!AuthValidator.validateSession()) {
-        window.location.href = '/index.html';
-        return;
-    }
-
-    // Verificar si el usuario es admin
-    if (!AuthValidator.validateRole('admin')) {
-        window.location.href = '/index.html';
-        return;
-    }
-
-    // Si pasa las validaciones, inicializar la aplicación
-    initializeAdminDashboard();
-});
-
-function initializeAdminDashboard() {
-    loadData();
-}
-
-
 let itemsGlobal = []
 
 
 async function loadData() {
     const token = localStorage.getItem('token');
 
-    // Redirigir si no hay token
-    if (!token) {
-        window.location.href = '/index.html';
-        return;
-    }
     try {
         const response = await fetch('http://localhost:8080/api/v1/items', {
             method: 'GET',
@@ -408,6 +380,7 @@ document.querySelectorAll('.card-clickeable').forEach(card => {
 
 // Método para ejecutar al cargar la página
 document.addEventListener("DOMContentLoaded", () => {
+    loadData();
     buildTable(itemsGlobal); // Llama a la función para crear la tabla
     conteoItemsTarjetas();
     console.log("Tabla creada al cargar la página");
