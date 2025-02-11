@@ -18,6 +18,10 @@
         integrity="sha512-6qScZESleBziOBqJwOPurSy6lhLqHGjHNALOOFX0mzRVPiE5SZQvepRzeSO1OB475fcZywuMjxtkrFaO93aq9g=="
         crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/virtual-select-plugin@1.0.46/dist/virtual-select.min.css">
+
+    <link href="https://unpkg.com/filepond/dist/filepond.css" rel="stylesheet">
+    <link href="https://unpkg.com/filepond-plugin-image-preview/dist/filepond-plugin-image-preview.css" rel="stylesheet">
+
     <link rel="stylesheet" href="./assets/css/components.css">
 
 
@@ -41,7 +45,7 @@
                 </li>
 
                 <li class="sidebar-item">
-                    <a href=admin-menu.html" class="sidebar-link active">
+                    <a href="admin-menu.html" class="sidebar-link active">
                         <i class='bx bxs-food-menu'></i>
                         <span>Menu</span>
                     </a>
@@ -259,7 +263,7 @@
 
     </div>
     <!-- tab agregar items -->
-    <div class="modal fade" id="addItems" data-bs-backdrop="static">
+    <div class="modal fade" id="addItems" data-bs-backdrop="static" tabindex="-1" aria-hidden="true">
         <div class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable">
             <div class="modal-content">
                 <div class="modal-header">
@@ -270,23 +274,10 @@
                     <form id="addItemForm" class="needs-validation" novalidate>
                         <div class="row">
 
-                            <div class="col-5">
+                            <div class="col-4">
                                 <div class="row">
-                                    <!-- Imagen con previsualización -->
                                     <div class="col-12">
-                                        <label for="name" class="form-label">Imagen del Producto <span
-                                                class="text-danger">*</span></label>
-                                        <div class="d-flex flex-column align-items-center">
-                                            <div id="imagePreview" class="border border-secondary mb-2 image-preview">
-                                                <span id="imagePlaceholder" class="text-muted">Previsualizar</span>
-                                                <img id="previewImage" src="" alt="Previsualización"
-                                                    class="preview-image">
-                                            </div>
-                                            <input type="file" id="itemImage" class="form-control d-none"
-                                                accept="image/*">
-                                            <button type="button" id="removeImage"
-                                                class="btn btn-sm btn-danger d-none">Eliminar Imagen</button>
-                                        </div>
+                                        <input type="file" class="filepond" name="filepond" accept="image/*" />
                                     </div>
                                 </div>
                             </div>
@@ -359,7 +350,6 @@
                         </div>
 
 
-
                     </form>
                 </div>
             </div>
@@ -367,7 +357,7 @@
     </div>
 
     <!-- tab Actualizar Items -->
-    <div class="modal fade" id="updateItems" data-bs-backdrop="static">
+    <div class="modal fade" id="updateItems" data-bs-backdrop="static" tabindex="-1" aria-hidden="true">
         <div class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable">
             <div class="modal-content">
                 <div class="modal-header">
@@ -391,24 +381,11 @@
                                 </div>
                             </div>
 
-                            <!-- Imagen -->
-                            <div class="col-5">
+                            <div class="col-4">
                                 <div class="row">
                                     <div class="col-12">
                                         <label for="updateItemImage" class="form-label">Imagen del Producto</label>
-                                        <div class="d-flex flex-column align-items-center">
-                                            <div id="updateImagePreview"
-                                                class="border border-secondary mb-2 image-preview">
-                                                <span id="updateImagePlaceholder"
-                                                    class="text-muted">Previsualizar</span>
-                                                <img id="updatePreviewImage" src="" alt="Previsualización"
-                                                    class="preview-image">
-                                            </div>
-                                            <input type="file" id="updateItemImage" class="form-control d-none"
-                                                accept="image/*">
-                                            <button type="button" id="updateRemoveImage"
-                                                class="btn btn-sm btn-danger d-none">Eliminar Imagen</button>
-                                        </div>
+                                        <input type="file" class="filepond" name="updateItemImage" id="updateItemImage" accept="image/*" />
                                     </div>
                                 </div>
                             </div>
@@ -496,6 +473,8 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js"
         integrity="sha384-0pUGZvbkm6XF6gxjEnlmuGrJXVbNuzT9qBBavbLwCsOGabYfZo0T0to5eqruptLy"
         crossorigin="anonymous"></script>
+        <script src="https://unpkg.com/filepond-plugin-image-preview/dist/filepond-plugin-image-preview.js"></script>
+        <script src="https://unpkg.com/filepond/dist/filepond.js"></script>
 
     
     <script src="./assets/js/admin/menu/admin-menu.js"></script>

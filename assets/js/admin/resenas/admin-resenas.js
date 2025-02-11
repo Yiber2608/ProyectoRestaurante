@@ -1,13 +1,11 @@
-// Primero validamos que solo los admins puedan acceder
 let reviewsTable; // Variable global para la tabla
 let itemsGlobal = []; // Mantener los datos globales
-
 
 async function loadReviews() {
     const token = localStorage.getItem('token');
 
     try {
-        const response = await fetch('http://localhost:8080/api/v1/reviews', {
+        const response = await fetch('http://localhost:8080/api/v1/reviews/private', {
             method: 'GET',
             headers: {
                 'Authorization': `Bearer ${token}`,
@@ -17,8 +15,16 @@ async function loadReviews() {
         const data = await response.json();
 
         if (response.ok && data.success) {
-            itemsGlobal = data.data; // Guardar los datos en la variable global
-            buildTable(itemsGlobal); // Construir la tabla inicial
+            // Asegurarnos de que active sea un booleano
+            itemsGlobal = data.data.map(item => ({
+                ...item,
+                active: Boolean(item.active) // Convertir explícitamente a booleano
+
+
+            }));
+
+            console.log('Datos cargados:', itemsGlobal);
+            buildTable(itemsGlobal);
         } else if (response.status === 401 || response.status === 403) {
             localStorage.removeItem('token');
             window.location.href = '/index.html';
@@ -54,7 +60,8 @@ function buildTable(data) {
                     "email": "Correo electrónico",
                     "rating": "Calificación",
                     "comment": "Comentario",
-                    "createdAt": "Fecha de creación"
+                    "userName": "Nombre de Usuario",
+                    "active": "Activo"
                 },
                 "pagination": {
                     "first": "Primera",
@@ -89,30 +96,38 @@ function buildTable(data) {
                 },
                 widthGrow: 3
             },
+            { title: "Nombre de Usuario", field: "userName", widthGrow: 2 },
             {
-                title: "Fecha de creación",
-                field: "createdAt",
-                formatter: (cell) => {
-                    const date = new Date(cell.getValue());
-                    return date.toLocaleString("es-419", { dateStyle: "short", timeStyle: "short" });
-                },
-                widthGrow: 2
+                title: "Estado",
+                field: "active",
+                hozAlign: "center",
+                widthGrow: 1,
+                formatter: "tickCross",
             },
             {
                 title: "Acciones",
                 field: "acciones",
                 hozAlign: "center",
-                formatter: () => `
-                    <button class='btn bg-warning btn-sm edit-btn'><i class="bi bi-pencil-square"></i></button>
-                    <button class='btn fondo-rojo btn-sm delete-btn'><i class="bi bi-trash3-fill"></i></button>
-                `,
+                formatter: (cell) => {
+                    const isActive = cell.getRow().getData().active;
+                    return `
+                        <button class='btn fondo-azul btn-sm status-btn'>
+                            <i class="bi bi-toggle-${isActive ? 'on' : 'off'} text-white"></i>
+                        </button>
+                        <button class='btn fondo-rojo btn-sm delete-btn'>
+                            <i class="bi bi-trash-fill text-white"></i>
+                        </button>
+                    `;
+                },
                 cellClick: (e, cell) => {
                     const target = e.target.closest('button');
                     if (!target) return;
 
                     const resenaId = cell.getRow().getData().id;
-                    if (target.classList.contains('edit-btn')) {
-                        loadDataById(resenaId);
+                    const currentStatus = cell.getRow().getData().active;
+                    
+                    if (target.classList.contains('status-btn')) {
+                        toggleReviewStatus(resenaId, currentStatus, cell);
                     } else if (target.classList.contains('delete-btn')) {
                         deleteResena(resenaId, cell.getRow());
                     }
@@ -191,6 +206,54 @@ function filterReviews(cardId) {
     }, 1000);
 }
 
+let searchTimeout; // Definir la variable para el timeout
+
+document.getElementById("searchInput").addEventListener("input", function () {
+    const searchTerm = this.value.trim().toLowerCase();
+
+    // Limpiar el timeout anterior
+    clearTimeout(searchTimeout);
+
+    // Si el campo está vacío, mostrar todos los datos
+    if (searchTerm === '') {
+        buildTable(itemsGlobal);
+        return;
+    }
+
+    // Establecer un timeout para esperar que el usuario termine de escribir
+    searchTimeout = setTimeout(() => {
+        const filteredItems = itemsGlobal.filter(item => {
+            // Comparar el término de búsqueda con el nombre, correo y comentario
+            const nameMatch = item.name?.toLowerCase().includes(searchTerm);
+            const emailMatch = item.email?.toLowerCase().includes(searchTerm);
+            const commentMatch = item.comment?.toLowerCase().includes(searchTerm);
+
+            return nameMatch || emailMatch || commentMatch;
+        });
+
+        // Actualizar la tabla con los resultados filtrados
+        buildTable(filteredItems);
+
+        // Mostrar mensaje apropiado según los resultados
+        if (filteredItems.length === 0) {
+            Swal.fire({
+                icon: 'info',
+                title: 'No se encontraron resultados',
+                text: 'No se encontraron reseñas que coincidan con tu búsqueda.',
+                showConfirmButton: false,
+                timer: 1500
+            });
+        } else {
+            Swal.fire({
+                icon: 'success',
+                title: 'Resultados encontrados',
+                text: `${filteredItems.length} reseña(s) coinciden con tu búsqueda.`,
+                showConfirmButton: false,
+                timer: 1500
+            });
+        }
+    }, 1500);
+});
 
 // Toggle Sidebar
 document.querySelector('.toggle-btn').addEventListener('click', function () {
@@ -212,3 +275,159 @@ document.addEventListener("DOMContentLoaded", () => {
     initializeCardListeners();
     console.log("Tabla creada al cargar la página");
 });
+
+async function toggleReviewStatus(reviewId, currentStatus, cell) {
+    const token = localStorage.getItem("token");
+
+    if (!token) {
+        Swal.fire({
+            icon: "error",
+            title: "Autenticación requerida",
+            text: "No se encontró un token de autenticación. Por favor, inicia sesión nuevamente.",
+        });
+        return;
+    }
+
+    const newStatus = !currentStatus;
+    const statusText = newStatus ? "activar" : "desactivar";
+
+    const result = await Swal.fire({
+        title: `¿Estás seguro de que deseas ${statusText} esta reseña?`,
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "Sí, cambiar",
+        cancelButtonText: "Cancelar",
+    });
+
+    if (result.isConfirmed) {
+        try {
+            const response = await fetch(`http://localhost:8080/api/v1/reviews/${reviewId}/status`, {
+                method: "PATCH",
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({ active: newStatus })
+            });
+
+            const responseData = await response.json();
+
+            if (response.ok && responseData.success) {
+                // Actualizar la fila en la tabla
+                cell.getRow().getTable().updateData([{ id: reviewId, active: newStatus }]);
+
+                // Actualizar `itemsGlobal`
+                itemsGlobal = itemsGlobal.map(item =>
+                    item.id === reviewId ? { ...item, active: newStatus } : item
+                );
+
+                // Volver a renderizar la tabla con los datos actualizados
+                buildTable(itemsGlobal);
+
+                Swal.fire({
+                    icon: "success",
+                    title: "¡Éxito!",
+                    text: responseData.message || "El estado de la reseña ha sido cambiado con éxito.",
+                    timer: 1500,
+                    showConfirmButton: false,
+                });
+            } else {
+                throw new Error(responseData.message || "No se pudo cambiar el estado de la reseña.");
+            }
+        } catch (error) {
+            Swal.fire({
+                icon: "error",
+                title: "Error",
+                text: error.message,
+                timer: 2000,
+                showConfirmButton: false,
+            });
+            console.error("Error al cambiar el estado de la reseña:", error);
+        }
+    }
+}
+
+
+async function deleteResena(reviewId, row) {
+    const token = localStorage.getItem("token"); // Obtener el token de autenticación
+
+    if (!token) {
+        Swal.fire({
+            icon: "error",
+            title: "Autenticación requerida",
+            text: "No se encontró un token de autenticación. Por favor, inicia sesión nuevamente.",
+        });
+        return;
+    }
+
+    // Mostrar confirmación con SweetAlert
+    const result = await Swal.fire({
+        title: "¿Estás seguro?",
+        text: "No podrás recuperar esta reseña después de eliminarla.",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#d33",
+        cancelButtonColor: "#3085d6",
+        confirmButtonText: "Sí, eliminar",
+        cancelButtonText: "Cancelar",
+    });
+
+    if (result.isConfirmed) {
+        try {
+            // Realizar la petición de eliminación al backend
+            const response = await fetch(`http://localhost:8080/api/v1/reviews/${reviewId}`, {
+                method: "DELETE",
+                headers: {
+                    Authorization: `Bearer ${token}`, // Añadir el token al encabezado Authorization
+                    "Content-Type": "application/json",
+                },
+            });
+
+            const responseData = await response.json();
+
+            if (response.ok && responseData.success) {
+                // Si usas Tabulator
+                if (row.delete) {
+                    row.delete();  // Elimina la fila si es Tabulator
+                } else {
+                    // Si no es Tabulator, intenta eliminar el nodo del DOM de la fila
+                    row.getElement().remove(); // Asegúrate de que `getElement()` devuelve el nodo correcto.
+                }
+
+                // Mostrar el mensaje del servidor en caso de éxito
+                Swal.fire({
+                    icon: "success",
+                    title: "¡Éxito!",
+                    text: responseData.message || "La reseña ha sido eliminada con éxito.",
+                    timer: 1500,
+                    showConfirmButton: false,
+                });
+
+                // Aquí puedes hacer cualquier otra acción, como actualizar el conteo de reseñas
+                // Asegúrate de tener la función `conteoResenas` o eliminarla si no la necesitas
+                // conteoResenas();  // Elimina esta línea si no tienes esta función.
+            } else {
+                // Mostrar el mensaje de error desde el servidor
+                Swal.fire({
+                    icon: "error",
+                    title: "Error",
+                    text: responseData.message || "No se pudo eliminar la reseña.",
+                    timer: 2000,
+                    showConfirmButton: false,
+                });
+            }
+        } catch (error) {
+            // Manejo de errores generales
+            Swal.fire({
+                icon: "error",
+                title: "Error",
+                text: "Ocurrió un problema al intentar eliminar la reseña.",
+                timer: 2000,
+                showConfirmButton: false,
+            });
+            console.error("Error al eliminar la reseña:", error);
+        }
+    }
+}

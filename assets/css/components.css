@@ -164,48 +164,67 @@ input:checked+.slider::before {
     white-space: nowrap;
 }
 
+/* Amarillo Claro */
 .fondo-amarillo {
-    background-color: #F7E283;
+    background-color: #F2C12E;
 }
 
-/* Amarillo Claro */
+.btn.fondo-amarillo:hover {
+    background-color: #A7D65B; /* Verde Claro */
+    border-color: #A7D65B;
+}
+
+/* Verde Claro */
 .fondo-verde {
     background-color: #A7D65B;
 }
 
-/* Verde Claro */
+.btn.fondo-verde:hover {
+    background-color: #A7D65B; /* Verde Claro (sin cambio de color, ya está en verde claro) */
+    border-color: #A7D65B;
+}
+
+/* Rojo Brillante */
 .fondo-rojo {
     background-color: #FF5460;
 }
 
-/* Rojo Brillante */
-.fondo-verde-agua {
-    background-color: #8DDCB8;
+.btn.fondo-rojo:hover {
+    background-color: #A7D65B; /* Verde Claro */
+    border-color: #A7D65B;
 }
 
 /* Verde Agua */
+.fondo-verde-agua {
+    background-color: #72F2EB;
+}
+
+.btn.fondo-verde-agua:hover {
+    background-color: #A7D65B; /* Verde Claro */
+    border-color: #A7D65B;
+}
+
+/* Naranja */
 .fondo-naranja {
     background-color: #FF8B00;
 }
 
-/* Naranja */
-
-
-.image-preview {
-    width: 150px;
-    height: 150px;
-    background-color: #f8f9fa;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    cursor: pointer;
+.btn.fondo-naranja:hover {
+    background-color: #A7D65B; /* Verde Claro */
+    border-color: #A7D65B;
 }
 
-.preview-image {
-    max-width: 100%;
-    max-height: 100%;
-    display: none;
+/* Azul */
+.fondo-azul {
+    background-color: #7EC8E3; /* Azul cielo ajustado */
+    border-color: #7EC8E3; /* Asegura que el borde sea del mismo color */
 }
+
+.btn.fondo-azul:hover {
+    background-color: #A7D65B; /* Verde Claro */
+    border-color: #A7D65B;
+}
+
 
 .card-clickeable{
         cursor: pointer; /* Cambia el cursor para indicar que es clickeable */
@@ -216,3 +235,27 @@ input:checked+.slider::before {
     transform: scale(1.05); /* Añade un efecto de zoom al pasar el mouse */
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Añade sombra al hacer hover */
   }
+
+  /* Estilo para el panel de FilePond */
+.filepond--panel-root {
+    background-color: #e3f2fd; /* Azul cielo claro */
+}
+
+/* Centrar el icono y darle color */
+.filepond--drop-label {
+    color: #1976d2 !important; /* Azul más oscuro para el ícono */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+}
+
+/* Ajustar el espacio del panel */
+.filepond--panel {
+    min-height: 150px;
+}
+
+/* Efecto hover suave */
+.filepond--drip-blob {
+    background-color: #90caf9 !important; /* Azul medio para el efecto de hover */
+}

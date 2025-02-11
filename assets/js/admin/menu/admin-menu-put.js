@@ -1,129 +1,112 @@
+let imageNameEdit = ""
+let pondUpdate = ""
 
+// Inicializar FilePond
+document.addEventListener("DOMContentLoaded", () => {
+    // Registrar el plugin de vista previa de imagen
+    FilePond.registerPlugin(FilePondPluginImagePreview)
 
-let imageNameEdit = "";
+    // Crear la instancia de FilePond
+    pondUpdate = FilePond.create(document.querySelector('input[type="file"].filepond'), {
+        allowMultiple: false,
+        acceptedFileTypes: ["image/*"],
+        maxFileSize: "5MB",
+        stylePanelAspectRatio: 1,
+        labelIdle: '<i class="bi bi-cloud-arrow-up" style="font-size: 2rem;"></i>',
+        labelMaxFileSizeExceeded: "El archivo es demasiado grande",
+        labelFileTypeNotAllowed: "Tipo de archivo no válido",
+        labelFileProcessing: "Cargando",
+        labelFileProcessingComplete: "Carga completa",
+        labelFileProcessingAborted: "Carga cancelada",
+        labelFileProcessingError: "Error durante la carga",
+        labelFileRemoveError: "Error durante la eliminación",
+        labelTapToCancel: "toca para cancelar",
+        labelTapToRetry: "toca para volver a intentar",
+        labelTapToUndo: "toca para deshacer",
+    })
+})
+
 // Función para cargar los datos del ítem en el modal de actualización
 function loadDataById(itemId) {
-    const item = itemsGlobal.find(item => item.id === itemId);
+
+    console.log("dentro de loadDataById")
+    const item = itemsGlobal.find((item) => item.id === itemId)
     if (!item) {
-        console.error('Ítem no encontrado');
-        return;
+        console.error("Ítem no encontrado")
+        return
     }
 
-    imageNameEdit = item.imageName;
+    imageNameEdit = item.imageName
 
-    document.getElementById('updateName').value = item.name;
-    document.getElementById('updateStatus').checked = item.status;
-    document.getElementById('updateTypeItem').value = item.typeItem;
-    document.getElementById('updateUnitPrice').value = item.unitPrice;
-    document.getElementById('updateItemDescription').value = item.description;
+    document.getElementById("updateName").value = item.name
+    document.getElementById("updateStatus").checked = item.status
+    document.getElementById("updateTypeItem").value = item.typeItem
+    document.getElementById("updateUnitPrice").value = item.unitPrice
+    document.getElementById("updateItemDescription").value = item.description
 
-    const updatePreviewImage = document.getElementById('updatePreviewImage');
-    const updateImagePlaceholder = document.getElementById('updateImagePlaceholder');
-    const updateRemoveImage = document.getElementById('updateRemoveImage');
-    const updateImagePreview = document.getElementById('updateImagePreview');
-
+    // Actualizar FilePond con la imagen actual
     if (item.imageUrl) {
-        updatePreviewImage.src = item.imageUrl;
-        updatePreviewImage.style.display = 'block';
-        updateImagePlaceholder.style.display = 'none';
-        updateRemoveImage.classList.remove('d-none');
-        updateImagePreview.classList.add('has-image');
+        pondUpdate.addFile(item.imageUrl)
     } else {
-        updatePreviewImage.src = '';
-        updatePreviewImage.style.display = 'none';
-        updateImagePlaceholder.style.display = 'block';
-        updateRemoveImage.classList.add('d-none');
-        updateImagePreview.classList.remove('has-image');
+        pondUpdate.removeFile()
     }
 
-    document.getElementById('updateItemImage').value = '';
+    document.getElementById("createdDate").textContent = `Fecha de Creación: ${new Date(item.createdAt).toLocaleString()}`
+    document.getElementById("updatedDate").textContent =
+        `Fecha de Última Actualización: ${new Date(item.updatedAt).toLocaleString()}`
 
-    document.getElementById('createdDate').textContent = `Fecha de Creación: ${new Date(item.createdAt).toLocaleString()}`;
-    document.getElementById('updatedDate').textContent = `Fecha de Última Actualización: ${new Date(item.updatedAt).toLocaleString()}`;
+    const updateItemForm = document.getElementById("updateItemForm")
+    updateItemForm.dataset.itemId = itemId
+    updateItemForm.dataset.currentImageUrl = item.imageUrl || ""
+    updateItemForm.dataset.currentImageName = item.imageName || ""
 
-    const updateItemForm = document.getElementById('updateItemForm');
-    updateItemForm.dataset.itemId = itemId;
-    updateItemForm.dataset.currentImageUrl = item.imageUrl || '';
-    updateItemForm.dataset.currentImageName = item.imageName || '';
-
-    const updateModal = new bootstrap.Modal(document.getElementById('updateItems'));
-    updateModal.show();
+    const updateModal = new bootstrap.Modal(document.getElementById("updateItems"))
+    updateModal.show()
 }
 
-// Función para manejar la actualización de la imagen
-document.getElementById('updateItemImage').addEventListener('change', function (event) {
-    const file = event.target.files[0];
-    if (file && validateImageFile(file)) {
-        const reader = new FileReader();
-        reader.onload = function (e) {
-            document.getElementById('updatePreviewImage').src = e.target.result;
-            document.getElementById('updatePreviewImage').style.display = 'block';
-            document.getElementById('updateImagePlaceholder').style.display = 'none';
-            document.getElementById('updateRemoveImage').classList.remove('d-none');
-            document.getElementById('updateImagePreview').classList.add('has-image');
-        };
-        reader.readAsDataURL(file);
-    }
-});
-
-// Función para eliminar la imagen actualizada
-document.getElementById('updateRemoveImage').addEventListener('click', function () {
-    document.getElementById('updateItemImage').value = '';
-    document.getElementById('updatePreviewImage').src = '';
-    document.getElementById('updatePreviewImage').style.display = 'none';
-    document.getElementById('updateImagePlaceholder').style.display = 'block';
-    this.classList.add('d-none');
-    document.getElementById('updateImagePreview').classList.remove('has-image');
-    document.getElementById('updateItemForm').dataset.currentImageUrl = '';
-    document.getElementById('updateItemForm').dataset.currentImageName = '';
-});
-
 // Función para manejar el envío del formulario de actualización
-document.getElementById('updateItemForm').addEventListener('submit', function (e) {
-    e.preventDefault();
+document.getElementById("updateItemForm").addEventListener("submit", function (e) {
+    e.preventDefault()
 
-    const itemId = this.dataset.itemId;
-    const currentImageUrl = this.dataset.currentImageUrl;
-    const currentImageName = this.dataset.currentImageName;
+    const itemId = this.dataset.itemId
+    const currentImageUrl = this.dataset.currentImageUrl
+    const currentImageName = this.dataset.currentImageName
 
-    // Recoger la información directamente de los elementos del formulario
-    const name = document.getElementById('updateName').value;
-    const status = document.getElementById('updateStatus').checked;
-    const typeItem = document.getElementById('updateTypeItem').value;
-    const unitPrice = document.getElementById('updateUnitPrice').value;
-    const description = document.getElementById('updateItemDescription').value;
+    const name = document.getElementById("updateName").value
+    const status = document.getElementById("updateStatus").checked
+    const typeItem = document.getElementById("updateTypeItem").value
+    const unitPrice = document.getElementById("updateUnitPrice").value
+    const description = document.getElementById("updateItemDescription").value
 
     if (!validateUpdateForm(name, description, unitPrice, typeItem)) {
-        return;
+        return
     }
 
-    const imageFile = document.getElementById('updateItemImage').files[0];
+    const pondFile = pondUpdate.getFile()
 
-    if (imageFile) {
-        // Si hay un archivo de imagen nuevo, eliminar primero la imagen previa (si existe)
-        uploadImage(imageFile)
-    .then(result => {
-        // Subir nueva imagen y luego eliminar la anterior
-        deletePreviousImage(imageNameEdit)
-            .then(() => {
-                updateItem(itemId, name, status, typeItem, unitPrice, description, result.secure_url, result.public_id);
+    if (pondFile) {
+        // Si hay un archivo de imagen nuevo, subir primero la nueva imagen
+        uploadImage(pondFile.file)
+            .then((result) => {
+                // Subir nueva imagen y luego eliminar la anterior
+                deletePreviousImage(imageNameEdit)
+                    .then(() => {
+                        updateItem(itemId, name, status, typeItem, unitPrice, description, result.secure_url, result.public_id)
+                    })
+                    .catch((error) => {
+                        console.error("Error al eliminar la imagen previa:", error)
+                        Swal.fire("Error", "No se pudo eliminar la imagen anterior", "error")
+                    })
             })
-            .catch(error => {
-                console.error('Error al eliminar la imagen previa:', error);
-                Swal.fire('Error', 'No se pudo eliminar la imagen anterior', 'error');
-            });
-    })
-    .catch(error => {
-        console.error('Error al subir la imagen:', error);
-        Swal.fire('Error', 'No se pudo subir la imagen', 'error');
-    });
+            .catch((error) => {
+                console.error("Error al subir la imagen:", error)
+                Swal.fire("Error", "No se pudo subir la imagen", "error")
+            })
     } else {
         // Si no hay una imagen nueva, solo actualizamos los datos
-        updateItem(itemId, name, status, typeItem, unitPrice, description, currentImageUrl, currentImageName);
+        updateItem(itemId, name, status, typeItem, unitPrice, description, currentImageUrl, currentImageName)
     }
-});
-
-
+})
 // Función para validar el formulario de actualización
 function validateUpdateForm(name, description, unitPrice, typeItem) {
     if (!name || name.trim().length < 3) {
@@ -180,7 +163,7 @@ async function deletePreviousImage(publicId) {
             title: 'Autenticación requerida',
             text: 'No se encontró un token de autenticación. Por favor, inicia sesión nuevamente.',
         });
-        return; 
+        return;
     }
     if (!publicId) {
         Swal.fire({
@@ -188,27 +171,21 @@ async function deletePreviousImage(publicId) {
             title: 'Error',
             text: 'El identificador de la imagen (publicId) no puede estar vacío.',
         });
-        return; 
+        return;
     }
     try {
         const dataToSend = { publicId: publicId };
         const response = await fetch('http://localhost:8080/api/v2/delete', {
             method: 'DELETE',
             headers: {
-                'Authorization': `Bearer ${token}`, 
+                'Authorization': `Bearer ${token}`,
                 'Content-Type': 'application/json',
             },
             body: JSON.stringify(dataToSend), // Convertir el objeto a JSON
         });
         const responseData = await response.json();
         if (response.ok && responseData.success) {
-            Swal.fire({
-                icon: 'success',
-                title: '¡Éxito!',
-                text: responseData.message || 'La imagen se eliminó correctamente.',
-                timer: 2000,
-                showConfirmButton: false,
-            });
+            console.log("Se subio correctamente la imagen ")
         } else {
             Swal.fire({
                 icon: 'error',
@@ -284,26 +261,4 @@ function updateItem(itemId, name, status, typeItem, unitPrice, description, imag
             });
         }
     });
-}
-
-
-// Evento de clic para abrir el selector de archivos
-document.getElementById('updateImagePreview').addEventListener('click', function () {
-    if (!this.classList.contains('has-image')) {
-        document.getElementById('updateItemImage').click();
-    }
-});
-
-// Función para validar el archivo de imagen
-function validateImageFile(file) {
-    const validTypes = ['image/jpeg', 'image/png', 'image/gif'];
-    if (!validTypes.includes(file.type)) {
-        Swal.fire('Error', 'Por favor, seleccione un archivo de imagen válido (JPEG, PNG o GIF)', 'error');
-        return false;
-    }
-    if (file.size > 5 * 1024 * 1024) {
-        Swal.fire('Error', 'El tamaño de la imagen no debe exceder 5MB', 'error');
-        return false;
-    }
-    return true;
 }

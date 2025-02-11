@@ -2,16 +2,11 @@
 
 const cloudName = 'dgabtcr2m';
 const uploadPreset = 'ml_default';
-const apiKey = '848622327782151';
 
 let pond;
 
-// Inicializar FilePond cuando el DOM esté cargado
 document.addEventListener("DOMContentLoaded", () => {
-    // Registrar el plugin de vista previa de imagen
-    FilePond.registerPlugin(FilePondPluginImagePreview)
-
-    // Crear la instancia de FilePond
+    FilePond.registerPlugin(FilePondPluginImagePreview);
     pond = FilePond.create(document.querySelector('input[type="file"].filepond'), {
         allowMultiple: false,
         acceptedFileTypes: ["image/*"],
@@ -30,13 +25,12 @@ document.addEventListener("DOMContentLoaded", () => {
         labelTapToUndo: "toca para deshacer",
         styleItemPanelAspectRatio: 1,
         stylePanelLayout: 'compact'
-    })
+    });
 });
 
-const form = document.querySelector('#addItemForm');
-const saveButton = document.querySelector('#saveItems');
+const form = document.querySelector('#addBranchForm');
+const saveButton = document.querySelector('#saveBranch');
 
-// Function to validate text input
 function validateTextInput(input, minLength, maxLength, fieldName) {
     const trimmedInput = input.trim();
     const invalidChars = /[<>{}[\]\\]/;
@@ -59,38 +53,33 @@ function validateTextInput(input, minLength, maxLength, fieldName) {
     return true;
 }
 
-function validatePrice(price) {
-    const numericPrice = parseFloat(price);
-    if (isNaN(numericPrice) || numericPrice <= 0 || numericPrice > 1000000) {
-        Swal.fire({
-            icon: 'error',
-            title: 'Error en la validación',
-            text: 'El precio debe ser un número positivo y no mayor a 1,000,000.',
-        });
-        return false;
-    }
-    return true;
-}
-
 let isSubmitting = false;
 
 function obtenerDatosFormulario() {
     const name = document.getElementById('name').value;
-    const description = document.getElementById('itemDescription').value;
-    const typeItem = document.getElementById('typeItem').value;
-    const unitPrice = document.getElementById('unitPrice').value;
-    const status = document.getElementById('status').checked;
+    const address = document.getElementById('address').value;
+    const description = document.getElementById('description').value;
+    const latitude = document.getElementById('latitude').value;
+    const longitude = document.getElementById('longitude').value;
+    const capacity = document.getElementById('capacity').value;
 
-    return { name, description, typeItem, unitPrice, status };
+    return { name, address, description, latitude, longitude, capacity };
 }
 
-function validarCamposFormulario(name, description, typeItem, unitPrice) {
+function validarCamposFormulario(name, address, description, latitude, longitude, capacity) {
     if (
         !validateTextInput(name, 3, 50, 'Nombre') ||
+        !validateTextInput(address, 10, 100, 'Dirección') ||
         !validateTextInput(description, 20, 150, 'Descripción') ||
-        !validateTextInput(typeItem, 3, 30, 'Tipo de ítem') ||
-        !validatePrice(unitPrice)
+        latitude.trim() === '' || isNaN(parseFloat(latitude)) ||
+        longitude.trim() === '' || isNaN(parseFloat(longitude)) ||
+        isNaN(capacity) || capacity <= 0
     ) {
+        Swal.fire({
+            icon: 'error',
+            title: 'Error en la validación',
+            text: 'Por favor, completa todos los campos correctamente.',
+        });
         return false;
     }
     return true;
@@ -121,23 +110,23 @@ function uploadImage(file) {
     });
 }
 
-function crearObjetoProducto(name, description, typeItem, unitPrice, status, imageUrl, imageName) {
+function crearObjetoSede(name, address, description, latitude, longitude, capacity, imageUrl, userId = 1) {
     return {
         name: name.trim(),
-        status: status,
-        typeItem: typeItem.trim(),
-        unitPrice: parseFloat(unitPrice).toFixed(2),
+        address: address.trim(),
         description: description.trim(),
-        imageUrl,
-        imageName,
+        latitude: parseFloat(latitude),
+        longitude: parseFloat(longitude),
+        capacity: parseInt(capacity),
+        image: imageUrl,
+        userId: userId
     };
 }
 
-// Función para resetear el formulario
 function resetForm() {
     form.reset();
     form.classList.remove('was-validated');
-    pond.removeFiles(); // Limpiar FilePond
+    pond.removeFiles();
 }
 
 saveButton.addEventListener('click', async (e) => {
@@ -145,14 +134,14 @@ saveButton.addEventListener('click', async (e) => {
 
     if (isSubmitting) return;
 
-    const { name, description, typeItem, unitPrice, status } = obtenerDatosFormulario();
+    const { name, address, description, latitude, longitude, capacity } = obtenerDatosFormulario();
 
-    if (!validarCamposFormulario(name, description, typeItem, unitPrice)) {
+    if (!validarCamposFormulario(name, address, description, latitude, longitude, capacity)) {
         return;
     }
 
     const pondFile = pond.getFile();
-    if (!pondFile) {
+    if (!pondFile || !pondFile.file) {
         Swal.fire({
             icon: 'warning',
             title: 'Imagen requerida',
@@ -165,13 +154,47 @@ saveButton.addEventListener('click', async (e) => {
     saveButton.disabled = true;
 
     try {
+        Swal.fire({
+            title: 'Subiendo imagen...',
+            html: 'Por favor espera mientras se sube la imagen.',
+            allowOutsideClick: false,
+            didOpen: () => {
+                Swal.showLoading();
+            }
+        });
+
         const result = await uploadImage(pondFile.file);
         const imageUrl = result.secure_url;
-        const imageName = result.public_id;
 
-        const itemData = crearObjetoProducto(name, description, typeItem, unitPrice, status, imageUrl, imageName);
+        const token = localStorage.getItem('token');
+        if (!token) {
+            console.error('Token no encontrado en localStorage');
+            return;
+        }
 
-        await enviarDatosAlServidor(itemData);
+        let userId = 1; // Valor por defecto
+        try {
+            const decodedToken = JSON.parse(atob(token.split('.')[1]));
+            userId = decodedToken.userId || 1; // Obtener userId del token o usar el valor por defecto
+            console.log('UserID obtenido:', userId);
+        } catch (error) {
+            console.error('Error al decodificar el token:', error);
+        }
+
+        const sedeData = crearObjetoSede(name, address, description, latitude, longitude, capacity, imageUrl, userId);
+
+        console.log('Datos preparados para enviar:', sedeData); // Imprimir JSON enviado
+
+        Swal.fire({
+            title: 'Guardando sede...',
+            html: 'Por favor espera mientras se guarda la sede.',
+            allowOutsideClick: false,
+            didOpen: () => {
+                Swal.showLoading();
+            }
+        });
+
+        await enviarDatosAlServidor(sedeData);
         resetForm();
     } catch (error) {
         console.error('Error:', error);
@@ -186,7 +209,7 @@ saveButton.addEventListener('click', async (e) => {
     }
 });
 
-async function enviarDatosAlServidor(itemData) {
+async function enviarDatosAlServidor(sedeData) {
     const token = localStorage.getItem('token');
 
     if (!token) {
@@ -199,36 +222,39 @@ async function enviarDatosAlServidor(itemData) {
     }
 
     try {
-        const response = await fetch('http://localhost:8080/api/v1/item', {
+        const response = await fetch('http://localhost:8080/api/v1/branches', {
             method: 'POST',
             headers: {
                 'Authorization': `Bearer ${token}`,
                 'Content-Type': 'application/json',
             },
-            body: JSON.stringify(itemData),
+            body: JSON.stringify(sedeData),
         });
 
         const responseData = await response.json();
 
+        console.log('Código de estado HTTP:', response.status);
+        console.log('Cuerpo de la respuesta:', responseData); // Imprimir respuesta del servidor
+
         if (response.ok && responseData.success) {
-            loadData();
+            loadBranches();
             Swal.fire({
                 icon: 'success',
                 title: '¡Éxito!',
-                text: responseData.message || 'El producto ha sido guardado correctamente en el servidor.',
+                text: responseData.message || 'La sede ha sido guardada correctamente en el servidor.',
             });
         } else {
             Swal.fire({
                 icon: 'error',
-                title: 'Error al guardar el producto',
-                text: responseData.message || 'Error desconocido al guardar el producto',
+                title: 'Error al guardar la sede',
+                text: responseData.message || 'Error desconocido al guardar la sede',
             });
         }
     } catch (error) {
-        console.error('Error al guardar el producto:', error);
+        console.error('Error al guardar la sede:', error);
         Swal.fire({
             icon: 'error',
-            title: 'Error al guardar el producto',
+            title: 'Error al guardar la sede',
             text: 'Hubo un problema al conectar con el servidor. Por favor, intenta nuevamente.',
         });
     }

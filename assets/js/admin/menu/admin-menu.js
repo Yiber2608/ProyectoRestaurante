@@ -117,7 +117,7 @@ function buildTable(data) {
                 title: "Imagen",
                 field: "imageUrl", // Usar 'imageUrl' directamente
                 formatter: () => `
-                    <button class='btn bg-info btn-sm view-img-btn'>
+                    <button class='btn fondo-azul btn-sm view-img-btn'>
                         <i class="bi bi-eye"></i>
                     </button>
                 `,
@@ -145,7 +145,7 @@ function buildTable(data) {
                 field: "acciones",
                 hozAlign: "center",
                 formatter: () => `
-                    <button class='btn bg-warning btn-sm edit-btn'><i class="bi bi-pencil-square"></i></button>
+                    <button class='btn fondo-amarillo btn-sm edit-btn'><i class="bi bi-pencil-square"></i></button>
                     <button class='btn fondo-rojo btn-sm delete-btn'><i class="bi bi-trash3-fill"></i></button>
                 `,
                 cellClick: (e, cell) => {
@@ -231,79 +231,51 @@ document.querySelector('.toggle-btn').addEventListener('click', function () {
 
 let searchTimeout; // Variable para almacenar el timeout
 
-// Evento de Escuchar el filtro
 document.getElementById("searchInput").addEventListener("input", function () {
-    const searchTerm = this.value.trim().toLowerCase(); // Elimina espacios en blanco y convierte a minúsculas
+    const searchTerm = this.value.trim().toLowerCase();
 
-    // Si hay menos de 3 caracteres, limpia la tabla
+    // Solo realizar la búsqueda si el término tiene al menos 4 caracteres
     if (searchTerm.length < 4) {
-        buildTable(itemsGlobal); // Muestra todos los elementos
-        return; // Sal del listener
+        buildTable(itemsGlobal);
+        return;
     }
 
-    // Retrasar la búsqueda para reducir eventos
-    clearTimeout(searchTimeout); // Limpia cualquier timeout previo
-    searchTimeout = setTimeout(() => {
-        const filteredItems = itemsGlobal.filter(item => 
-            item.nombre.toLowerCase().includes(searchTerm)
-        );
+    // Limpiar el timeout anterior para esperar un momento antes de buscar
+    clearTimeout(searchTimeout);
 
-        // Si no se encuentran resultados
+    // Establecer un timeout para esperar que el usuario termine de escribir
+    searchTimeout = setTimeout(() => {
+        const filteredItems = itemsGlobal.filter(item => {
+            const nameMatch = item.name && item.name.toLowerCase().includes(searchTerm);
+            const descriptionMatch = item.description && item.description.toLowerCase().includes(searchTerm);
+
+            return nameMatch || descriptionMatch;  // Buscar en nombre o descripción
+        });
+
         if (filteredItems.length === 0) {
             Swal.fire({
                 icon: 'info',
                 title: 'No se encontraron resultados',
                 text: 'No hay productos que coincidan con tu búsqueda.',
                 showConfirmButton: false,
-                timer: 1500 // 1.5 segundos de duración
+                timer: 1500
             });
-
-            // No cargar la tabla vacía
             return;
         }
 
-        // Si hay resultados, actualiza la tabla con los elementos filtrados
         buildTable(filteredItems);
-    }, 300); // Retraso de 300ms antes de ejecutar el filtro
+
+        // Mostrar alerta cuando se encuentran productos que coinciden
+        Swal.fire({
+            icon: 'success',
+            title: 'Resultados encontrados',
+            text: `${filteredItems.length} producto(s) coinciden con tu búsqueda.`,
+            showConfirmButton: false,
+            timer: 1500
+        });
+    }, 1500);  // El valor de 300ms puede ajustarse a tu preferencia
 });
 
-
-//Evento de previsuaviliazr imagen
-document.getElementById('imagePreview').addEventListener('click', function () {
-    document.getElementById('itemImage').click();
-});
-
-document.getElementById('itemImage').addEventListener('change', function (event) {
-    const file = event.target.files[0];
-    const preview = document.getElementById('previewImage');
-    const placeholder = document.getElementById('imagePlaceholder');
-    const removeBtn = document.getElementById('removeImage');
-
-    if (file) {
-        const reader = new FileReader();
-        reader.onload = function (e) {
-            preview.src = e.target.result;
-            preview.style.display = 'block';
-            placeholder.style.display = 'none';
-            removeBtn.classList.remove('d-none');
-        };
-        reader.readAsDataURL(file);
-    }
-});
-
-// Evento de remover imagen
-document.getElementById('removeImage').addEventListener('click', function () {
-    const preview = document.getElementById('previewImage');
-    const placeholder = document.getElementById('imagePlaceholder');
-    const fileInput = document.getElementById('itemImage');
-    const removeBtn = document.getElementById('removeImage');
-
-    preview.src = '';
-    preview.style.display = 'none';
-    placeholder.style.display = 'block';
-    fileInput.value = '';
-    removeBtn.classList.add('d-none');
-});
 
 
 // Evento de filtro de tarjetas 
@@ -375,8 +347,6 @@ document.querySelectorAll('.card-clickeable').forEach(card => {
         }, 1000); 
     });
 });
-
-
 
 // Método para ejecutar al cargar la página
 document.addEventListener("DOMContentLoaded", () => {
