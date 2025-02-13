@@ -26,6 +26,14 @@ document.addEventListener("DOMContentLoaded", () => {
         styleItemPanelAspectRatio: 1,
         stylePanelLayout: 'compact'
     });
+
+    const addBranchForm = document.getElementById("addBranchForm");
+    if (addBranchForm) {
+        addBranchForm.addEventListener("submit", async (event) => {
+            event.preventDefault();
+            await addBranch();
+        });
+    }
 });
 
 const form = document.querySelector('#addBranchForm');
@@ -129,85 +137,87 @@ function resetForm() {
     pond.removeFiles();
 }
 
-saveButton.addEventListener('click', async (e) => {
-    e.preventDefault();
+if (saveButton) {
+    saveButton.addEventListener('click', async (e) => {
+        e.preventDefault();
 
-    if (isSubmitting) return;
+        if (isSubmitting) return;
 
-    const { name, address, description, latitude, longitude, capacity } = obtenerDatosFormulario();
+        const { name, address, description, latitude, longitude, capacity } = obtenerDatosFormulario();
 
-    if (!validarCamposFormulario(name, address, description, latitude, longitude, capacity)) {
-        return;
-    }
-
-    const pondFile = pond.getFile();
-    if (!pondFile || !pondFile.file) {
-        Swal.fire({
-            icon: 'warning',
-            title: 'Imagen requerida',
-            text: 'Por favor, selecciona una imagen.',
-        });
-        return;
-    }
-
-    isSubmitting = true;
-    saveButton.disabled = true;
-
-    try {
-        Swal.fire({
-            title: 'Subiendo imagen...',
-            html: 'Por favor espera mientras se sube la imagen.',
-            allowOutsideClick: false,
-            didOpen: () => {
-                Swal.showLoading();
-            }
-        });
-
-        const result = await uploadImage(pondFile.file);
-        const imageUrl = result.secure_url;
-
-        const token = localStorage.getItem('token');
-        if (!token) {
-            console.error('Token no encontrado en localStorage');
+        if (!validarCamposFormulario(name, address, description, latitude, longitude, capacity)) {
             return;
         }
 
-        let userId = 1; // Valor por defecto
-        try {
-            const decodedToken = JSON.parse(atob(token.split('.')[1]));
-            userId = decodedToken.userId || 1; // Obtener userId del token o usar el valor por defecto
-            console.log('UserID obtenido:', userId);
-        } catch (error) {
-            console.error('Error al decodificar el token:', error);
+        const pondFile = pond.getFile();
+        if (!pondFile || !pondFile.file) {
+            Swal.fire({
+                icon: 'warning',
+                title: 'Imagen requerida',
+                text: 'Por favor, selecciona una imagen.',
+            });
+            return;
         }
 
-        const sedeData = crearObjetoSede(name, address, description, latitude, longitude, capacity, imageUrl, userId);
+        isSubmitting = true;
+        saveButton.disabled = true;
 
-        console.log('Datos preparados para enviar:', sedeData); // Imprimir JSON enviado
+        try {
+            Swal.fire({
+                title: 'Subiendo imagen...',
+                html: 'Por favor espera mientras se sube la imagen.',
+                allowOutsideClick: false,
+                didOpen: () => {
+                    Swal.showLoading();
+                }
+            });
 
-        Swal.fire({
-            title: 'Guardando sede...',
-            html: 'Por favor espera mientras se guarda la sede.',
-            allowOutsideClick: false,
-            didOpen: () => {
-                Swal.showLoading();
+            const result = await uploadImage(pondFile.file);
+            const imageUrl = result.secure_url;
+
+            const token = localStorage.getItem('token');
+            if (!token) {
+                console.error('Token no encontrado en localStorage');
+                return;
             }
-        });
 
-        await enviarDatosAlServidor(sedeData);
-        resetForm();
-    } catch (error) {
-        console.error('Error:', error);
-        Swal.fire({
-            icon: 'error',
-            title: 'Error',
-            text: 'Hubo un problema al procesar la solicitud. Por favor, inténtalo de nuevo.',
-        });
-    } finally {
-        isSubmitting = false;
-        saveButton.disabled = false;
-    }
-});
+            let userId = 1; // Valor por defecto
+            try {
+                const decodedToken = JSON.parse(atob(token.split('.')[1]));
+                userId = decodedToken.userId || 1; // Obtener userId del token o usar el valor por defecto
+                console.log('UserID obtenido:', userId);
+            } catch (error) {
+                console.error('Error al decodificar el token:', error);
+            }
+
+            const sedeData = crearObjetoSede(name, address, description, latitude, longitude, capacity, imageUrl, userId);
+
+            console.log('Datos preparados para enviar:', sedeData); // Imprimir JSON enviado
+
+            Swal.fire({
+                title: 'Guardando sede...',
+                html: 'Por favor espera mientras se guarda la sede.',
+                allowOutsideClick: false,
+                didOpen: () => {
+                    Swal.showLoading();
+                }
+            });
+
+            await enviarDatosAlServidor(sedeData);
+            resetForm();
+        } catch (error) {
+            console.error('Error:', error);
+            Swal.fire({
+                icon: 'error',
+                title: 'Error',
+                text: 'Hubo un problema al procesar la solicitud. Por favor, inténtalo de nuevo.',
+            });
+        } finally {
+            isSubmitting = false;
+            saveButton.disabled = false;
+        }
+    });
+}
 
 async function enviarDatosAlServidor(sedeData) {
     const token = localStorage.getItem('token');
@@ -258,4 +268,45 @@ async function enviarDatosAlServidor(sedeData) {
             text: 'Hubo un problema al conectar con el servidor. Por favor, intenta nuevamente.',
         });
     }
+}
+
+async function addBranch() {
+    const token = localStorage.getItem('token');
+    const formData = new FormData(document.getElementById("addBranchForm"));
+
+    try {
+        const response = await fetch('http://localhost:8080/api/v1/branches', {
+            method: 'POST',
+            headers: {
+                'Authorization': `Bearer ${token}`
+            },
+            body: formData
+        });
+        const data = await response.json();
+
+        if (response.ok && data.success) {
+            Swal.fire({
+                icon: 'success',
+                title: 'Sede agregada',
+                text: 'La sede ha sido agregada exitosamente.',
+                showConfirmButton: true
+            });
+            loadBranches();
+        } else {
+            handleError(`Error en la respuesta: ${data.message || 'Error desconocido'}`);
+        }
+    } catch (error) {
+        console.error('Error al agregar la sede:', error);
+        handleError('Error al agregar la sede. Por favor, intente nuevamente.');
+    }
+}
+
+function handleError(message) {
+    console.error(message);
+    Swal.fire({
+        icon: 'error',
+        title: 'Error',
+        text: message,
+        showConfirmButton: true
+    });
 }

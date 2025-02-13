@@ -1,0 +1,376 @@
+let branchesGlobal = [];
+let selectedBranchId = null;
+let existingDates = [];
+let selectedDates = [];
+
+document.addEventListener("DOMContentLoaded", () => {
+    loadBranches();
+    document.getElementById("searchInput").addEventListener("input", filterBranches);
+});
+
+async function loadBranches() {
+    const token = localStorage.getItem('token');
+    try {
+        const response = await fetch('http://localhost:8080/api/v1/branches', {
+            method: 'GET',
+            headers: {
+                'Authorization': `Bearer ${token}`,
+                'Content-Type': 'application/json'
+            }
+        });
+        const data = await response.json();
+        if (response.ok && data.success) {
+            branchesGlobal = data.data;
+            displayBranchCards(branchesGlobal);
+        } else {
+            handleError(`Error en la respuesta: ${data.message || 'Error desconocido'}`);
+        }
+    } catch (error) {
+        console.error('Error al cargar las sedes:', error);
+        handleError('Error al cargar las sedes. Por favor, intente nuevamente.');
+    }
+}
+
+function displayBranchCards(branches) {
+    const container = document.getElementById("branchCardsContainer");
+    container.innerHTML = '';
+    branches.forEach(branch => {
+        const card = document.createElement('div');
+        card.className = 'col';
+        card.innerHTML = `
+            <div class="card h-100 border-0 shadow" data-branch-id="${branch.id}">
+                <div class="card-body">
+                    <h5 class="card-title">${branch.name}</h5>
+                    <p class="card-text">${branch.address}</p>
+                    <p class="card-text">Capacidad: ${branch.capacity}</p>
+                </div>
+            </div>
+        `;
+        card.addEventListener('click', () => showBranchDetails(branch));
+        container.appendChild(card);
+    });
+}
+
+function filterBranches() {
+    const searchTerm = document.getElementById("searchInput").value.trim().toLowerCase();
+    const filteredBranches = branchesGlobal.filter(branch => {
+        return branch.name.toLowerCase().includes(searchTerm) ||
+            branch.address.toLowerCase().includes(searchTerm) ||
+            branch.description.toLowerCase().includes(searchTerm);
+    });
+    displayBranchCards(filteredBranches);
+}
+
+function showBranchDetails(branch) {
+    selectedBranchId = branch.id;
+    document.getElementById("branchModalLabel").innerText = branch.name;
+    $('#branchDetailsModal').modal('show');
+    loadBranchCalendar(branch.id);
+}
+
+async function loadBranchCalendar(branchId) {
+    const token = localStorage.getItem('token');
+    try {
+        const response = await fetch(`http://localhost:8080/api/v1/schedules/branch/${branchId}`, {
+            method: 'GET',
+            headers: {
+                'Authorization': `Bearer ${token}`,
+                'Content-Type': 'application/json'
+            }
+        });
+        const data = await response.json();
+        if (response.ok && data.success) {
+            existingDates = data.data.map(schedule => schedule.date);
+            const events = data.data.map(schedule => ({
+                title: `Capacidad: ${schedule.capacity}`,
+                start: schedule.date,
+                allDay: true,
+                backgroundColor: 'lightgreen',
+                borderColor: 'lightgreen'
+            }));
+            renderBranchCalendar(events);
+        } else {
+            handleError(`Error en la respuesta: ${data.message || 'Error desconocido'}`);
+        }
+    } catch (error) {
+        console.error('Error al cargar los horarios:', error);
+        handleError('Error al cargar los horarios. Por favor, intente nuevamente.');
+    }
+}
+
+function renderBranchCalendar(events) {
+    const calendarEl = document.getElementById('branchCalendar');
+    const calendar = new FullCalendar.Calendar(calendarEl, {
+        initialView: 'dayGridMonth',
+        locale: 'es',
+        events: events,
+        selectable: true,
+        headerToolbar: {
+            left: 'prev,next today',
+            center: 'title',
+            right: ''
+        },
+        select: function(info) {
+            const startDate = info.startStr;
+            const endDate = info.endStr;
+            const dates = getDatesInRange(startDate, endDate);
+            const newDates = dates.filter(date => !existingDates.includes(date));
+            selectedDates.push(...newDates);
+            Swal.fire({
+                title: 'Confirmar selección',
+                text: `¿Deseas reservar las siguientes fechas: ${newDates.join(', ')}?`,
+                icon: 'question',
+                showCancelButton: true,
+                confirmButtonText: 'Sí, reservar',
+                cancelButtonText: 'Cancelar'
+            }).then(async (result) => {
+                if (result.isConfirmed) {
+                    await saveSchedules(newDates);
+                } else {
+                    selectedDates = selectedDates.filter(date => !newDates.includes(date));
+                    newDates.forEach(date => {
+                        const event = calendar.getEventById(date);
+                        if (event) {
+                            event.remove();
+                        }
+                    });
+                }
+            });
+        },
+        dateClick: function(info) {
+            loadDaySchedule(info.dateStr);
+        },
+        eventDidMount: function(info) {
+            const cell = info.el.closest('.fc-daygrid-day');
+            if (cell) {
+                cell.style.backgroundColor = 'lightgreen';
+            }
+        }
+    });
+    calendar.render();
+}
+
+async function loadDaySchedule(date) {
+    const token = localStorage.getItem('token');
+    try {
+        const response = await fetch(`http://localhost:8080/api/v1/schedules/branch/${selectedBranchId}/date/${date}`, {
+            method: 'GET',
+            headers: {
+                'Authorization': `Bearer ${token}`,
+                'Content-Type': 'application/json'
+            }
+        });
+        const data = await response.json();
+        if (response.ok && data.success) {
+            renderReservations(data.data, date);
+        } else {
+            handleError(`Error en la respuesta: ${data.message || 'Error desconocido'}`);
+        }
+    } catch (error) {
+        console.error('Error al cargar los horarios del día:', error);
+        handleError('Error al cargar los horarios del día. Por favor, intente nuevamente.');
+    }
+}
+
+function getDatesInRange(startDate, endDate) {
+    const dates = [];
+    let currentDate = new Date(startDate);
+    const end = new Date(endDate);
+
+    while (currentDate <= end) {
+        dates.push(currentDate.toISOString().split('T')[0]);
+        currentDate.setDate(currentDate.getDate() + 1);
+    }
+
+    return dates;
+}
+
+function handleError(message) {
+    console.error(message);
+    Swal.fire({
+        icon: 'error',
+        title: 'Error',
+        text: message,
+        showConfirmButton: true
+    });
+}
+
+function renderReservations(schedule, date) {
+    const container = document.getElementById('dayScheduleCalendar');
+    container.innerHTML = '';
+
+    if (!schedule) {
+        container.innerHTML = `
+            <div class="no-selection">
+                <h2>Seleccione una fecha para ver las reservas</h2>
+                <p>Por favor, seleccione una fecha en el calendario para ver las reservas correspondientes.</p>
+            </div>
+        `;
+        return;
+    }
+
+    const deleteButton = `
+        <button class="btn btn-danger btn-sm float-end" onclick="deleteSchedule(${schedule.id})">
+            <i class="bi bi-trash"></i>
+        </button>
+    `;
+
+    const header = document.createElement('div');
+    header.className = 'd-flex justify-content-between align-items-center mb-3';
+    header.innerHTML = `
+        <h5 class="mb-0">Horario del ${date}</h5>
+        ${deleteButton}
+    `;
+    container.appendChild(header);
+
+    for (let hour = 12; hour <= 22; hour++) {
+        const reservation = schedule[`hour${hour}Reservation`];
+        const card = document.createElement('div');
+        card.className = 'card mb-3 shadow-sm';
+        card.innerHTML = reservation ? `
+            <div class="card-body">
+                <h5 class="card-title">Reserva a las ${hour}:00</h5>
+                <p class="card-text">Nombre: ${reservation.userName}</p>
+                <p class="card-text">Personas: ${reservation.numPeople}</p>
+                <p class="card-text">Estado: ${reservation.status}</p>
+                <button class="btn btn-success" onclick="approveReservation(${reservation.id})">Aprobar</button>
+                <button class="btn btn-danger" onclick="cancelReservation(${reservation.id})">Cancelar</button>
+            </div>
+        ` : `
+            <div class="card-body">
+                <h5 class="card-title">Reserva a las ${hour}:00</h5>
+                <p class="card-text">No hay reservas</p>
+            </div>
+        `;
+        container.appendChild(card);
+    }
+}
+
+async function deleteSchedule(scheduleId) {
+    const token = localStorage.getItem('token');
+    try {
+        const response = await fetch(`http://localhost:8080/api/v1/schedules/${scheduleId}`, {
+            method: 'DELETE',
+            headers: {
+                'Authorization': `Bearer ${token}`,
+                'Content-Type': 'application/json'
+            }
+        });
+        const data = await response.json();
+        if (response.ok && data.success) {
+            Swal.fire({
+                icon: 'success',
+                title: 'Horario eliminado',
+                text: 'El horario ha sido eliminado exitosamente.',
+                showConfirmButton: true
+            });
+            loadBranchCalendar(selectedBranchId);
+        } else {
+            handleError(`Error en la respuesta: ${data.message || 'Error desconocido'}`);
+        }
+    } catch (error) {
+        console.error('Error al eliminar el horario:', error);
+        handleError('Error al eliminar el horario. Por favor, intente nuevamente.');
+    }
+}
+
+async function approveReservation(reservationId) {
+    const token = localStorage.getItem('token');
+    try {
+        const response = await fetch(`http://localhost:8080/api/v1/reservations/${reservationId}/approve`, {
+            method: 'PUT',
+            headers: {
+                'Authorization': `Bearer ${token}`,
+                'Content-Type': 'application/json'
+            }
+        });
+        const data = await response.json();
+        if (response.ok && data.success) {
+            Swal.fire({
+                icon: 'success',
+                title: 'Reserva aprobada',
+                text: 'La reserva ha sido aprobada exitosamente.',
+                showConfirmButton: true
+            });
+            loadDaySchedule(new Date().toISOString().split('T')[0]);
+        } else {
+            handleError(`Error en la respuesta: ${data.message || 'Error desconocido'}`);
+        }
+    } catch (error) {
+        console.error('Error al aprobar la reserva:', error);
+        handleError('Error al aprobar la reserva. Por favor, intente nuevamente.');
+    }
+}
+
+async function cancelReservation(reservationId) {
+    const token = localStorage.getItem('token');
+    try {
+        const response = await fetch(`http://localhost:8080/api/v1/reservations/${reservationId}/cancel`, {
+            method: 'PUT',
+            headers: {
+                'Authorization': `Bearer ${token}`,
+                'Content-Type': 'application/json'
+            }
+        });
+        const data = await response.json();
+        if (response.ok && data.success) {
+            Swal.fire({
+                icon: 'success',
+                title: 'Reserva cancelada',
+                text: 'La reserva ha sido cancelada exitosamente.',
+                showConfirmButton: true
+            });
+            loadDaySchedule(new Date().toISOString().split('T')[0]);
+        } else {
+            handleError(`Error en la respuesta: ${data.message || 'Error desconocido'}`);
+        }
+    } catch (error) {
+        console.error('Error al cancelar la reserva:', error);
+        handleError('Error al cancelar la reserva. Por favor, intente nuevamente.');
+    }
+}
+
+async function saveSchedules(dates) {
+    const token = localStorage.getItem('token');
+    const scheduleData = {
+        branchId: selectedBranchId,
+        dates: dates
+    };
+    console.log('Datos a enviar:', scheduleData);
+
+    try {
+        const response = await fetch('http://localhost:8080/api/v1/schedules/bulk', {
+            method: 'POST',
+            headers: {
+                'Authorization': `Bearer ${token}`,
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(scheduleData)
+        });
+        const data = await response.json();
+        if (response.ok && data.success) {
+            Swal.fire({
+                icon: 'success',
+                title: 'Horarios guardados',
+                text: 'Los horarios han sido guardados exitosamente.',
+                showConfirmButton: true
+            });
+            loadBranchCalendar(selectedBranchId);
+        } else {
+            handleError(`Error en la respuesta: ${data.message || 'Error desconocido'}`);
+        }
+    } catch (error) {
+        console.error('Error al guardar los horarios:', error);
+        handleError('Error al guardar los horarios. Por favor, intente nuevamente.');
+    }
+}
+
+function handleError(message) {
+    console.error(message);
+    Swal.fire({
+        icon: 'error',
+        title: 'Error',
+        text: message,
+        showConfirmButton: true
+    });
+}
