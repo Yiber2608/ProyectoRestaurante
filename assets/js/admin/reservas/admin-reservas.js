@@ -2,14 +2,27 @@ let branchesGlobal = [];
 let selectedBranchId = null;
 let existingDates = [];
 let selectedDates = [];
+let branchCalendar = null; // Agregar referencia global al calendario
 
 document.addEventListener("DOMContentLoaded", () => {
     loadBranches();
     document.getElementById("searchInput").addEventListener("input", filterBranches);
+    $('#branchDetailsModal').on('shown.bs.modal', function () {
+        if (branchCalendar) {
+            setTimeout(() => {
+                branchCalendar.updateSize();
+                branchCalendar.render(); // Forzar redibujado
+            }, 100);
+        }
+    });
 });
 
 async function loadBranches() {
     const token = localStorage.getItem('token');
+    if (!token) {
+        handleError('No se encontró el token de autorización.');
+        return;
+    }
     try {
         const response = await fetch('http://localhost:8080/api/v1/branches', {
             method: 'GET',
@@ -70,6 +83,10 @@ function showBranchDetails(branch) {
 
 async function loadBranchCalendar(branchId) {
     const token = localStorage.getItem('token');
+    if (!token) {
+        handleError('No se encontró el token de autorización.');
+        return;
+    }
     try {
         const response = await fetch(`http://localhost:8080/api/v1/schedules/branch/${branchId}`, {
             method: 'GET',
@@ -81,13 +98,22 @@ async function loadBranchCalendar(branchId) {
         const data = await response.json();
         if (response.ok && data.success) {
             existingDates = data.data.map(schedule => schedule.date);
-            const events = data.data.map(schedule => ({
-                title: `Capacidad: ${schedule.capacity}`,
-                start: schedule.date,
-                allDay: true,
-                backgroundColor: 'lightgreen',
-                borderColor: 'lightgreen'
-            }));
+            const events = data.data.map(schedule => {
+                // Contar el número total de reservas para este horario
+                let reservationCount = 0;
+                for (let hour = 12; hour <= 22; hour++) {
+                    if (schedule[`hour${hour}Reservation`]) {
+                        reservationCount++;
+                    }
+                }
+                return {
+                    title: `R: ${reservationCount}`,
+                    start: schedule.date,
+                    allDay: true,
+                    backgroundColor: reservationCount > 0 ? 'lightgreen' : '#c8e6c9',
+                    borderColor: reservationCount > 0 ? 'lightgreen' : '#c8e6c9'
+                };
+            });
             renderBranchCalendar(events);
         } else {
             handleError(`Error en la respuesta: ${data.message || 'Error desconocido'}`);
@@ -100,7 +126,7 @@ async function loadBranchCalendar(branchId) {
 
 function renderBranchCalendar(events) {
     const calendarEl = document.getElementById('branchCalendar');
-    const calendar = new FullCalendar.Calendar(calendarEl, {
+    branchCalendar = new FullCalendar.Calendar(calendarEl, {
         initialView: 'dayGridMonth',
         locale: 'es',
         events: events,
@@ -112,8 +138,9 @@ function renderBranchCalendar(events) {
         },
         select: function(info) {
             const startDate = info.startStr;
-            const endDate = info.endStr;
-            const dates = getDatesInRange(startDate, endDate);
+            const endDate = new Date(info.endStr);
+            endDate.setDate(endDate.getDate() - 1); // Ajustar la fecha final para no incluir el día siguiente
+            const dates = getDatesInRange(startDate, endDate.toISOString().split('T')[0]);
             const newDates = dates.filter(date => !existingDates.includes(date));
             selectedDates.push(...newDates);
             Swal.fire({
@@ -147,11 +174,15 @@ function renderBranchCalendar(events) {
             }
         }
     });
-    calendar.render();
+    branchCalendar.render();
 }
 
 async function loadDaySchedule(date) {
     const token = localStorage.getItem('token');
+    if (!token) {
+        handleError('No se encontró el token de autorización.');
+        return;
+    }
     try {
         const response = await fetch(`http://localhost:8080/api/v1/schedules/branch/${selectedBranchId}/date/${date}`, {
             method: 'GET',
@@ -210,7 +241,7 @@ function renderReservations(schedule, date) {
     }
 
     const deleteButton = `
-        <button class="btn btn-danger btn-sm float-end" onclick="deleteSchedule(${schedule.id})">
+        <button class="btn btn-danger btn-sm float-end" onclick="deleteSchedule(${schedule.id}, '${date}')">
             <i class="bi bi-trash"></i>
         </button>
     `;
@@ -246,7 +277,7 @@ function renderReservations(schedule, date) {
     }
 }
 
-async function deleteSchedule(scheduleId) {
+async function deleteSchedule(scheduleId, scheduleDate) {
     const token = localStorage.getItem('token');
     try {
         const response = await fetch(`http://localhost:8080/api/v1/schedules/${scheduleId}`, {
@@ -264,6 +295,15 @@ async function deleteSchedule(scheduleId) {
                 text: 'El horario ha sido eliminado exitosamente.',
                 showConfirmButton: true
             });
+            
+            // Actualizar el estado visual
+            const cell = document.querySelector(`.fc-daygrid-day[data-date="${scheduleDate}"]`);
+            if (cell) {
+                cell.style.backgroundColor = '';
+            }
+            
+            existingDates = existingDates.filter(date => date !== scheduleDate);
+            renderReservations(null);
             loadBranchCalendar(selectedBranchId);
         } else {
             handleError(`Error en la respuesta: ${data.message || 'Error desconocido'}`);

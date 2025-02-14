@@ -159,7 +159,7 @@
         </div>
     </div>
     <!-- Modal for Branch Details and Schedule -->
-    <div class="modal fade" id="branchDetailsModal" tabindex="-1" aria-hidden="true">
+    <div class="modal fade " id="branchDetailsModal" tabindex="-1" aria-hidden="true">
         <div class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable">
             <div class="modal-content">
                 <div class="modal-header">
@@ -173,7 +173,12 @@
                             <div id="branchCalendar" class="calendar-container"></div>
                         </div>
                         <div class="col-md-6">
-                            <div id="dayScheduleCalendar" class="calendar-container"></div>
+                            <div id="dayScheduleCalendar" class="reservations-container">
+                                <div class="no-selection">
+                                    <h2>Seleccione una fecha para ver las reservas</h2>
+                                    <p>Por favor, seleccione una fecha en el calendario para ver las reservas correspondientes.</p>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -207,10 +212,6 @@
     <script src="https://unpkg.com/fullcalendar@5.10.1/main.min.js"></script>
     <script src="./assets/js/admin/reservas/admin-reservas.js"></script>
     <script src="./assets/js/admin/reservas/admin-reservas-schedule.js"></script>
-    <script src="./assets/js/admin/sedes/admin-sedes.js"></script>
-    <script src="./assets/js/admin/sedes/admin-sedes-add.js"></script>
-    <script src="./assets/js/admin/sedes/admin-sedes-put.js"></script>
-    <script src="./assets/js/admin/sedes/admin-sedes-delete.js"></script>
     <script src="./assets/js/config/jwt-decode.js"></script>
     <script src="./assets/js/config/validate-auth.js"></script>
     <script src="./assets/js/config/protect-routes.js"></script>

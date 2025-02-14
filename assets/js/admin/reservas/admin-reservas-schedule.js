@@ -1,13 +1,9 @@
-let selectedDates = [];
-let dayScheduleCalendar;
-
 document.addEventListener("DOMContentLoaded", () => {
     initializeCalendars();
 });
 
 function initializeCalendars() {
     const branchCalendarEl = document.getElementById('branchCalendar');
-    const dayScheduleCalendarEl = document.getElementById('dayScheduleCalendar');
 
     const branchCalendar = new FullCalendar.Calendar(branchCalendarEl, {
         initialView: 'dayGridMonth',
@@ -25,10 +21,11 @@ function initializeCalendars() {
         })),
         select: function(info) {
             const startDate = info.startStr;
-            const endDate = info.endStr;
-            const dates = getDatesInRange(startDate, endDate);
+            const endDate = new Date(info.endStr);
+            endDate.setDate(endDate.getDate() - 1); // Ajustar la fecha final para no incluir el día siguiente
+            const dates = getDatesInRange(startDate, endDate.toISOString().split('T')[0]);
             const newDates = dates.filter(date => !existingDates.includes(date));
-            if (newDates.length > 1) {
+            if (newDates.length > 0) {
                 selectedDates.push(...newDates);
                 newDates.forEach(date => {
                     info.view.calendar.addEvent({
@@ -57,26 +54,11 @@ function initializeCalendars() {
         }
     });
 
-    dayScheduleCalendar = new FullCalendar.Calendar(dayScheduleCalendarEl, {
-        initialView: 'timeGridDay',
-        slotMinTime: '12:00:00',
-        slotMaxTime: '22:00:00',
-        headerToolbar: {
-            left: 'prev,next today',
-            center: 'title',
-            right: ''
-        },
-        dateClick: function(info) {
-            loadDaySchedule(info.dateStr);
-        },
-        select: function(info) {
-            alert('selected ' + info.startStr + ' to ' + info.endStr);
-        }
-    });
-
     branchCalendar.render();
-    dayScheduleCalendar.render();
 }
+
+// Eliminar la lógica del calendario por horas
+// ...rest of existing code...
 
 function getDatesInRange(startDate, endDate) {
     const dates = [];
@@ -144,6 +126,9 @@ function renderReservations(schedule) {
     header.innerHTML = `
         <h5 class="mb-0">Horario del ${schedule.date}</h5>
         <p class="mb-0">Capacidad: ${remainingCapacity}/${totalCapacity}</p>
+        <button class="btn btn-danger btn-sm float-end" onclick="deleteSchedule(${schedule.id}, '${schedule.date}')">
+            <i class="bi bi-trash"></i>
+        </button>
     `;
     container.appendChild(header);
 
@@ -226,7 +211,7 @@ async function cancelReservation(reservationId) {
     }
 }
 
-async function deleteSchedule(scheduleId) {
+async function deleteSchedule(scheduleId, scheduleDate) {
     const token = localStorage.getItem('token');
     try {
         const response = await fetch(`http://localhost:8080/api/v1/schedules/${scheduleId}`, {
@@ -244,13 +229,14 @@ async function deleteSchedule(scheduleId) {
                 text: 'El horario ha sido eliminado exitosamente.',
                 showConfirmButton: true
             });
-            // Limpiar el panel derecho
-            renderReservations(null);
-            // Quitar el color verde de la celda
-            const event = dayScheduleCalendar.getEventById(scheduleId);
-            if (event) {
-                event.remove();
+            // Actualizar el estado visual
+            const cell = document.querySelector(`.fc-daygrid-day[data-date="${scheduleDate}"]`);
+            if (cell) {
+                cell.style.backgroundColor = '';
             }
+            
+            existingDates = existingDates.filter(date => date !== scheduleDate);
+            renderReservations(null);
             loadBranchCalendar(selectedBranchId);
         } else {
             handleError(`Error en la respuesta: ${data.message || 'Error desconocido'}`);
