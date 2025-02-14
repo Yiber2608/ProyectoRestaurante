@@ -279,8 +279,38 @@ input:checked+.slider::before {
 
 .calendar-container {
     height: 500px;
-    overflow-y: auto;
-    margin: 20px;
+    margin: 20px 0;
+    padding: 10px;
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+}
+
+/* Estilos específicos para FullCalendar */
+.fc {
+    height: 100% !important;
+}
+
+.fc-view {
+    height: auto !important;
+}
+
+.fc-scroller {
+    height: auto !important;
+    overflow: visible !important;
+}
+
+.fc table {
+    width: 100% !important;
+}
+
+.fc td, .fc th {
+    min-width: 40px; /* Ancho mínimo para las celdas */
+}
+
+/* Ajustes para el día seleccionado */
+.fc-highlight {
+    background: rgba(0, 255, 0, 0.1) !important;
 }
 
 #branchCalendar, #dayScheduleCalendar {

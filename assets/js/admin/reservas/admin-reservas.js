@@ -136,36 +136,50 @@ function renderBranchCalendar(events) {
             center: 'title',
             right: ''
         },
-        select: function(info) {
+        select: async function(info) {
             const startDate = info.startStr;
             const endDate = new Date(info.endStr);
             endDate.setDate(endDate.getDate() - 1); // Ajustar la fecha final para no incluir el día siguiente
             const dates = getDatesInRange(startDate, endDate.toISOString().split('T')[0]);
             const newDates = dates.filter(date => !existingDates.includes(date));
-            selectedDates.push(...newDates);
-            Swal.fire({
-                title: 'Confirmar selección',
-                text: `¿Deseas reservar las siguientes fechas: ${newDates.join(', ')}?`,
-                icon: 'question',
-                showCancelButton: true,
-                confirmButtonText: 'Sí, reservar',
-                cancelButtonText: 'Cancelar'
-            }).then(async (result) => {
+            
+            // Mostrar confirmación para cualquier nueva fecha seleccionada
+            if (newDates.length > 0) {
+                const result = await Swal.fire({
+                    title: 'Confirmar selección',
+                    text: `¿Deseas habilitar las siguientes fechas: ${newDates.join(', ')}?`,
+                    icon: 'question',
+                    showCancelButton: true,
+                    confirmButtonText: 'Sí, habilitar',
+                    cancelButtonText: 'Cancelar'
+                });
                 if (result.isConfirmed) {
                     await saveSchedules(newDates);
-                } else {
-                    selectedDates = selectedDates.filter(date => !newDates.includes(date));
-                    newDates.forEach(date => {
-                        const event = calendar.getEventById(date);
-                        if (event) {
-                            event.remove();
-                        }
-                    });
                 }
-            });
+            }
+            
+            info.view.calendar.unselect(); // Limpiar selección
         },
-        dateClick: function(info) {
-            loadDaySchedule(info.dateStr);
+        dateClick: async function(info) {
+            const clickedDate = info.dateStr;
+            
+            // Si la fecha ya tiene horario, mostrar las reservas
+            if (existingDates.includes(clickedDate)) {
+                loadDaySchedule(clickedDate);
+            } else {
+                // Si la fecha no tiene horario, solicitar confirmación para habilitarla
+                const result = await Swal.fire({
+                    title: 'Habilitar fecha',
+                    text: `¿Deseas habilitar el ${clickedDate}?`,
+                    icon: 'question',
+                    showCancelButton: true,
+                    confirmButtonText: 'Sí, habilitar',
+                    cancelButtonText: 'Cancelar'
+                });
+                if (result.isConfirmed) {
+                    await saveSchedules([clickedDate]);
+                }
+            }
         },
         eventDidMount: function(info) {
             const cell = info.el.closest('.fc-daygrid-day');

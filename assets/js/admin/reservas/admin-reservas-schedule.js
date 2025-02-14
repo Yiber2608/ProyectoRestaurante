@@ -8,53 +8,104 @@ function initializeCalendars() {
     const branchCalendar = new FullCalendar.Calendar(branchCalendarEl, {
         initialView: 'dayGridMonth',
         selectable: true,
+        height: 'auto',
+        aspectRatio: 1.35,
+        fixedWeekCount: false,
+        showNonCurrentDates: true,
+        displayEventTime: false,
         headerToolbar: {
             left: 'prev,next today',
             center: 'title',
             right: ''
         },
+        views: {
+            dayGrid: {
+                dayMaxEventRows: 0 // Mostrar todos los eventos
+            }
+        },
+        dayMaxEvents: true,
+        eventDisplay: 'block',
         events: existingDates.map(date => ({
             start: date,
             allDay: true,
+            display: 'background',
             backgroundColor: 'lightgreen',
             borderColor: 'lightgreen'
         })),
-        select: function(info) {
-            const startDate = info.startStr;
-            const endDate = new Date(info.endStr);
-            endDate.setDate(endDate.getDate() - 1); // Ajustar la fecha final para no incluir el día siguiente
-            const dates = getDatesInRange(startDate, endDate.toISOString().split('T')[0]);
+        select: async function(info) {
+            // Obtener las fechas seleccionadas
+            const dates = getDatesInRange(info.startStr, info.endStr);
             const newDates = dates.filter(date => !existingDates.includes(date));
+            
+            // Mostrar confirmación para cualquier nueva fecha seleccionada
             if (newDates.length > 0) {
-                selectedDates.push(...newDates);
-                newDates.forEach(date => {
-                    info.view.calendar.addEvent({
-                        start: date,
-                        allDay: true,
-                        backgroundColor: 'lightgreen',
-                        borderColor: 'lightgreen'
-                    });
-                });
-                Swal.fire({
+                const result = await Swal.fire({
                     title: 'Confirmar selección',
-                    text: `¿Deseas reservar las siguientes fechas: ${newDates.join(', ')}?`,
+                    text: `¿Deseas habilitar las siguientes fechas: ${newDates.join(', ')}?`,
                     icon: 'question',
                     showCancelButton: true,
-                    confirmButtonText: 'Sí, reservar',
+                    confirmButtonText: 'Sí, habilitar',
                     cancelButtonText: 'Cancelar'
-                }).then(async (result) => {
-                    if (result.isConfirmed) {
-                        await saveSchedules(newDates);
-                    }
                 });
+                if (result.isConfirmed) {
+                    await saveSchedules(newDates);
+                }
+            }
+            
+            info.view.calendar.unselect(); // Limpiar selección
+        },
+        dateClick: async function(info) {
+            const clickedDate = info.dateStr;
+            
+            // Si la fecha ya tiene horario, mostrar las reservas
+            if (existingDates.includes(clickedDate)) {
+                loadDaySchedule(clickedDate);
+            } else {
+                // Si la fecha no tiene horario, solicitar confirmación para habilitarla
+                const result = await Swal.fire({
+                    title: 'Habilitar fecha',
+                    text: `¿Deseas habilitar el ${clickedDate}?`,
+                    icon: 'question',
+                    showCancelButton: true,
+                    confirmButtonText: 'Sí, habilitar',
+                    cancelButtonText: 'Cancelar'
+                });
+                if (result.isConfirmed) {
+                    await saveSchedules([clickedDate]);
+                }
             }
         },
-        dateClick: function(info) {
-            loadDaySchedule(info.dateStr);
+        // Evitar la selección de fechas que ya tienen horario
+        selectConstraint: {
+            start: '0000-01-01', // Fecha en el pasado
+            end: '9999-12-31',   // Fecha en el futuro
+            overlap: false        // No permitir superposición
+        },
+        selectOverlap: function(event) {
+            // Retornar false para fechas que ya tienen horario
+            return !existingDates.includes(event.start.toISOString().split('T')[0]);
+        },
+        viewDidMount: function(view) {
+            // Forzar actualización después de montar la vista
+            setTimeout(() => {
+                this.updateSize();
+            }, 100);
         }
     });
 
     branchCalendar.render();
+
+    // Asegurarse de que el calendario se actualice cuando el modal se muestre
+    $('#branchDetailsModal').on('shown.bs.modal', function () {
+        setTimeout(() => {
+            branchCalendar.updateSize();
+        }, 100);
+    });
+
+    // También actualizar cuando cambie el tamaño de la ventana
+    window.addEventListener('resize', () => {
+        branchCalendar.updateSize();
+    });
 }
 
 // Eliminar la lógica del calendario por horas
