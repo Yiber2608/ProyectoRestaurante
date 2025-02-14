@@ -48,6 +48,22 @@
         .no-selection p {
             font-size: 18px;
         }
+        .calendar-container {
+            height: 100%;
+            max-height: 500px;
+            overflow-y: auto;
+            margin: 20px 0;
+            border: 1px solid #ddd;
+            border-radius: 10px;
+            padding: 10px;
+            background-color: #fff;
+        }
+        @media (max-width: 768px) {
+            .calendar-container {
+                margin: 10px 0;
+                max-height: 300px;
+            }
+        }
     </style>
 </head>
 

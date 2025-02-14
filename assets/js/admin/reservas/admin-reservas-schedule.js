@@ -88,7 +88,7 @@ function initializeCalendars() {
         viewDidMount: function(view) {
             // Forzar actualización después de montar la vista
             setTimeout(() => {
-                this.updateSize();
+                branchCalendar.updateSize();
             }, 100);
         }
     });
